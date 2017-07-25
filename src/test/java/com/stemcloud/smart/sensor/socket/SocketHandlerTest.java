@@ -9,6 +9,6 @@ import junit.framework.TestCase;
  */
 public class SocketHandlerTest extends TestCase {
     public void testHandle() throws Exception {
-        SocketHandler.handle();
+        SocketManager.handle();
     }
 }

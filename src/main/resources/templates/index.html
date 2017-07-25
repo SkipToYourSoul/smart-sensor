@@ -30,7 +30,12 @@
                             <option value="2">default</option>
                         </select>
                     </div>
-                    <button class="btn btn-info" onclick="hideMark()">HIDE SENSOR</button>
+                    <div class="col-sm-2">
+                        <button class="btn btn-info" onclick="hideMark()">HIDE SENSOR</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <button class="btn btn-info" onclick="toMark()">TO SENSOR</button>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-4 col-md-4">
@@ -48,17 +53,19 @@
 
     <script src="js/dependency/jquery.min.js"></script>
     <script src="js/dependency/bootstrap.min.js"></script>
-
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
-
-    <script src="js/user/index-map.js"></script>
-
     <script>
         $.get('nav', function(msg) {
             $(".navbar-wrapper").html(msg);
         });
     </script>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+
+    <script src="js/dependency/messenger/messenger.min.js"></script>
+
+    <script src="js/user/common.js"></script>
+    <script src="js/user/index-map.js"></script>
 </body>
 </html>
