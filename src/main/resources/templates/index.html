@@ -37,6 +37,9 @@
                 <h4><i class="fa fa-bar-chart-o"></i>
                 <b>&nbsp; SENSOR CHART</b></h4>
                 <hr style="margin-top: 0"/>
+
+                <a href="#" onclick="startSocket()"><i class="fa fa-toggle-right fa-fw"></i>&nbsp; 启动Socket</a>
+                <a href="#" onclick="stopSocket()"><i class="fa fa-ban fa-fw  fa-fw"></i>&nbsp; 关闭Socket</a>
             </div>
         </div>
     </div>
@@ -54,6 +57,7 @@
     <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 
     <script src="js/user/index-map.js"></script>
+    <script src="js/socket/setsocket.js"></script>
 
     <script>
         $.get('nav', function(msg) {
