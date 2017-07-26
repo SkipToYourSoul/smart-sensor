@@ -60,8 +60,8 @@ $.ajax({
                     fillOpacity: 0.9
                 })
             });
-            sub_marker.addEventListener("click", function(){
-                var p = sub_marker.getPosition();
+            sub_marker.addEventListener("click", function(e){
+                var p = e.target.getPosition();
                 var infoWindow = new BMap.InfoWindow("<hr/><p>CREATOR: " + d['creator'] + "</p><p>DESCRIPTION: " + d['description'] + "</p>", opts);  // 创建信息窗口对象
                 map.openInfoWindow(infoWindow, new BMap.Point(p.lng, p.lat+0.008)); //开启信息窗口
             });
