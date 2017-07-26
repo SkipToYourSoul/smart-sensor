@@ -11,7 +11,7 @@ var map = new BMap.Map("allmap",{
     enableMapClick: false
 });
 map.setMapStyle({style:'grayscale'});
-var centerPoint = new BMap.Point(125.499, 31.240);
+var centerPoint = new BMap.Point(121.499, 31.240);
 map.centerAndZoom(centerPoint, 12);
 
 // --- set center point and city according ip
@@ -38,51 +38,40 @@ map.addControl(new BMap.NavigationControl({
 // ---------------------------------------------------------------------------
 
 // --- add map marker --------------------------------------------------------
-// --- marker info
 var opts = {
     width : 200,     // 信息窗口宽度
-    height: 200,     // 信息窗口高度
     title : "<b>传感器信息</b>" // 信息窗口标题
 };
 
-var markers = [];
 $.ajax({
     type: "get",
     url: current_address + "/map/sensor",
     dataType: "json",
     success: function (sensor) {
+        var markers = [];
         for (var row in sensor){
             var d = sensor[row];
-            var sub_marker = new BMap.Marker(new BMap.Point(d['longitude'], d['latitude']), {
-                icon: new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
-                    scale: 1,
-                    fillColor: "orange",
-                    fillOpacity: 0.9
-                })
-            });
-            var info = "<hr/><p>CREATOR: " + d['creator'] + "</p><p>DESCRIPTION: " + d['description'] + "</p>";
-            sub_marker.setTitle(info);
-
-
-            sub_marker.addEventListener("click", markerClick);
-
-
-
-            markers.push(sub_marker);
-            map.addOverlay(sub_marker);
+            var info = "<hr/>" +
+                "<p>NAME: " + d['name'] + "</p>" +
+                "<p>CREATOR: " + d['creator'] + "</p>" +
+                "<p>DESCRIPTION: " + d['description'] + "</p>";
+            var id = d['id'];
+            markers.push(createMarker(d, info, id));
         }
         var markerCluster = new BMapLib.MarkerClusterer(map, {markers: markers});
-        console.info(map.getOverlays());
     },
     error: function (err_msg) {
         message_info('加载传感器数据出错', 'error', 3);
     }
 });
 
-function markerClick(e){
-    var p = e.target.getPosition();
-    var infoWindow = new BMap.InfoWindow(p.lng + "," + p.lat + "<br/>" + e.target.getTitle(), opts);  // 创建信息窗口对象
-    map.openInfoWindow(infoWindow, new BMap.Point(p.lng, p.lat)); //开启信息窗口
+function createMarker(d, info, id) {
+    var _marker = new BMap.Marker(new BMap.Point(d['longitude'], d['latitude']));
+    _marker.addEventListener("click", function(e){
+        this.openInfoWindow(new BMap.InfoWindow(info, opts));
+        $('#chart').html("chart" + id);
+    });
+    return _marker;
 }
 
 // ---------------------------------------------------------------------------
@@ -92,7 +81,12 @@ function toMark(){
     map.centerAndZoom(centerPoint, 12);
 }
 
-function hideMark() {
-
-}
+$('#theme-select').change(function () {
+    console.info(this.value);
+    if (this.value == 1){
+        map.setMapStyle({style:'grayscale'});
+    } else if (this.value == 2){
+        map.setMapStyle({style:'normal'});
+    }
+});
 // ---------------------------------------------------------------------------
