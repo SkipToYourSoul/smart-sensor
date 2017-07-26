@@ -45,12 +45,12 @@ var opts = {
     title : "<b>传感器信息</b>" // 信息窗口标题
 };
 
+var markers = [];
 $.ajax({
     type: "get",
     url: current_address + "/map/sensor",
     dataType: "json",
     success: function (sensor) {
-        var markers = [];
         for (var row in sensor){
             var d = sensor[row];
             var sub_marker = new BMap.Marker(new BMap.Point(d['longitude'], d['latitude']), {
@@ -60,19 +60,31 @@ $.ajax({
                     fillOpacity: 0.9
                 })
             });
-            sub_marker.addEventListener("click", function(e){
-                var p = e.target.getPosition();
-                var infoWindow = new BMap.InfoWindow("<hr/><p>CREATOR: " + d['creator'] + "</p><p>DESCRIPTION: " + d['description'] + "</p>", opts);  // 创建信息窗口对象
-                map.openInfoWindow(infoWindow, new BMap.Point(p.lng, p.lat+0.008)); //开启信息窗口
-            });
+            var info = "<hr/><p>CREATOR: " + d['creator'] + "</p><p>DESCRIPTION: " + d['description'] + "</p>";
+            sub_marker.setTitle(info);
+
+
+            sub_marker.addEventListener("click", markerClick);
+
+
+
             markers.push(sub_marker);
+            map.addOverlay(sub_marker);
         }
         var markerCluster = new BMapLib.MarkerClusterer(map, {markers: markers});
+        console.info(map.getOverlays());
     },
     error: function (err_msg) {
         message_info('加载传感器数据出错', 'error', 3);
     }
 });
+
+function markerClick(e){
+    var p = e.target.getPosition();
+    var infoWindow = new BMap.InfoWindow(p.lng + "," + p.lat + "<br/>" + e.target.getTitle(), opts);  // 创建信息窗口对象
+    map.openInfoWindow(infoWindow, new BMap.Point(p.lng, p.lat)); //开启信息窗口
+}
+
 // ---------------------------------------------------------------------------
 
 // --- map function ----------------------------------------------------------
