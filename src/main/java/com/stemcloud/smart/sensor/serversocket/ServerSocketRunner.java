@@ -1,7 +1,10 @@
 package com.stemcloud.smart.sensor.serversocket;
 
+import com.stemcloud.smart.sensor.config.SocketConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -12,11 +15,17 @@ import java.net.Socket;
 /**
  * Created by betty.bao on 2017/7/26.
  */
+@Component
 public class ServerSocketRunner implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(ServerSocketRunner.class);
 
     private String filePath;
     private Socket client;
+
+    @Autowired
+    SocketConfig socketConfig;
+
+    public  ServerSocketRunner(){}
 
     public ServerSocketRunner(Socket client) {
         this.client = client;
@@ -30,6 +39,7 @@ public class ServerSocketRunner implements Runnable {
     @Override
     public void run() {
         try {
+            System.out.println("thread:" + Thread.currentThread());
             receiveFile(client);
         } catch (Exception e) {
             logger.error("error occurs in client", client.getInetAddress(), e);
@@ -46,15 +56,12 @@ public class ServerSocketRunner implements Runnable {
         try {
             dataInputStream = new DataInputStream(socket.getInputStream());
             String fileName = dataInputStream.readUTF();
-            System.out.println(filePath);
+            System.out.println(socketConfig.getTmpPath());
             System.out.println(fileName);
             fout = new FileOutputStream(new File(filePath + fileName));
             inputByte = new byte[1024];
             System.out.println("开始接收数据...");
             while (true) {
-                if (dataInputStream != null) {
-                    length = dataInputStream.read(inputByte, 0, inputByte.length);
-                }
                 if (length == -1) {
                     break;
                 }

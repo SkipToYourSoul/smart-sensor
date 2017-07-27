@@ -29,6 +29,15 @@ public class BasicClientSocket {
         }
     }
 
+    public boolean isConnected(Socket socket){
+        try{
+            socket.sendUrgentData(0xFF);
+        }catch(Exception ex){
+            return false;
+        }
+        return true;
+    }
+
     public void transferData(String filePath) { // 连接套接字方法
         try {
             try {
@@ -43,7 +52,6 @@ public class BasicClientSocket {
                     dataOutputStream.write(sendByte, 0, length);
                     dataOutputStream.flush();
                 }
-                System.out.println(file.getName() + " finished");
             } catch (Exception e) {
                 logger.error("" + e);
             } finally {

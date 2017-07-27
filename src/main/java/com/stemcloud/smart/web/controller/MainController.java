@@ -1,7 +1,7 @@
 package com.stemcloud.smart.web.controller;
 
 import com.stemcloud.smart.sensor.config.SocketConfig;
-import com.stemcloud.smart.sensor.serversocket.ServerSocketManager;
+import com.stemcloud.smart.sensor.serversocket.NettyServerSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +37,26 @@ public class MainController {
     @RequestMapping(value = "/startsocket", method = RequestMethod.GET)
     public void startSocket() {
 
-        ServerSocketManager serverSocketManager = ServerSocketManager.getIstance();
-        serverSocketManager.start(socketConfig.getPort(), socketConfig.getTmpPath());
+//        ServerSocketManager serverSocketManager = ServerSocketManager.getIstance();
+//        System.out.println(serverSocketManager);
+//        serverSocketManager.start(socketConfig.getPort(), socketConfig.getTmpPath());
+
+        try {
+            NettyServerSocket.getIntance().bind(socketConfig.getPort());
+        } catch (Exception e) {
+            logger.error("" + e);
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "/stopsocket", method = RequestMethod.GET)
     public void stopSocket() {
-        ServerSocketManager serverSocketManager = ServerSocketManager.getIstance();
-        serverSocketManager.stop();
-        logger.info("serverSocket has already closed");
-        System.out.println("socket closed");
+//        ServerSocketManager serverSocketManager = ServerSocketManager.getIstance();
+//        System.out.println(serverSocketManager);
+//        serverSocketManager.stop();
+//        logger.info("serverSocket has already closed");
+//        System.out.println("socket closed");
+
+        NettyServerSocket.getIntance().unbind();
     }
 }

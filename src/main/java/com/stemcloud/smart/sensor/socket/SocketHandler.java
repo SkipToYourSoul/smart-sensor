@@ -17,7 +17,7 @@ public class SocketHandler {
         env.setRestartStrategy(RestartStrategies.fixedDelayRestart(3, 10000));
         env.getConfig().disableSysoutLogging();
 
-        DataStream<String> dataStream = env.socketTextStream("10.121.84.90", 9999);
+        DataStream<String> dataStream = env.socketTextStream("10.107.69.123", 9999);
         dataStream.map(
             new RichMapFunction<String, String>() {
                 @Override
