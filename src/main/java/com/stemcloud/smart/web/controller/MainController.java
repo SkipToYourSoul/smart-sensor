@@ -1,7 +1,7 @@
 package com.stemcloud.smart.web.controller;
 
 import com.stemcloud.smart.sensor.config.SocketConfig;
-import com.stemcloud.smart.sensor.serversocket.NettyServerSocket;
+import com.stemcloud.smart.sensor.serversocket.NettyBossSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,8 @@ public class MainController {
 
     @Autowired
     private SocketConfig socketConfig;
+    @Autowired
+    NettyBossSocket serverSocket;
 
     @GetMapping("/")
     public String index() {
@@ -42,7 +44,7 @@ public class MainController {
 //        serverSocketManager.start(socketConfig.getPort(), socketConfig.getTmpPath());
 
         try {
-            NettyServerSocket.getIntance().bind(socketConfig.getPort());
+            serverSocket.bind(socketConfig.getPort());
         } catch (Exception e) {
             logger.error("" + e);
         }
@@ -57,6 +59,6 @@ public class MainController {
 //        logger.info("serverSocket has already closed");
 //        System.out.println("socket closed");
 
-        NettyServerSocket.getIntance().unbind();
+        serverSocket.unbind();
     }
 }
