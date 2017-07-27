@@ -57,7 +57,7 @@ $.ajax({
                 "<p>DESCRIPTION: " + d['description'] + "</p>";
             var id = d['id'];
             markers.push(createMarker(d, info, id));
-        }
+    }
         var markerCluster = new BMapLib.MarkerClusterer(map, {markers: markers});
     },
     error: function (err_msg) {
@@ -65,14 +65,14 @@ $.ajax({
     }
 });
 
-function createMarker(d, info, id) {
+createMarker = function (d, info, id) {
     var _marker = new BMap.Marker(new BMap.Point(d['longitude'], d['latitude']));
     _marker.addEventListener("click", function(e){
         this.openInfoWindow(new BMap.InfoWindow(info, opts));
         $('#chart').html("chart" + id);
     });
     return _marker;
-}
+};
 
 // ---------------------------------------------------------------------------
 
