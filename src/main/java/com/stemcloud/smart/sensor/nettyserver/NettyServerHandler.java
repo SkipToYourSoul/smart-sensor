@@ -2,6 +2,7 @@ package com.stemcloud.smart.sensor.nettyserver;
 
 import com.stemcloud.smart.sensor.dataparser.ParseData;
 import com.stemcloud.smart.sensor.exception.ParseDataException;
+import com.stemcloud.smart.sensor.pojo.Message;
 import com.stemcloud.smart.sensor.utils.DataType;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 
 
 /**
@@ -26,6 +26,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
 
     @Autowired
     ParseData dataParser;
+
     /**
      * 接收来自客户端的数据
      *
@@ -36,18 +37,22 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
         try {
-            ByteBuf buf = (ByteBuf) msg;
-            byte[] con = new byte[buf.readableBytes()];
-            String dataType = DataType.getType(con[0] & 0xff);
-            this.doAction(dataType, con);
-            ctx.writeAndFlush(getSendByteBuf("data transfer completed"));
+            if(msg instanceof Message) {
+                Message customMsg = (Message)msg;
+                String dataType = DataType.getType(customMsg.getDataType() & 0xff);
+                this.doAction(dataType, customMsg.getBody());
+                ctx.writeAndFlush(getSendByteBuf("data transfer completed"));
+//                System.out.println("Client->Server:"+ctx.channel().remoteAddress()+" send "+customMsg.getBody());
+            }
 
         } catch (EnumConstantNotPresentException e) {
             logger.error("DataType is unsupported !");
-        }catch (UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e) {
             logger.error("UnsupportedEncoding in server !");
-        }catch (ParseDataException e){
+        } catch (ParseDataException e) {
             logger.error("error occurs when parsing data");
+        }catch (Exception e){
+            logger.error("error occurs when receiving data");
         }
     }
 
@@ -56,10 +61,11 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
      *
      * @param dataType
      */
-    private void doAction(String dataType, byte[] dataBytes) throws ParseDataException{
+    private void doAction(String dataType, byte[] dataBytes) throws ParseDataException {
 
 //        dataParser.persistDataLocally(dataType, Arrays.copyOfRange(dataBytes, 1, dataBytes.length));
-        new ParseData().persistDataLocally(dataType, Arrays.copyOfRange(dataBytes, 1, dataBytes.length));
+//        new ParseData().persistDataLocally(dataType, Arrays.copyOfRange(dataBytes, 1, dataBytes.length));
+        dataParser.persistDataLocally(dataType, dataBytes);
     }
 
     /**

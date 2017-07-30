@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Smart-Sensor</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap-select.min.css"/>
+
+    <link rel="stylesheet" href="css/bootstrap/font-awesome.min.css"/>
+
+    <link rel="stylesheet" href="css/nav/nav.css"/>
+    <link rel="stylesheet" href="css/user/dashboard.css"/>
+</head>
+<body>
+    <div class="navbar-wrapper">
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <button class="btn btn-info btn-block">新建应用</button>
+
+                <hr/>
+                <strong>我的应用</strong>
+                <ul class="nav nav-sidebar">
+                    <li><a>APP1</a></li>
+                    <li><a>APP2</a></li>
+                </ul>
+            </div>
+
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <div class="row">
+                    <div style="height:1000px">test</div>
+                </div>
+
+
+                <hr/>
+                <footer>
+                    <p align="center">@STEM.CLOUD - <strong>SMART SENSOR</strong></p>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="js/dependency/jquery.min.js"></script>
+    <script src="js/dependency/bootstrap.min.js"></script>
+    <script>
+        $.get('nav', function(msg) {
+            $(".navbar-wrapper").html(msg);
+            $('#navbar').find('ul:eq(0) li:eq(1)').addClass('active');
+        });
+    </script>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+
+    <script src="js/dependency/messenger/messenger.min.js"></script>
+    <script src="js/dependency/bootstrap-select.min.js"></script>
+
+    <script src="js/dependency/echarts/echarts.common.min.js"></script>
+    <script src="js/dependency/echarts/infographic.js"></script>
+
+    <script src="js/user/common.js"></script>
+</body>
+</html>

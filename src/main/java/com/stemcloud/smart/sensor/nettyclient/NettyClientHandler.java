@@ -1,7 +1,7 @@
 package com.stemcloud.smart.sensor.nettyclient;
 
+import com.stemcloud.smart.sensor.pojo.Message;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.apache.log4j.Logger;
@@ -33,14 +33,11 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
         byte[] fileBytes = readFile("E:/tmp/sensortmp/in/Chrysanthemum.jpg");
-        byte[] data = new byte[fileBytes.length + 1];
-        data[0] = 2;
-        System.arraycopy(fileBytes, 0, data, 1, fileBytes.length);
-        msg = Unpooled.buffer();
-        msg.writeBytes(data);
-        ctx.writeAndFlush(msg);
+        Message customMsg = new Message((byte)5, fileBytes.length, fileBytes);
+        ctx.writeAndFlush(customMsg);
     }
 
+    //文件内容转为字节数组
     private byte[] readFile(String filePath) throws IOException {
         FileChannel channel = null;
         FileInputStream fs = null;

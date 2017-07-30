@@ -1,6 +1,7 @@
 package com.stemcloud.smart.sensor.nettyserver;
 
 import com.stemcloud.smart.sensor.config.SocketConfig;
+import com.stemcloud.smart.sensor.protocol.ServerDecode;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
+ * socket服务器端
  * Created by betty.bao on 2017/7/27.
  */
 @Component
@@ -44,7 +46,9 @@ public class NettyServer {
 
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
+
                             ChannelPipeline channelPipeline = ch.pipeline();
+                            channelPipeline.addLast(new ServerDecode());  //服务器端数据报文解析协议
                             //支持异步发送大的码流，但不会占用过多的内存，防止发生java内存溢出
                             channelPipeline.addLast(new ChunkedWriteHandler());
                             channelPipeline.addLast(new NettyServerHandler());
@@ -69,8 +73,8 @@ public class NettyServer {
      */
     public void start() {
         try {
-//            run(socketConfig.getPort());
-            run(6666);
+            run(socketConfig.getPort());
+//            run(6666);
         } catch (InterruptedException e) {
             System.out.println("Server start failure." + e);
             logger.error("Server Start Failure. ->" + e.getMessage(), e);

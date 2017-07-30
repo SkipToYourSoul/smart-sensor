@@ -4,7 +4,7 @@
  * Description: basic settings of baidu map
  */
 
-// --- new map
+// --- map initial -------------------------------------------------------
 var map = new BMap.Map("allmap",{
     minZoom: 8,
     maxZoom: 14,
@@ -12,19 +12,14 @@ var map = new BMap.Map("allmap",{
 });
 map.setMapStyle({style:'grayscale'});
 var centerPoint = new BMap.Point(121.499, 31.240);
-
-// --- set center point according browser
 map.centerAndZoom(centerPoint, 12);
-var geolocation = new BMap.Geolocation();
-geolocation.getCurrentPosition(function(r){
-    if(this.getStatus() == BMAP_STATUS_SUCCESS){
-        var mk = new BMap.Marker(r.point);
-        map.panTo(r.point);
-    }
-    else {
-        alert('failed'+this.getStatus());
-    }
-},{enableHighAccuracy: true})
+
+// --- set center point and city according ip
+var currentCity = new BMap.LocalCity();
+currentCity.get(function (city) {
+    map.setCenter(city.name);
+    message_info('定位到当前城市：' + city.name, 'info', 3);
+});
 
 // --- operation settings
 map.enableScrollWheelZoom();
@@ -32,44 +27,71 @@ map.enableInertialDragging();
 
 // --- map control
 map.addControl(new BMap.CityListControl({
-    anchor: BMAP_ANCHOR_TOP_LEFT,
+    anchor: BMAP_ANCHOR_TOP_RIGHT,
     offset: new BMap.Size(10, 20)
 }));
 
-// --- marker
-var marker = new BMap.Marker(centerPoint, {
-    icon: new BMap.Symbol(BMap_Symbol_SHAPE_POINT, {
-        scale: 2,
-        fillColor: "orange",
-        fillOpacity: 0.9
-    })
-});
-map.addOverlay(marker);
-function hideMark() {
-    marker.hide();
-}
+map.addControl(new BMap.NavigationControl({
+    anchor: BMAP_ANCHOR_TOP_LEFT,
+    type: BMAP_NAVIGATION_CONTROL_LARGE
+}));
+// ---------------------------------------------------------------------------
 
-var markers = [];
-for (var i=0; i<10; i++){
-    var sub_marker = new BMap.Marker(new BMap.Point(121.4 + 0.01*i, 31.2 + 0.01*i));
-    sub_marker.addEventListener('click', attribute);
-    markers.push(sub_marker);
-}
-var markerCluster = new BMapLib.MarkerClusterer(map, {markers: markers});
-
-function attribute(e){
-    var p = e.target;
-    alert("marker的位置是" + p.getPosition().lng + "," + p.getPosition().lat);
-}
-
-// --- marker info
+// --- add map marker --------------------------------------------------------
 var opts = {
     width : 200,     // 信息窗口宽度
-    height: 100,     // 信息窗口高度
-    title : "SENSOR 1" // 信息窗口标题
+    title : "<b>传感器信息</b>" // 信息窗口标题
 };
-var infoWindow = new BMap.InfoWindow("<b>Author: liye</b>", opts);  // 创建信息窗口对象
-marker.addEventListener("click", function(){
-    var p = marker.getPosition();
-    map.openInfoWindow(infoWindow, new BMap.Point(p.lng, p.lat+0.01)); //开启信息窗口
+
+$.ajax({
+    type: "get",
+    url: current_address + "/map/sensor",
+    dataType: "json",
+    success: function (sensor) {
+        var markers = [];
+        for (var row in sensor){
+            var d = sensor[row];
+            var info = "<hr/>" +
+                "<p>NAME: " + d['name'] + "</p>" +
+                "<p>CREATOR: " + d['creator'] + "</p>" +
+                "<p>DESCRIPTION: " + d['description'] + "</p>";
+            var id = d['id'];
+            markers.push(createMarker(d, info, id));
+    }
+        var markerCluster = new BMapLib.MarkerClusterer(map, {markers: markers});
+    },
+    error: function (err_msg) {
+        message_info('加载传感器数据出错', 'error', 3);
+    }
 });
+
+createMarker = function (d, info, id) {
+    var _marker = new BMap.Marker(new BMap.Point(d['longitude'], d['latitude']));
+    _marker.addEventListener("mouseover", function(e){
+        this.openInfoWindow(new BMap.InfoWindow(info, opts));
+    });
+    _marker.addEventListener("mouseout", function(e){
+        this.closeInfoWindow();
+    });
+    _marker.addEventListener("click", function(e){
+        chart_line.setOption(chart_line_option(id));
+    });
+    return _marker;
+};
+
+// ---------------------------------------------------------------------------
+
+// --- map function ----------------------------------------------------------
+function toMark(){
+    map.centerAndZoom(centerPoint, 12);
+}
+
+$('#theme-select').change(function () {
+    console.info(this.value);
+    if (this.value == 1){
+        map.setMapStyle({style:'grayscale'});
+    } else if (this.value == 2){
+        map.setMapStyle({style:'normal'});
+    }
+});
+// ---------------------------------------------------------------------------

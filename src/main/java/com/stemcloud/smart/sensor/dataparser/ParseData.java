@@ -14,6 +14,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
+ * 服务器端解析数据
+ *
  * Created by betty.bao on 2017/7/28.
  */
 @Component
@@ -40,7 +42,9 @@ public class ParseData {
             if (!dir.exists() && dir.isDirectory()) {//判断文件目录是否存在
                 dir.mkdirs();
             }
-            file = new File("E:/tmp/sensortmp/out/" + File.separator
+//            file = new File("E:/tmp/sensortmp/out/" + File.separator
+//                    + RandomStrGenarator.createRandomFileName() + "." + dataType);
+            file = new File(socketConfig.getTmpPath() + File.separator
                     + RandomStrGenarator.createRandomFileName() + "." + dataType);
             fileOutputStream = new FileOutputStream(file);
             bufferedOutputStream = new BufferedOutputStream(fileOutputStream);

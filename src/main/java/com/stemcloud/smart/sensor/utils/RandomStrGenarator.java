@@ -12,7 +12,8 @@ import java.util.Random;
 public class RandomStrGenarator {
 
     /**
-     * generate random file name
+     * 服务器端本地化存储文件时产生的随机的文件名
+     * 命名：当前年月日-4个随机字符-4个随机字符-8个随机字符
      * example: 20170728-dXSy-fjHV-AbT1n4nY
      * @return
      */

@@ -1,6 +1,7 @@
 package com.stemcloud.smart.sensor.exception;
 
 /**
+ * 当传输的数据类型不在已有的DataType中时抛出的异常
  * Created by betty.bao on 2017/7/28.
  */
 public class UnsupportedDataType extends EnumConstantNotPresentException {

@@ -1,5 +1,6 @@
 package com.stemcloud.smart.sensor.nettyclient;
 
+import com.stemcloud.smart.sensor.protocol.ClientEncode;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 
 /**
+ * socket客户端
+ *
  * Created by betty.bao on 2017/7/27.
  */
 @Component
@@ -35,6 +38,8 @@ public class NettyClient {
                         @Override
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
+
+                            ch.pipeline().addLast(new ClientEncode());  //客户端报文编码协议
                             ch.pipeline().addLast(new NettyClientHandler());
                         }
                     });
@@ -50,7 +55,7 @@ public class NettyClient {
     }
 
     public static void main(String[] args) throws Exception {
-        int port = 6666;
+        int port = 5879;
         new NettyClient().connect(port, "127.0.0.1");
     }
 }

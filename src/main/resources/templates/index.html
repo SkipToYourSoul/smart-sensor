@@ -3,10 +3,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <title>Title</title>
+    <title>Smart-Sensor</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap-select.min.css"/>
 
     <link rel="stylesheet" href="css/bootstrap/font-awesome.min.css"/>
 
@@ -23,14 +24,16 @@
                 <hr style="margin-top: 0"/>
                 <div id="allmap"
                      style="width: 100%; height: 600px; overflow: hidden"></div>
-                <div style="margin-top: 5px">
+                <div style="margin-top: 10px">
                     <div class="col-sm-2">
-                        <select class="form-control">
-                            <option value="1">gray</option>
-                            <option value="2">default</option>
+                        <select class="selectpicker form-control" title="更改地图主题" id="theme-select">
+                            <option value="1">灰色（突出信息）</option>
+                            <option value="2">默认</option>
                         </select>
                     </div>
-                    <button class="btn btn-info" onclick="hideMark()">HIDE SENSOR</button>
+                    <div class="col-sm-2">
+                        <button class="btn btn-info btn-block" onclick="toMark()">回到传感器中心</button>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-4 col-md-4">
@@ -40,7 +43,20 @@
 
                 <a href="#" onclick="startSocket()"><i class="fa fa-toggle-right fa-fw"></i>&nbsp; 启动Socket</a>
                 <a href="#" onclick="stopSocket()"><i class="fa fa-ban fa-fw  fa-fw"></i>&nbsp; 关闭Socket</a>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div style="height:200px" id="chart-pie-1"></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="height:200px" id="chart-pie-2"></div>
+                    </div>
+                </div>
+                <div style="height: 400px;margin-top: 20px" id="chart-line"></div>
+
             </div>
+
+
         </div>
     </div>
 
@@ -51,18 +67,37 @@
 
     <script src="js/dependency/jquery.min.js"></script>
     <script src="js/dependency/bootstrap.min.js"></script>
-
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
-
-    <script src="js/user/index-map.js"></script>
-    <script src="js/socket/setsocket.js"></script>
-
     <script>
         $.get('nav', function(msg) {
             $(".navbar-wrapper").html(msg);
+            $('#navbar').find('ul:eq(0) li:eq(0)').addClass('active');
         });
     </script>
+
+    <script dataType="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
+    <script dataType="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+    <script dataType="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+
+
+    <script src="js/socket/setsocket.js"></script>
+
+<<<<<<< Updated upstream
+    <script src="js/dependency/messenger/messenger.min.js"></script>
+    <script src="js/dependency/bootstrap-select.min.js"></script>
+
+
+    <script src="js/dependency/echarts/echarts.common.min.js"></script>
+    <script src="js/dependency/echarts/infographic.js"></script>
+
+    <script src="js/user/common.js"></script>
+    <script src="js/user/index-chart.js"></script>
+    <script src="js/user/index-map.js"></script>
+=======
+    <script>
+        $.get('nav', function(message) {
+            $(".navbar-wrapper").html(message);
+        });
+    </script>
+>>>>>>> Stashed changes
 </body>
 </html>

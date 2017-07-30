@@ -30,6 +30,11 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/app")
+    public String app(){
+        return "app";
+    }
+
     @GetMapping(value = "/nav")
     public String loadNavModel() {
         return "module/nav";
@@ -39,22 +44,12 @@ public class MainController {
     @RequestMapping(value = "/startsocket", method = RequestMethod.GET)
     public void startSocket() {
 
-//        ServerSocketManager serverSocketManager = ServerSocketManager.getIstance();
-//        System.out.println(serverSocketManager);
-//        serverSocketManager.start(socketConfig.getPort(), socketConfig.getTmpPath());
-
         socket.start();
-
     }
 
     @ResponseBody
     @RequestMapping(value = "/stopsocket", method = RequestMethod.GET)
     public void stopSocket() {
-//        ServerSocketManager serverSocketManager = ServerSocketManager.getIstance();
-//        System.out.println(serverSocketManager);
-//        serverSocketManager.stop();
-//        logger.info("socket has already closed");
-//        System.out.println("socket closed");
 
         socket.stop();
     }

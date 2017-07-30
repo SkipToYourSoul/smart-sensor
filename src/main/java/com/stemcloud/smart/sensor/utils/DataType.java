@@ -6,7 +6,7 @@ package com.stemcloud.smart.sensor.utils;
  */
 public enum DataType {
 
-    IMAG_GIF("gif", 1), IMAGE_JPEG("jpg", 2), IMAGE_PNG("png", 3), TEXT_PLAIN("text", 4);
+    IMAG_GIF("gif", 1), IMAGE_JPEG("jpg", 2), IMAGE_PNG("png", 3), TEXT_PLAIN("text", 4), MEDIA_WMV("wmv", 5);
 
     private String name;
     private int index;

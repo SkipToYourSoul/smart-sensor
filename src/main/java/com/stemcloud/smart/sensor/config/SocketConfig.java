@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
+ * 有关socket服务的配置项
  * Created by betty.bao on 2017/7/26.
  */
 @Component
