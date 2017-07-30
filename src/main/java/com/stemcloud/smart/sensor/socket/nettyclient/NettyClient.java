@@ -1,6 +1,6 @@
-package com.stemcloud.smart.sensor.nettyclient;
+package com.stemcloud.smart.sensor.socket.nettyclient;
 
-import com.stemcloud.smart.sensor.protocol.ClientEncode;
+import com.stemcloud.smart.sensor.socket.protocol.ClientEncode;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -56,6 +56,6 @@ public class NettyClient {
 
     public static void main(String[] args) throws Exception {
         int port = 5879;
-        new NettyClient().connect(port, "127.0.0.1");
+        new NettyClient().connect(port, "10.107.69.123");
     }
 }

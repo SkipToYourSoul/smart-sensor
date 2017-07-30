@@ -1,7 +1,7 @@
 package com.stemcloud.smart.web.controller;
 
 import com.stemcloud.smart.sensor.config.SocketConfig;
-import com.stemcloud.smart.sensor.nettyserver.NettyServer;
+import com.stemcloud.smart.sensor.socket.nettyserver.NettyServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

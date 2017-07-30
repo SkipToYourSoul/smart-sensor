@@ -1,4 +1,4 @@
-package com.stemcloud.smart.sensor.nettyserver;
+package com.stemcloud.smart.sensor.socket.nettyserver;
 
 import com.stemcloud.smart.sensor.dataparser.ParseData;
 import com.stemcloud.smart.sensor.exception.ParseDataException;
@@ -37,10 +37,10 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
 
         try {
-            if(msg instanceof Message) {
-                Message customMsg = (Message)msg;
+            if (msg instanceof Message) {
+                Message customMsg = (Message) msg;
                 String dataType = DataType.getType(customMsg.getDataType() & 0xff);
-                this.doAction(dataType, customMsg.getBody());
+                doAction(dataType, customMsg.getBody());
                 ctx.writeAndFlush(getSendByteBuf("data transfer completed"));
 //                System.out.println("Client->Server:"+ctx.channel().remoteAddress()+" send "+customMsg.getBody());
             }
@@ -51,8 +51,8 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
             logger.error("UnsupportedEncoding in server !");
         } catch (ParseDataException e) {
             logger.error("error occurs when parsing data");
-        }catch (Exception e){
-            logger.error("error occurs when receiving data");
+        } catch (Exception e) {
+            logger.error("error occurs when receiving data", e);
         }
     }
 
@@ -65,6 +65,8 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
 
 //        dataParser.persistDataLocally(dataType, Arrays.copyOfRange(dataBytes, 1, dataBytes.length));
 //        new ParseData().persistDataLocally(dataType, Arrays.copyOfRange(dataBytes, 1, dataBytes.length));
+        if (dataParser == null)
+            System.out.println("FFFFFFFFFFFFFFFFFFFFKKKKKKKKKKKKKKKK");
         dataParser.persistDataLocally(dataType, dataBytes);
     }
 

@@ -1,4 +1,4 @@
-package com.stemcloud.smart.sensor.protocol;
+package com.stemcloud.smart.sensor.socket.protocol;
 
 import com.stemcloud.smart.sensor.exception.ProtocolException;
 import com.stemcloud.smart.sensor.pojo.Message;

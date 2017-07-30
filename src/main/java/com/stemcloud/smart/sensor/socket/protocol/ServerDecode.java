@@ -1,9 +1,10 @@
-package com.stemcloud.smart.sensor.protocol;
+package com.stemcloud.smart.sensor.socket.protocol;
 
 import com.stemcloud.smart.sensor.pojo.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * 报文解析协议--服务器端
  * Created by betty.bao on 2017/7/30.
  */
+@Component
 public class ServerDecode extends ByteToMessageDecoder {
 
     //判断是否是有效报文。头部信息的大小应该是 byte+int = 1+4 = 5
@@ -42,8 +44,8 @@ public class ServerDecode extends ByteToMessageDecoder {
             // 读取body数据
             body = new byte[length];
             in.readBytes(body);
-            Message protocol = new Message(dataType, length, body);
-            out.add(protocol);
+            Message msg = new Message(dataType, length, body);
+            out.add(msg);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.stemcloud.smart.sensor.nettyclient;
+package com.stemcloud.smart.sensor.socket.nettyclient;
 
 import com.stemcloud.smart.sensor.pojo.Message;
 import io.netty.buffer.ByteBuf;
@@ -33,7 +33,7 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
         byte[] fileBytes = readFile("E:/tmp/sensortmp/in/Chrysanthemum.jpg");
-        Message customMsg = new Message((byte)5, fileBytes.length, fileBytes);
+        Message customMsg = new Message((byte)2, fileBytes.length, fileBytes);
         ctx.writeAndFlush(customMsg);
     }
 

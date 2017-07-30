@@ -1,7 +1,7 @@
-package com.stemcloud.smart.sensor.nettyserver;
+package com.stemcloud.smart.sensor.socket.nettyserver;
 
 import com.stemcloud.smart.sensor.config.SocketConfig;
-import com.stemcloud.smart.sensor.protocol.ServerDecode;
+import com.stemcloud.smart.sensor.socket.protocol.ServerDecode;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -24,19 +24,25 @@ public class NettyServer {
 
     @Autowired
     SocketConfig socketConfig;
+    @Autowired
+    NettyServerHandler nettyServerHandler;
+    @Autowired
+    ServerDecode serverDecode;
 
+//    private Channel channel;
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
 
     /**
      * socket服务器配置
+     *
      * @param port
      * @throws InterruptedException
      */
-    private void run(final int port) throws InterruptedException {
-        bossGroup = new NioEventLoopGroup();
-        workerGroup = new NioEventLoopGroup();
+    private void runServer(final int port) throws InterruptedException {
         try {
+            bossGroup = new NioEventLoopGroup();
+            workerGroup = new NioEventLoopGroup();
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)  // UDP NioDatagramChannel.class
@@ -48,14 +54,15 @@ public class NettyServer {
                         protected void initChannel(SocketChannel ch) throws Exception {
 
                             ChannelPipeline channelPipeline = ch.pipeline();
-                            channelPipeline.addLast(new ServerDecode());  //服务器端数据报文解析协议
+                            channelPipeline.addLast(serverDecode);  //服务器端数据报文解析协议
                             //支持异步发送大的码流，但不会占用过多的内存，防止发生java内存溢出
                             channelPipeline.addLast(new ChunkedWriteHandler());
-                            channelPipeline.addLast(new NettyServerHandler());
+                            channelPipeline.addLast(nettyServerHandler);
                         }
                     });
 
             ChannelFuture future = b.bind(port).sync();
+//        channel = b.bind(port).sync().channel();
             System.out.println("Welcome to Server... " + port);
             logger.info("============== init netty server success ===============");
             logger.info("start server at port: " + port);
@@ -71,14 +78,22 @@ public class NettyServer {
     /**
      * start socket server
      */
+
     public void start() {
-        try {
-            run(socketConfig.getPort());
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runServer(socketConfig.getPort());
+                } catch (InterruptedException e) {
+                    System.out.println("Server start failure." + e);
+                    logger.error("Server Start Failure. ->" + e.getMessage(), e);
+                }
+            }
+        }).start();
+//            run(socketConfig.getPort());
 //            run(6666);
-        } catch (InterruptedException e) {
-            System.out.println("Server start failure." + e);
-            logger.error("Server Start Failure. ->" + e.getMessage(), e);
-        }
+
     }
 
     /**
@@ -90,6 +105,10 @@ public class NettyServer {
             bossGroup.shutdownGracefully();
         if (workerGroup != null)
             workerGroup.shutdownGracefully();
+//        channel.closeFuture().syncUninterruptibly();
+        bossGroup = null;
+        workerGroup = null;
+//        channel = null;
         logger.info("stop socket server at port: " + socketConfig.getPort());
     }
 
