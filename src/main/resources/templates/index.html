@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <title>Title</title>
+    <title>Smart-Sensor</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
@@ -40,8 +40,18 @@
                 <h4><i class="fa fa-bar-chart-o"></i>
                 <b>&nbsp; SENSOR CHART</b></h4>
                 <hr style="margin-top: 0"/>
-                <div style="height: 400px;" id="chart"></div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div style="height:200px" id="chart-pie-1"></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="height:200px" id="chart-pie-2"></div>
+                    </div>
+                </div>
+                <div style="height: 400px;margin-top: 20px" id="chart-line"></div>
             </div>
+
+
         </div>
     </div>
 
@@ -55,6 +65,7 @@
     <script>
         $.get('nav', function(msg) {
             $(".navbar-wrapper").html(msg);
+            $('#navbar').find('ul:eq(0) li:eq(0)').addClass('active');
         });
     </script>
 
@@ -69,7 +80,7 @@
     <script src="js/dependency/echarts/infographic.js"></script>
 
     <script src="js/user/common.js"></script>
-    <script src="js/user/index-map.js"></script>
     <script src="js/user/index-chart.js"></script>
+    <script src="js/user/index-map.js"></script>
 </body>
 </html>

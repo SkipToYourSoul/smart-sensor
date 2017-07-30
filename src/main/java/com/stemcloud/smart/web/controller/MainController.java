@@ -15,6 +15,11 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/app")
+    public String app(){
+        return "app";
+    }
+
     @GetMapping(value = "/nav")
     public String loadNavModel() {
         return "module/nav";

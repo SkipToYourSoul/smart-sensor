@@ -67,9 +67,14 @@ $.ajax({
 
 createMarker = function (d, info, id) {
     var _marker = new BMap.Marker(new BMap.Point(d['longitude'], d['latitude']));
-    _marker.addEventListener("click", function(e){
+    _marker.addEventListener("mouseover", function(e){
         this.openInfoWindow(new BMap.InfoWindow(info, opts));
-        $('#chart').html("chart" + id);
+    });
+    _marker.addEventListener("mouseout", function(e){
+        this.closeInfoWindow();
+    });
+    _marker.addEventListener("click", function(e){
+        chart_line.setOption(chart_line_option(id));
     });
     return _marker;
 };

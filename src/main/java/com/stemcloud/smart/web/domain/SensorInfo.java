@@ -19,6 +19,7 @@ public class SensorInfo {
     private String creator;
     private Double longitude;
     private Double latitude;
+    private String city;
     private String description;
     @Column(name = "is_show")
     private int isShow;
@@ -77,5 +78,13 @@ public class SensorInfo {
 
     public void setIsShow(int isShow) {
         this.isShow = isShow;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }
