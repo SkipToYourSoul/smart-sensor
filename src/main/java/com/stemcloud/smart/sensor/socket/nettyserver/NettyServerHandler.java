@@ -6,6 +6,7 @@ import com.stemcloud.smart.sensor.pojo.Message;
 import com.stemcloud.smart.sensor.utils.DataType;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import java.io.UnsupportedEncodingException;
  * Created by betty.bao on 2017/7/27.
  */
 @Component
+@ChannelHandler.Sharable
 public class NettyServerHandler extends ChannelHandlerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(NettyServerHandler.class);
@@ -65,27 +67,7 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
 
 //        dataParser.persistDataLocally(dataType, Arrays.copyOfRange(dataBytes, 1, dataBytes.length));
 //        new ParseData().persistDataLocally(dataType, Arrays.copyOfRange(dataBytes, 1, dataBytes.length));
-        if (dataParser == null)
-            System.out.println("FFFFFFFFFFFFFFFFFFFFKKKKKKKKKKKKKKKK");
         dataParser.persistDataLocally(dataType, dataBytes);
-    }
-
-    /**
-     * 从ByteBuf中获取信息 使用UTF-8编码返回
-     *
-     * @param buf
-     * @return
-     */
-    private String getMessage(ByteBuf buf) {
-
-        byte[] con = new byte[buf.readableBytes()];
-        buf.readBytes(con);
-        try {
-            return new String(con, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private ByteBuf getSendByteBuf(String message)

@@ -29,7 +29,6 @@ public class RandomStrGenarator {
         sb.append(RandomStringUtils.randomAlphanumeric(4));
         sb.append("-");
         sb.append(RandomStringUtils.randomAlphanumeric(8));
-//        System.out.println(sb.toString());
         return sb.toString();
     }
 

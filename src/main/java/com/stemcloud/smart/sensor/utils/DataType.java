@@ -21,7 +21,7 @@ public enum DataType {
         return null;
     }
 
-    private DataType(String name, int index) {
+    DataType(String name, int index) {
         this.name = name;
         this.index = index;
     }

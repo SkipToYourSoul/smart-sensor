@@ -40,6 +40,11 @@ public class MainController {
         return "module/nav";
     }
 
+    @GetMapping(value = "/socket")
+    public String setSocket() {
+        return "module/socket";
+    }
+
     @ResponseBody
     @RequestMapping(value = "/startsocket", method = RequestMethod.GET)
     public void startSocket() {
