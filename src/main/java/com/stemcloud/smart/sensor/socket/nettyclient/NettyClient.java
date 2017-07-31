@@ -38,7 +38,6 @@ public class NettyClient {
                         @Override
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
-
                             ch.pipeline().addLast(new ClientEncode());  //客户端报文编码协议
                             ch.pipeline().addLast(new NettyClientHandler());
                         }
@@ -47,7 +46,6 @@ public class NettyClient {
             ChannelFuture future = b.connect(host, port).sync();
             if (future.isSuccess())
                 System.out.println("----------------connect server success----------------");
-
             future.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully();

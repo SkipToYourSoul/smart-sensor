@@ -36,7 +36,7 @@ public class NettyServer {
 
     private ServerBootstrap bootstrap;
 
-    //    private Channel channel;
+    // --- private Channel channel;
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
 
@@ -57,10 +57,8 @@ public class NettyServer {
                     .option(ChannelOption.TCP_NODELAY, true)  //不延迟，消息立即发送
                     .option(ChannelOption.SO_REUSEADDR, true)
                     .childHandler(new ChannelInitializer<SocketChannel>() {
-
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-
                             ChannelPipeline channelPipeline = ch.pipeline();
                             try{
                                 channelPipeline.addLast(serverDecode);  //服务器端数据报文解析协议
@@ -72,7 +70,6 @@ public class NettyServer {
                         }
                     });
             ChannelFuture future = bootstrap.bind(port).sync();
-            System.out.println("Welcome to Server... " + port);
             logger.info("============== init netty server success ===============");
             logger.info("start server at port: " + port);
 
@@ -88,16 +85,13 @@ public class NettyServer {
      * start socket server
      */
     public void start() {
-
         try {
             if (!isPortUsing("localhost", socketConfig.getPort())) {
                 new Thread(new Runnable() {
-
                     public void run() {
                         try {
                             runServer(socketConfig.getPort());
                         } catch (InterruptedException e) {
-                            System.out.println("Server start failure." + e);
                             logger.error("Server Start Failure. ->" + e.getMessage(), e);
                         }
                     }
@@ -112,7 +106,6 @@ public class NettyServer {
      * stop socket server
      */
     public void stop() {
-
         if (bossGroup != null)
             bossGroup.shutdownGracefully();
         if (workerGroup != null)
@@ -133,16 +126,14 @@ public class NettyServer {
      * @throws UnknownHostException
      */
     private boolean isPortUsing(String host, int port) throws UnknownHostException {
-        boolean flag = false;
         InetAddress theAddress = InetAddress.getByName(host);
         try {
             new Socket(theAddress, port);
-            flag = true;
             logger.error("-----------port has already been used--------------");
         } catch (IOException e) {
-            return flag;
+            return false;
         }
-        return flag;
+        return true;
     }
 
     public static void main(String[] args) throws Exception {

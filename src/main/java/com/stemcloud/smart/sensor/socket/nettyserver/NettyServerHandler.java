@@ -44,9 +44,8 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
                 String dataType = DataType.getType(customMsg.getDataType() & 0xff);
                 doAction(dataType, customMsg.getBody());
                 ctx.writeAndFlush(getSendByteBuf("data transfer completed"));
-//                System.out.println("Client->Server:"+ctx.channel().remoteAddress()+" send "+customMsg.getBody());
+                logger.info("Client->Server:" + ctx.channel().remoteAddress()+" send "+ customMsg.getBody());
             }
-
         } catch (EnumConstantNotPresentException e) {
             logger.error("DataType is unsupported !");
         } catch (UnsupportedEncodingException e) {
@@ -79,5 +78,4 @@ public class NettyServerHandler extends ChannelHandlerAdapter {
 
         return pingMessage;
     }
-
 }
