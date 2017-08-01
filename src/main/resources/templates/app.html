@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/bootstrap/font-awesome.min.css"/>
 
     <link rel="stylesheet" href="css/nav/nav.css"/>
-    <link rel="stylesheet" href="css/user/dashboard.css"/>
+    <link rel="stylesheet" href="css/user/app-sidebar.css"/>
 </head>
 <body>
     <div class="navbar-wrapper">
@@ -21,24 +21,88 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
-                <button class="btn btn-info btn-block">新建应用</button>
-
+                <strong><i class="fa fa-bookmark-o"></i>&nbsp; 我的应用</strong>
+                <div style="margin-top: 10px" id="app-group">
+                    <ul class="nav nav-sidebar">
+                        <li class="active"><a>脑电波传感器 - 测试</a></li>
+                        <li><a>温湿度传感器 - 测试</a></li>
+                    </ul>
+                </div>
                 <hr/>
-                <strong>我的应用</strong>
-                <ul class="nav nav-sidebar">
-                    <li><a>APP1</a></li>
-                    <li><a>APP2</a></li>
-                </ul>
+                <button class="btn btn-info btn-block">新建应用</button>
+                <button class="btn btn-info btn-block">编辑应用</button>
             </div>
-
 
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <div class="row">
-                    <div style="height:1000px">test</div>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2 col-sm-2">
+                                    <div class="row text-center overview-title">APP状态</div>
+                                    <div class="row text-center overview-content">打开</div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="row text-center overview-title">IP/端口</div>
+                                    <div class="row text-center overview-content">192.168.1.1:8080</div>
+                                </div>
+                                <div class="col-md-2 col-sm-2">
+                                    <div class="row text-center overview-title">传感器数量</div>
+                                    <div class="row text-center overview-content">2</div>
+                                </div>
+                                <div class="col-md-2 col-sm-2">
+                                    <div class="row text-center overview-title">数据维度</div>
+                                    <div class="row text-center overview-content">3</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-footer overview-panel-footer">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-3">
+                                    <button class="btn btn-default btn-block">关闭APP</button>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <button class="btn btn-default btn-block">刷新APP数据</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="sensor-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>SENSOR - 1</strong>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-9 col-sm-9">
+                                        <div style="height:400px" id="sensor-content-1"></div>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3">
+                                        <strong>传感器信息</strong>
+                                        <hr/>
+                                        <p>温度</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>SENSOR - 2</strong>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div style="height:400px" id="sensor-content-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
-                <hr/>
+                <hr style="height:1px;border:none;border-top:1px solid #9d9d9d;" />
                 <footer>
                     <p align="center">@STEM.CLOUD - <strong>SMART SENSOR</strong></p>
                 </footer>
@@ -68,5 +132,6 @@
     <script src="js/dependency/echarts/infographic.js"></script>
 
     <script src="js/user/common.js"></script>
+    <script src="js/user/app-chart.js"></script>
 </body>
 </html>

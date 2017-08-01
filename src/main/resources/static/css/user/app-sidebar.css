@@ -17,7 +17,7 @@
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #D1D1D1;
+    background-color: #FFFFFF;
     border-right: 1px solid #eeeeee;
   }
 }
@@ -35,8 +35,8 @@
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
+  color: #FFFFFF;
+  background-color: #4b91f4;
 }
 .nav-sidebar > li > span {
   padding-right: 10px;
@@ -44,12 +44,10 @@
 }
 
 
-/*
- * Main content
- */
-
+/* Main content */
 .main {
-  padding: 20px;
+    padding: 20px;
+    background-color: rgba(245, 245, 245, 0.7);
 }
 @media (min-width: 768px) {
   .main {
@@ -62,10 +60,7 @@
 }
 
 
-/*
- * Placeholder dashboard ideas
- */
-
+/* Placeholder dashboard ideas */
 .placeholders {
   margin-bottom: 30px;
   text-align: center;
@@ -79,4 +74,25 @@
 .placeholder img {
   display: inline-block;
   border-radius: 50%;
+}
+
+/* overview */
+.overview-panel-footer {
+  background-color: #FFFFFF;
+}
+
+.overview-title {
+  height: 35px;
+  line-height: 35px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #9d9d9d;
+}
+
+.overview-content {
+  height: 35px;
+  line-height: 35px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #ff5a00;
 }
