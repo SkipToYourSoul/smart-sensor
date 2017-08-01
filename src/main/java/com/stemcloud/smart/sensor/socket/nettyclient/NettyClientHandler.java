@@ -2,8 +2,8 @@ package com.stemcloud.smart.sensor.socket.nettyclient;
 
 import com.stemcloud.smart.sensor.pojo.Message;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +18,9 @@ import java.nio.channels.FileChannel;
  * Created by betty.bao on 2017/7/27.
  */
 @Component
-public class NettyClientHandler extends ChannelHandlerAdapter {
+public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
-    private static final Logger logger = Logger.getLogger(NettyClientHandler.class.getName());
+    private static final Logger logger = Logger.getLogger(NettyClientHandler.class);
     private ByteBuf msg;
 
     /**
@@ -30,7 +30,7 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
      * @throws Exception
      */
     @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(final ChannelHandlerContext ctx) throws Exception {
 
         byte[] fileBytes = readFile("E:/tmp/sensortmp/in/Chrysanthemum.jpg");
         Message customMsg = new Message((byte)2, fileBytes.length, fileBytes);
@@ -88,5 +88,4 @@ public class NettyClientHandler extends ChannelHandlerAdapter {
             return null;
         }
     }
-
 }
