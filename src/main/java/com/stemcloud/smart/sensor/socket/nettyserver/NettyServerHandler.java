@@ -4,7 +4,7 @@ import com.stemcloud.smart.sensor.dataparser.ParseData;
 import com.stemcloud.smart.sensor.exception.ParseDataException;
 import com.stemcloud.smart.sensor.pojo.Message;
 import com.stemcloud.smart.sensor.utils.DataType;
-import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;
@@ -12,12 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
+
 
 /**
  * Created by betty.bao on 2017/7/27.
  */
 @Component
-@ChannelHandler.Sharable
+@Sharable
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(NettyServerHandler.class);
@@ -40,7 +42,6 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
                 String dataType = DataType.getType(customMsg.getDataType() & 0xff);
                 doAction(dataType, customMsg.getBody());
             }
-
         } catch (EnumConstantNotPresentException e) {
             logger.error("DataType is unsupported !");
         } catch (ParseDataException e) {
@@ -57,8 +58,6 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      */
     private void doAction(String dataType, byte[] dataBytes) throws ParseDataException {
 
-//        dataParser.persistDataLocally(dataType, Arrays.copyOfRange(dataBytes, 1, dataBytes.length));
-//        new ParseData().persistDataLocally(dataType, Arrays.copyOfRange(dataBytes, 1, dataBytes.length));
         dataParser.persistDataLocally(dataType, dataBytes);
     }
 

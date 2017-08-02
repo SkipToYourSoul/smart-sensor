@@ -30,11 +30,11 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
      * @throws Exception
      */
     @Override
-    public void channelActive(final ChannelHandlerContext ctx) throws Exception {
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
 
         byte[] fileBytes = readFile("E:/tmp/sensortmp/in/Chrysanthemum.jpg");
-        Message customMsg = new Message((byte)2, fileBytes.length, fileBytes);
-        ctx.writeAndFlush(customMsg);
+        Message customMsg = new Message((byte) 2, fileBytes.length, fileBytes);
+        ctx.channel().writeAndFlush(customMsg);
     }
 
     //文件内容转为字节数组
@@ -51,12 +51,12 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
             try {
                 channel.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
             try {
                 fs.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("", e);
             }
         }
     }
@@ -84,7 +84,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
         try {
             return new String(con, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error("", e);
             return null;
         }
     }

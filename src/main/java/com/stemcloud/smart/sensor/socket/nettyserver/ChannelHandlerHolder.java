@@ -1,4 +1,4 @@
-package com.stemcloud.smart.sensor.socket.idle;
+package com.stemcloud.smart.sensor.socket.nettyserver;
 
 import io.netty.channel.ChannelHandler;
 

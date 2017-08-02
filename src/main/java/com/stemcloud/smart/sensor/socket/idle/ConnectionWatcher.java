@@ -4,6 +4,7 @@ package com.stemcloud.smart.sensor.socket.idle;
  * Created by betty.bao on 2017/8/1.
  */
 
+import com.stemcloud.smart.sensor.socket.nettyserver.ChannelHandlerHolder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.util.Timeout;
@@ -18,9 +19,9 @@ import java.util.concurrent.TimeUnit;
  * 当发现当前的链路不稳定关闭之后，进行12次重连
  */
 @ChannelHandler.Sharable
-public abstract class ConnectionWatchdog extends ChannelInboundHandlerAdapter implements TimerTask, ChannelHandlerHolder {
+public abstract class ConnectionWatcher extends ChannelInboundHandlerAdapter implements TimerTask, ChannelHandlerHolder {
 
-    private static final Logger logger = LoggerFactory.getLogger(ConnectionWatchdog.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConnectionWatcher.class);
 
     private final Bootstrap bootstrap;
     private final Timer timer;
@@ -31,7 +32,7 @@ public abstract class ConnectionWatchdog extends ChannelInboundHandlerAdapter im
     private int attempts;
 
 
-    public ConnectionWatchdog(Bootstrap bootstrap, Timer timer, int port, String host, boolean reconnect) {
+    public ConnectionWatcher(Bootstrap bootstrap, Timer timer, int port, String host, boolean reconnect) {
         this.bootstrap = bootstrap;
         this.timer = timer;
         this.port = port;
@@ -71,7 +72,12 @@ public abstract class ConnectionWatchdog extends ChannelInboundHandlerAdapter im
         ctx.fireChannelInactive();
     }
 
-
+    /**
+     * 定时任务，重连服务器
+     * @param timeout
+     * @throws Exception
+     */
+    @Override
     public void run(Timeout timeout) throws Exception {
 
         ChannelFuture future;
