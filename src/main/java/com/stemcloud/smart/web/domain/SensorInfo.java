@@ -25,7 +25,7 @@ public class SensorInfo {
     @Column(name = "sensor_owner")
     private String owner;
 
-    @Column(name = "type")
+    @Column(name = "sensor_type")
     private int type;
 
     private Double longitude;
@@ -49,7 +49,10 @@ public class SensorInfo {
     @Column(name = "sensor_modify_time")
     private String modifyTime;
 
-    public SensorInfo(int id, String name, String creator, String owner, int type, Double longitude, Double latitude, String city, String description, int appId, int isShow, String createTime) {
+    @Column(name = "is_deleted")
+    private int isDeleted;
+
+    public SensorInfo(int id, String name, String creator, String owner, int type, Double longitude, Double latitude, String city, String description, int appId, int isShow, String createTime, int isDeleted) {
         this.id = id;
         this.name = name;
         this.creator = creator;
@@ -62,6 +65,10 @@ public class SensorInfo {
         this.appId = appId;
         this.isShow = isShow;
         this.createTime = createTime;
+        this.isDeleted = isDeleted;
+    }
+
+    public SensorInfo() {
     }
 
     public int getId() {
@@ -166,5 +173,13 @@ public class SensorInfo {
 
     public void setModifyTime(String modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public int getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(int isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

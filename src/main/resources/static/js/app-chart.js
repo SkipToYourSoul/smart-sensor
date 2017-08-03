@@ -138,3 +138,13 @@ var chart_option = {
 
 chart.setOption(chart_option);
 window.onresize = chart.resize;
+
+
+$("#fakeLoader").fakeLoader({
+    timeToHide:1200, //Time in milliseconds for fakeLoader disappear
+    zIndex:999, // Default zIndex
+    spinner:"spinner4",//Options: 'spinner1', 'spinner2', 'spinner3', 'spinner4', 'spinner5', 'spinner6', 'spinner7'
+    bgColor:"rgba(154, 154, 154, 0.7)", //Hex, RGB or RGBA colors
+    // imagePath:"yourPath/customizedImage.gif" //If you want can you insert your custom image
+});
+$("#fakeLoader").fadeOut();

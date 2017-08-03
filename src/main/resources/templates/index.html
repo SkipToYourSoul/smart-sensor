@@ -6,12 +6,12 @@
     <title>Smart-Sensor</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap/bootstrap-select.min.css"/>
+    <link rel="stylesheet" href="source/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="source/bootstrap/bootstrap-select.min.css"/>
 
-    <link rel="stylesheet" href="css/bootstrap/font-awesome.min.css"/>
+    <link rel="stylesheet" href="source/bootstrap/font-awesome.min.css"/>
 
-    <link rel="stylesheet" href="css/nav/nav.css"/>
+    <link rel="stylesheet" href="css/nav.css"/>
 </head>
 <body>
     <div class="navbar-wrapper">
@@ -62,8 +62,8 @@
         <p align="center">@STEM.CLOUD - <strong>SMART SENSOR</strong></p>
     </footer>
 
-    <script src="js/dependency/jquery.min.js"></script>
-    <script src="js/dependency/bootstrap.min.js"></script>
+    <script src="source/jquery.min.js"></script>
+    <script src="source/bootstrap/bootstrap.min.js"></script>
     <script>
         $.get('nav', function(msg) {
             $(".navbar-wrapper").html(msg);
@@ -76,15 +76,15 @@
     <script dataType="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 
 
-    <script src="js/dependency/messenger/messenger.min.js"></script>
-    <script src="js/dependency/bootstrap-select.min.js"></script>
+    <script src="source/messenger/messenger.min.js"></script>
+    <script src="source/bootstrap/bootstrap-select.min.js"></script>
 
-    <script src="js/dependency/echarts/echarts.common.min.js"></script>
-    <script src="js/dependency/echarts/infographic.js"></script>
+    <script src="source/echarts/echarts.common.min.js"></script>
+    <script src="source/echarts/infographic.js"></script>
 
-    <script src="js/user/common.js"></script>
-    <script src="js/user/index-chart.js"></script>
-    <script src="js/user/index-map.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/index-chart.js"></script>
+    <script src="js/index-map.js"></script>
 
 </body>
 </html>

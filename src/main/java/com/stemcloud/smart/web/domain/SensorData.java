@@ -37,6 +37,8 @@ public class SensorData {
         this.value = value;
     }
 
+    public SensorData(){}
+
     public int getId() {
         return id;
     }

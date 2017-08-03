@@ -31,13 +31,20 @@ public class AppInfo {
     @Column(name = "app_modify_time")
     private String modifyTime;
 
-    public AppInfo(int id, String name, String creator, String description, String createTime) {
+    @Column(name = "is_deleted")
+    private String isDeleted;
+
+    public AppInfo(int id, String name, String creator, String description, String createTime, String modifyTime, String isDeleted) {
         this.id = id;
         this.name = name;
         this.creator = creator;
         this.description = description;
         this.createTime = createTime;
+        this.modifyTime = modifyTime;
+        this.isDeleted = isDeleted;
     }
+
+    public AppInfo(){}
 
     public int getId() {
         return id;
@@ -85,5 +92,13 @@ public class AppInfo {
 
     public void setModifyTime(String modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(String isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }
