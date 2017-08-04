@@ -1,5 +1,6 @@
-package com.stemcloud.smart.web.domain;
+package com.stemcloud.smart.web.dao;
 
+import com.stemcloud.smart.web.domain.SensorInfo;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

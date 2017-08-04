@@ -1,5 +1,6 @@
-package com.stemcloud.smart.web.domain;
+package com.stemcloud.smart.web.dao;
 
+import com.stemcloud.smart.web.domain.SensorData;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

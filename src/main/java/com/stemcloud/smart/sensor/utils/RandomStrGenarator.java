@@ -1,6 +1,6 @@
 package com.stemcloud.smart.sensor.utils;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

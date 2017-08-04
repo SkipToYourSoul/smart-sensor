@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.login;
+package com.stemcloud.smart.web.config;
 
 /**
  * Belongs to smart-sensor

@@ -1,9 +1,9 @@
 package com.stemcloud.smart.web.service;
 
 import com.stemcloud.smart.web.domain.SensorData;
-import com.stemcloud.smart.web.domain.SensorDataRepository;
+import com.stemcloud.smart.web.dao.SensorDataRepository;
 import com.stemcloud.smart.web.domain.SensorInfo;
-import com.stemcloud.smart.web.domain.SensorInfoRepository;
+import com.stemcloud.smart.web.dao.SensorInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
