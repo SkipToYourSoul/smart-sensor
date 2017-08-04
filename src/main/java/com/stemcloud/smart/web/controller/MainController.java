@@ -2,10 +2,12 @@ package com.stemcloud.smart.web.controller;
 
 import com.stemcloud.smart.sensor.config.SocketConfig;
 import com.stemcloud.smart.sensor.socket.nettyserver.NettyServer;
+import com.stemcloud.smart.web.service.SensorViewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,13 +27,19 @@ public class MainController {
     @Autowired
     NettyServer socket;
 
+    @Autowired
+    SensorViewService sensorViewService;
+
     @GetMapping("/")
     public String index() {
         return "index";
     }
 
     @GetMapping("/app")
-    public String app(){
+    public String app(Model model){
+
+
+
         return "app";
     }
 

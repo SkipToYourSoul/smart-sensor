@@ -20,7 +20,7 @@ public class SensorData {
     private int sensorId;
 
     @Column(name = "data_entry")
-    private int entrance;
+    private String entrance;
 
     @Column(name = "sensor_type")
     private int type;
@@ -29,7 +29,7 @@ public class SensorData {
 
     private String timestamp;
 
-    public SensorData(int id, int sensorId, int entrance, int type, String value) {
+    public SensorData(int id, int sensorId, String entrance, int type, String value) {
         this.id = id;
         this.sensorId = sensorId;
         this.entrance = entrance;
@@ -55,11 +55,11 @@ public class SensorData {
         this.sensorId = sensorId;
     }
 
-    public int getEntrance() {
+    public String getEntrance() {
         return entrance;
     }
 
-    public void setEntrance(int entrance) {
+    public void setEntrance(String entrance) {
         this.entrance = entrance;
     }
 
