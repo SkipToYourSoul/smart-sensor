@@ -13,14 +13,14 @@ import io.netty.handler.codec.MessageToByteEncoder;
 public class ClientEncode extends MessageToByteEncoder<Message> {
 
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Message message, ByteBuf byteBuf) throws Exception {
+    protected void encode(ChannelHandlerContext channelHandlerContext, Message message, ByteBuf out) throws Exception {
+
         if(null == message){
             throw new ProtocolException("message is null");
         }
-
         byte[] body = message.getBody();
-        byteBuf.writeByte(message.getDataType());
-        byteBuf.writeInt(body.length);
-        byteBuf.writeBytes(body);
+        out.writeByte(message.getDataType());
+        out.writeInt(body.length);
+        out.writeBytes(body);
     }
 }
