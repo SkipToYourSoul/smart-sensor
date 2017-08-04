@@ -1,23 +1,28 @@
 package com.stemcloud.smart.sensor.socket.nettyclient;
 
-import com.stemcloud.smart.sensor.socket.protocol.ClientEncode;
+import com.stemcloud.smart.sensor.socket.nettyserver.ChannelHandlerHolder;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import org.springframework.stereotype.Component;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
+import org.apache.log4j.Logger;
 
 
 /**
  * socket客户端
- *
+ * <p>
  * Created by betty.bao on 2017/7/27.
  */
-@Component
 public class NettyClient {
+
+    private static final Logger logger = Logger.getLogger(NettyClient.class);
+
+    private ChannelHandlerHolder channelHandlerHolder;
 
     /**
      * 客户端socket配置
@@ -30,23 +35,26 @@ public class NettyClient {
 
         NioEventLoopGroup group = new NioEventLoopGroup();
         try {
-            Bootstrap b = new Bootstrap();
-            b.group(group).channel(NioSocketChannel.class)
-                    .option(ChannelOption.SO_BACKLOG, 1024)
-                    .handler(new ChannelInitializer<SocketChannel>() {
+            Bootstrap boot = new Bootstrap();
+            boot.group(group).channel(NioSocketChannel.class)
+                    .option(ChannelOption.SO_BACKLOG, 1024).handler(new LoggingHandler(LogLevel.INFO));
 
-                        @Override
-                        public void initChannel(SocketChannel ch)
-                                throws Exception {
-                            ch.pipeline().addLast(new ClientEncode());  //客户端报文编码协议
-                            ch.pipeline().addLast(new NettyClientHandler());
-                        }
-                    });
+//            channelHandlerHolder = new WatcherChannelInitializer(boot, port, host, true);
+            channelHandlerHolder = new CommonChannelInitializer();
 
-            ChannelFuture future = b.connect(host, port).sync();
-            if (future.isSuccess())
-                System.out.println("----------------connect server success----------------");
+            boot.handler(new ChannelInitializer<Channel>() {
+
+                //初始化channel
+                @Override
+                protected void initChannel(Channel ch) throws Exception {
+                    ch.pipeline().addLast(channelHandlerHolder.handlers());
+                }
+            });
+
+            ChannelFuture future = boot.connect(host, port).sync();
             future.channel().closeFuture().sync();
+            System.out.println("----------------connect server success----------------");
+            logger.info("----------------connect server success----------------");
         } finally {
             group.shutdownGracefully();
         }
@@ -54,6 +62,6 @@ public class NettyClient {
 
     public static void main(String[] args) throws Exception {
         int port = 5879;
-        new NettyClient().connect(port, "10.107.69.123");
+        new NettyClient().connect(port, "127.0.0.1");
     }
 }

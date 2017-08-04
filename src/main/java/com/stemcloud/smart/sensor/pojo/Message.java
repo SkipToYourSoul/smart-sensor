@@ -1,5 +1,9 @@
 package com.stemcloud.smart.sensor.pojo;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
+
 /**
  * 传输协议类
  * Created by betty.bao on 2017/7/30.
@@ -20,6 +24,8 @@ public class Message {
         this.length = length;
         this.body = body;
     }
+
+    public Message(){}
 
     public byte getDataType() {
         return dataType;
@@ -43,5 +49,10 @@ public class Message {
 
     public void setBody(byte[] body) {
         this.body = body;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 }
