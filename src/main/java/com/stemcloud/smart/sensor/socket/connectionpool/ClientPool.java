@@ -61,23 +61,4 @@ public class ClientPool {
         return ret;
     }
 
-    //单元测试
-    public static void main(String[] args) {
-        try {
-            int maxconnect = 10;
-            ClientPool pool = new ClientPool("127.0.0.1", 5879, maxconnect);
-            Channel ch = pool.acquire(5);
-            pool.release(ch);
-
-            Channel[] chlist = new Channel[maxconnect];
-            for(int i=0; i<maxconnect; i++) {
-                chlist[i] = pool.acquire(1);
-            }
-            for(int i=0; i<maxconnect; i++) {
-                pool.release(chlist[i]);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 }
