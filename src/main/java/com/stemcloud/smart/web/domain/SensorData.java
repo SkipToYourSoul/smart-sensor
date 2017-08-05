@@ -1,9 +1,6 @@
 package com.stemcloud.smart.web.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Belongs to smart-sensor
@@ -14,6 +11,7 @@ import javax.persistence.Table;
 @Table(name = "sensor_data")
 public class SensorData {
     @Id
+    @GeneratedValue
     private int id;
 
     @Column(name = "sensor_id")
@@ -29,8 +27,7 @@ public class SensorData {
 
     private String timestamp;
 
-    public SensorData(int id, int sensorId, String entrance, int type, String value) {
-        this.id = id;
+    public SensorData(int sensorId, String entrance, int type, String value) {
         this.sensorId = sensorId;
         this.entrance = entrance;
         this.type = type;
