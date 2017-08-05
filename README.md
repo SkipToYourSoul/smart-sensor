@@ -19,3 +19,14 @@
 * application.properties文件由于每个机器配置不同，在同步代码时可以使用以下命令忽略：git update-index --assume-unchanged src/main/resources/application.properties
 * 若要恢复，可使用命令git update-index --no-assume-unchanged src/main/resources/application.properties
 * /lib/*.sql文件存储了用到的MYSQL数据表
+
+
+
+### 参考链接
+
+* thymeleaf比较符号：http://www.bubuko.com/infodetail-413210.html
+* thymeleaf条件判断：http://www.cnblogs.com/suncj/p/4030393.html
+* thymeleaf js取值：http://blog.csdn.net/xiaoyu411502/article/details/48582355
+* spring-boot处理url参数：http://blog.csdn.net/u010412719/article/details/69788227
+* themeleaf常用属性（include）：http://www.cnblogs.com/hjwublog/p/5051732.html
+* themeleaf常用属性（url传参）：http://blog.csdn.net/mygzs/article/details/52472039
