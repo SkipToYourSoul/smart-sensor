@@ -31,7 +31,6 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-
         byte[] fileBytes = readFile("E:/tmp/sensortmp/in/Chrysanthemum.jpg");
         Message customMsg = new Message((byte) 2, fileBytes.length, fileBytes);
         ctx.channel().writeAndFlush(customMsg);

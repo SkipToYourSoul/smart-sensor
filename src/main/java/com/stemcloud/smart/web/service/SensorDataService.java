@@ -29,4 +29,8 @@ public class SensorDataService {
     public List<SensorData> getSensorDataByAppId(int appId){
         return sensorDataRepository.findSensorDataByAppId(appId);
     }
+
+    public List<SensorData> getSensorDataBySensorId(int sensorId) {
+        return sensorDataRepository.findBySensorId(sensorId);
+    }
 }

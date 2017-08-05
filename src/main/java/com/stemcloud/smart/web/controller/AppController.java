@@ -22,7 +22,13 @@ public class AppController {
     SensorDataService sensorDataService;
 
     @GetMapping("/sensor/data")
-    public List<SensorData> getSensorData(@RequestParam int appId){
-        return sensorDataService.getSensorDataByAppId(appId);
+    public List<SensorData> getSensorData(@RequestParam int sensorId){
+        return sensorDataService.getSensorDataBySensorId(sensorId);
+    }
+
+    @GetMapping("/click")
+    public String click(){
+
+        return "success";
     }
 }

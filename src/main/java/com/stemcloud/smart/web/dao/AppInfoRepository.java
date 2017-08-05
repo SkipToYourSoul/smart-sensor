@@ -11,5 +11,5 @@ import java.util.List;
  * Description:
  */
 public interface AppInfoRepository extends CrudRepository<AppInfo, Integer> {
-    public List<AppInfo> findByCreator(String creator);
+    public List<AppInfo> findByCreatorOrderByCreateTime(String creator);
 }

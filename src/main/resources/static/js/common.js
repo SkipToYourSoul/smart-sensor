@@ -4,9 +4,9 @@
  *  Description: some common function
  */
 var current_address = window.location.href;
-/*if (current_address.endsWith('/')){
-    current_address = current_address.substring(0, current_address.length - 1);
-}*/
+if (current_address.indexOf('?') >= 0){
+    current_address = current_address.substring(0, window.location.href.indexOf('?'));
+}
 
 function loadSource(){
     var link = document.createElement("link");

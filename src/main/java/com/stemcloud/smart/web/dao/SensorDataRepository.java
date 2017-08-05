@@ -24,4 +24,6 @@ public interface SensorDataRepository extends CrudRepository<SensorData, Integer
             "ON a.id = b.sensor_id " +
             "ORDER BY sensor_id, b.id", nativeQuery = true)
     public List<SensorData> findSensorDataByAppId(@Param("appId") int appId);
+
+    public List<SensorData> findBySensorId(int sensorId);
 }

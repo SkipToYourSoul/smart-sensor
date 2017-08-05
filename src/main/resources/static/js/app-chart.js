@@ -5,21 +5,35 @@
  */
 
 // --- init chart
-var chart = echarts.init(document.getElementById('sensor-content-1'));
-window.onresize = chart.resize;
 var $loading = $("#fakeLoader");
-initialApp(1);
+$loading.fakeLoader({
+    timeToHide: 5000,
+    spinner:"spinner4",
+    bgColor:"rgba(154, 154, 154, 0.7)"
+});
 
-function initialApp(appId) {
-    $loading.fakeLoader({
-        spinner:"spinner4",
-        bgColor:"rgba(154, 154, 154, 0.7)"
-    });
+// --- init sensor content
+var charts = [];
+for (var i in sensors){
+    var row = sensors[i];
+    // --- chart
+    if (row['type'] == 1){
+        var chart = echarts.init(document.getElementById('sensor-content-' + row['id']));
+        initialSensorChart(row['id'], chart);
+        charts.push(chart);
+    }
+}
+window.onresize = function () {
+    for (var i in charts)
+        charts[i].resize();
+};
+$loading.fadeOut();
 
+function initialSensorChart(sensorId, chart) {
     $.ajax({
         type: "get",
         url: current_address + "/sensor/data",
-        data: {appId: appId},
+        data: {sensorId: sensorId},
         dataType: "json",
         success: function (sensor) {
             var chartSeriesData = [];
@@ -28,16 +42,13 @@ function initialApp(appId) {
                 chartSeriesData.push({
                     value:[
                         row['timestamp'],
-                        row['value']],
+                        row['value']]
                 });
             }
-
             chart.setOption(chartOption(chartSeriesData));
-
-            $loading.fadeOut();
         },
         error: function (err_msg) {
-            message_info('加载传感器数据出错', 'error', 3);
+            message_info('加载传感器数据出错，传感器编号：' + sensorId, 'error', 3);
         }
     });
 }

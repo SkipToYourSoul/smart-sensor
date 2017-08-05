@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface SensorInfoRepository extends CrudRepository<SensorInfo, Integer> {
     List<SensorInfo> findByIsShow(int isShow);
+
+    List<SensorInfo> findByAppId(int appId);
 }

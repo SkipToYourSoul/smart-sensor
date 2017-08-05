@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/app-sidebar.css"/>
 </head>
 <body>
-    <div class="navbar-wrapper">
+    <div class="navbar-wrapper" th:include="/module/nav::nav">
     </div>
 
     <div class="container-fluid">
@@ -25,8 +25,12 @@
                 <strong><i class="fa fa-bookmark-o"></i>&nbsp; 我的应用</strong>
                 <div style="margin-top: 10px" id="app-group">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a>脑电波传感器 - 测试</a></li>
-                        <li><a>温湿度传感器 - 测试</a></li>
+                        <th:block th:if="${not #lists.isEmpty(apps)}">
+                            <th:block th:each="app,index:${apps}">
+                                <li th:class="${currentAppIndex eq index.count}?'active':''">
+                                    <a th:text="${app.name}" th:href="@{/app(id=${app.id})}" th:class="|app-${index.count}|"></a></li>
+                            </th:block>
+                        </th:block>
                     </ul>
                 </div>
                 <hr/>
@@ -37,29 +41,28 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <div id="fakeLoader"></div>
                 <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-2 col-sm-2">
-                                    <div class="row text-center overview-title">APP状态</div>
-                                    <div class="row text-center overview-content">打开</div>
+                    <!-- app info and sensor info -->
+                    <th:block th:if="${not #lists.isEmpty(apps)}">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2">
+                                        <div class="row text-center overview-title">APP状态</div>
+                                        <div class="row text-center overview-content">-</div>
+                                    </div>
+                                    <div class="col-md-2 col-sm-2">
+                                        <div class="row text-center overview-title">传感器数量</div>
+                                        <div class="row text-center overview-content" th:text="${#lists.size(sensors)}"></div>
+                                    </div>
                                 </div>
-                                <div class="col-md-3 col-sm-3">
-                                    <div class="row text-center overview-title">IP/端口</div>
-                                    <div class="row text-center overview-content">192.168.1.1:8080</div>
-                                </div>
-                                <div class="col-md-2 col-sm-2">
-                                    <div class="row text-center overview-title">传感器数量</div>
-                                    <div class="row text-center overview-content">2</div>
-                                </div>
-                                <div class="col-md-2 col-sm-2">
-                                    <div class="row text-center overview-title">数据维度</div>
-                                    <div class="row text-center overview-content">3</div>
-                                </div>
+                            </div>
+
+                            <div class="panel-footer overview-panel-footer">
+                                <p><strong>应用描述：</strong><span th:text="${apps[currentAppIndex-1].description}"></span></p>
                             </div>
                         </div>
 
-                        <div class="panel-footer overview-panel-footer">
+                        <div id="btn-group" style="margin-bottom: 20px">
                             <div class="row">
                                 <div class="col-md-3 col-sm-3">
                                     <button class="btn btn-default btn-block">关闭APP</button>
@@ -67,42 +70,71 @@
                                 <div class="col-md-3 col-sm-3">
                                     <button class="btn btn-default btn-block">刷新APP数据</button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="sensor-group">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <strong>SENSOR - 1</strong>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-9 col-sm-9">
-                                        <div style="height:400px" id="sensor-content-1"></div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-3">
-                                        <strong>传感器信息</strong>
-                                        <hr/>
-                                        <p>温度</p>
-                                    </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <button class="btn btn-danger" onclick="open_sensor()">open</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <strong>SENSOR - 2</strong>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div style="height:400px" id="sensor-content-2"></div>
+                        <div id="sensor-group">
+                            <th:block th:each="sensor,index:${sensors}">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <strong th:text="${sensor.name}"></strong>
+                                    </div>
+                                    <!-- load different content according to sensor.type -->
+                                    <div class="panel-body">
+                                        <div class="row" th:switch="${sensor.type}">
+                                            <div th:case="1">
+                                                <div class="col-md-9 col-sm-9">
+                                                    <div style="height:400px" th:id="|sensor-content-${sensor.id}|"></div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-3">
+                                                    <p><strong>传感器信息</strong></p>
+                                                    <hr/>
+                                                    <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
+                                                    <p><strong>拥有者：</strong><span th:text="${sensor.owner}"></span></p>
+                                                    <p><strong>传感器位置：</strong><span th:text="${sensor.city}"></span></p>
+                                                    <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
+                                                </div>
+                                            </div>
+                                            <div th:case="2">
+                                                <div class="col-md-9 col-sm-9">
+                                                    <div style="height:400px" th:id="|sensor-content-${sensor.id}|"><h3>video</h3></div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-3">
+                                                    <p><strong>传感器信息</strong></p>
+                                                    <hr/>
+                                                    <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
+                                                    <p><strong>拥有者：</strong><span th:text="${sensor.owner}"></span></p>
+                                                    <p><strong>传感器位置：</strong><span th:text="${sensor.city}"></span></p>
+                                                    <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
+                                                </div>
+                                            </div>
+                                            <div th:case="3">
+                                                <div class="col-md-9 col-sm-9">
+                                                    <div style="height:400px" th:id="|sensor-content-${sensor.id}|"><h3>picture</h3></div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-3">
+                                                    <p><strong>传感器信息</strong></p>
+                                                    <hr/>
+                                                    <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
+                                                    <p><strong>拥有者：</strong><span th:text="${sensor.owner}"></span></p>
+                                                    <p><strong>传感器位置：</strong><span th:text="${sensor.city}"></span></p>
+                                                    <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
+                            </th:block>
                         </div>
-                    </div>
+                    </th:block>
+                    <th:block th:if="${#lists.isEmpty(apps)}">
+                        <h1>暂无app，可新建一个</h1>
+                    </th:block>
                 </div>
-
 
                 <hr style="height:1px;border:none;border-top:1px solid #9d9d9d;" />
                 <footer>
@@ -112,15 +144,27 @@
         </div>
     </div>
 
-
-
     <script src="source/jquery.min.js"></script>
     <script src="source/bootstrap/bootstrap.min.js"></script>
     <script>
-        $.get('nav', function(msg) {
-            $(".navbar-wrapper").html(msg);
-            $('#navbar').find('ul:eq(0) li:eq(1)').addClass('active');
-        });
+        function open_sensor(){
+            $.ajax({
+                type: "get",
+                url: current_address + "/click",
+                success: function (sensor) {
+                    message_info(sensor);
+                },
+                error: function (err_msg) {
+                    message_info('加载传感器数据出错', 'error', 3);
+                }
+            });
+        }
+    </script>
+
+    <script th:inline="javascript">
+        var currentAppId = [[${currentAppId}]];
+        var sensors = [[${sensors}]];
+        var currentAppIndex = [[${currentAppIndex}]];
     </script>
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>

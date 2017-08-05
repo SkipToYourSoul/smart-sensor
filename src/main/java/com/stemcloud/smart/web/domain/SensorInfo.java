@@ -17,6 +17,9 @@ public class SensorInfo {
     @Column(name = "sensor_name")
     private String name;
 
+    @Column(name = "sensor_code")
+    private String code;
+
     @Column(name = "sensor_creator")
     private String creator;
 
@@ -50,8 +53,9 @@ public class SensorInfo {
     @Column(name = "is_deleted")
     private int isDeleted;
 
-    public SensorInfo(String name, String creator, String owner, int type, Double longitude, Double latitude, String city, String description, int appId, int isShow, String createTime, int isDeleted) {
+    public SensorInfo(String name, String code, String creator, String owner, int type, Double longitude, Double latitude, String city, String description, int appId, int isShow, String createTime, int isDeleted) {
         this.name = name;
+        this.code = code;
         this.creator = creator;
         this.owner = owner;
         this.type = type;
@@ -82,6 +86,14 @@ public class SensorInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getCreator() {
