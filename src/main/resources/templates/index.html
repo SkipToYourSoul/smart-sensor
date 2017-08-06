@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="css/nav.css"/>
 </head>
 <body>
-    <div class="navbar-wrapper">
+    <div class="navbar-wrapper" th:include="/module/nav::nav">
     </div>
 
     <div class="container-fluid">
@@ -66,12 +66,6 @@
 
     <script src="source/jquery.min.js"></script>
     <script src="source/bootstrap/bootstrap.min.js"></script>
-    <script>
-        $.get('nav', function(msg) {
-            $(".navbar-wrapper").html(msg);
-            $('#navbar').find('ul:eq(0) li:eq(0)').addClass('active');
-        });
-    </script>
 
     <script dataType="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
     <script dataType="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>

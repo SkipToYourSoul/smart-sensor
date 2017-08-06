@@ -4,30 +4,32 @@
  *  Description:
  */
 
-// --- init chart
-var $loading = $("#fakeLoader");
-$loading.fakeLoader({
-    timeToHide: 5000,
-    spinner:"spinner4",
-    bgColor:"rgba(154, 154, 154, 0.7)"
-});
+if (sensors.length > 0){
+    // --- init chart
+    var $loading = $("#fakeLoader");
+    $loading.fakeLoader({
+        timeToHide: 5000,
+        spinner:"spinner4",
+        bgColor:"rgba(154, 154, 154, 0.7)"
+    });
 
-// --- init sensor content
-var charts = [];
-for (var i in sensors){
-    var row = sensors[i];
-    // --- chart
-    if (row['type'] == 1){
-        var chart = echarts.init(document.getElementById('sensor-content-' + row['id']));
-        initialSensorChart(row['id'], chart);
-        charts.push(chart);
+    // --- init sensor content
+    var charts = [];
+    for (var i in sensors){
+        var row = sensors[i];
+        // --- chart
+        if (row['type'] == 1){
+            var chart = echarts.init(document.getElementById('sensor-content-' + row['id']));
+            initialSensorChart(row['id'], chart);
+            charts.push(chart);
+        }
     }
+    window.onresize = function () {
+        for (var i in charts)
+            charts[i].resize();
+    };
+    $loading.fadeOut();
 }
-window.onresize = function () {
-    for (var i in charts)
-        charts[i].resize();
-};
-$loading.fadeOut();
 
 function initialSensorChart(sensorId, chart) {
     $.ajax({

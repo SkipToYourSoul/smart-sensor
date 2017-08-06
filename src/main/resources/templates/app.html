@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="source/bootstrap/font-awesome.min.css"/>
     <link rel="stylesheet" href="source/loading/fakeLoader.css"/>
+    <link rel="stylesheet" href="source/validation/formValidation.min.css"/>
 
     <link rel="stylesheet" href="css/nav.css"/>
     <link rel="stylesheet" href="css/app-sidebar.css"/>
@@ -34,8 +35,10 @@
                     </ul>
                 </div>
                 <hr/>
-                <button class="btn btn-info btn-block">新建应用</button>
-                <button class="btn btn-info btn-block">编辑应用</button>
+                <button class="btn btn-info btn-block" data-toggle="modal" data-target="#new-app-modal">新建应用</button>
+                <th:block th:if="${not #lists.isEmpty(apps)}">
+                    <button class="btn btn-info btn-block" data-toggle="modal" data-target="#edit-app-modal">编辑应用</button>
+                </th:block>
             </div>
 
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -77,6 +80,9 @@
                         </div>
 
                         <div id="sensor-group">
+                            <th:block th:if="${#lists.isEmpty(sensors)}">
+                                <h1>该应用暂无传感器，可新建一个</h1>
+                            </th:block>
                             <th:block th:each="sensor,index:${sensors}">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -144,6 +150,11 @@
         </div>
     </div>
 
+    <div th:include="/module/modal::new-app-modal"></div>
+    <th:block th:if="${not #lists.isEmpty(apps)}">
+        <div th:include="/module/modal::edit-app-modal"></div>
+    </th:block>
+
     <script src="source/jquery.min.js"></script>
     <script src="source/bootstrap/bootstrap.min.js"></script>
     <script>
@@ -164,6 +175,7 @@
     <script th:inline="javascript">
         var currentAppId = [[${currentAppId}]];
         var sensors = [[${sensors}]];
+        var apps = [[${apps}]];
         var currentAppIndex = [[${currentAppIndex}]];
     </script>
 
@@ -175,10 +187,14 @@
     <script src="source/bootstrap/bootstrap-select.min.js"></script>
     <script src="source/loading/fakeLoader.min.js"></script>
 
+    <script src="source/validation/formValidation.min.js"></script>
+    <script src="source/validation/bootstrap.min.js"></script>
+
     <script src="source/echarts/echarts.common.min.js"></script>
     <script src="source/echarts/infographic.js"></script>
 
     <script src="js/common.js"></script>
     <script src="js/app-chart.js"></script>
+    <script src="js/app-controller.js"></script>
 </body>
 </html>

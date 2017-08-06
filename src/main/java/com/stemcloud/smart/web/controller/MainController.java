@@ -87,10 +87,4 @@ public class MainController {
 
         return "app";
     }
-
-    @GetMapping(value = "/nav")
-    public String loadNavModel() {
-        return "module/nav";
-    }
-
 }
