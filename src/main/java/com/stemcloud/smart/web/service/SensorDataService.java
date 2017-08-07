@@ -54,4 +54,10 @@ public class SensorDataService {
         int ret = appInfoRepository.updateAppInfo(id, name, description);
         return ret;
     }
+
+    public SensorInfo saveNewSensor(int appId, String name, String code, int type, String city, double longitude, double latitude, String description){
+        SensorInfo sensorInfo = sensorInfoRepository.save(new SensorInfo(name, code, "liye", "liye", type, longitude, latitude,
+                city, description, appId, 1, dateFormat.format(new Date()) , 0));
+        return sensorInfo;
+    }
 }
