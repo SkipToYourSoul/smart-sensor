@@ -29,43 +29,56 @@ public class AppController {
         return sensorDataService.getSensorDataBySensorId(sensorId);
     }
 
-    @PostMapping("/new")
+    @PostMapping("/new/app")
     public int newApp(@RequestParam Map<String, String> queryParams){
-        String name = queryParams.get("new-app-name");
-        String description = queryParams.get("new-app-description");
-        int appId = sensorDataService.saveNewApp("liye", name, description);
-        logger.info("New app " + appId);
-        return appId;
-    }
+        int isNewApp = Integer.parseInt(queryParams.get("is-new-app"));
+        if (isNewApp == 1){
+            int appId = sensorDataService.saveNewApp(queryParams);
+            logger.info("New app " + appId);
+            return appId;
+        } else if (isNewApp == 0){
+            int appId = Integer.valueOf(queryParams.get("id"));
+            sensorDataService.saveEditApp(queryParams);
+            logger.info("Edit app " + appId);
+            return appId;
+        }
 
-    @PostMapping("/edit")
-    public int editApp(@RequestParam Map<String, String> queryParams){
-        String name = queryParams.get("edit-app-name");
-        String description = queryParams.get("edit-app-description");
-        int appId = Integer.valueOf(queryParams.get("id"));
-
-        return sensorDataService.saveEditApp(appId, name, description);
+        return -1;
     }
 
     @PostMapping("/new/sensor")
-    public int newSensor(@RequestParam Map<String, String> queryParams){
-        int appId = Integer.parseInt(queryParams.get("appId"));
+    public String newSensor(@RequestParam Map<String, String> queryParams){
+        int isNewSensor = Integer.parseInt(queryParams.get("is-new-sensor"));
 
-        String name = queryParams.get("new-sensor-name");
-        String code = queryParams.get("new-sensor-code");
-        int type = Integer.parseInt(queryParams.get("new-sensor-type"));
-        String city = queryParams.get("new-sensor-city");
-        double longitude = Double.parseDouble(queryParams.get("new-sensor-longitude"));
-        double latitude = Double.parseDouble(queryParams.get("new-sensor-latitude"));
-        String description = queryParams.get("new-sensor-description");
+        if (isNewSensor == 1) {
+            SensorInfo sensorInfo = sensorDataService.saveNewSensor(queryParams);
+            logger.info("New sensor: " + sensorInfo.getId());
+        } else if (isNewSensor == 0){
+            int sensorId = Integer.parseInt(queryParams.get("sensorId"));
+            int ret = sensorDataService.saveEditSensor(sensorId, queryParams);
+            logger.info("Update sensor: " + sensorId + " return state: " + ret);
+        }
 
-        SensorInfo sensorInfo = sensorDataService.saveNewSensor(appId, name, code, type, city, longitude, latitude, description);
-
-        return 1;
+        return "success";
     }
 
-    @GetMapping("/click")
-    public String click(){
+    @GetMapping(value = "/delete/sensor")
+    public String deleteSensor(@RequestParam int id){
+        try {
+            sensorDataService.deleteSensor(id);
+            logger.info("Delete sensor: " + id);
+        } catch (Exception e){
+            return "failure";
+        }
+        return "success";
+    }
+
+    @GetMapping("/monitor/sensor")
+    public String click(@RequestParam String appId, @RequestParam String sensorId){
+        logger.info("AppId: " + appId);
+        logger.info("SensorId: " + sensorId);
+
+        // call your service here
 
         return "success";
     }

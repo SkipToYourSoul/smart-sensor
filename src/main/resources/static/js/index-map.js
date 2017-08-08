@@ -7,7 +7,7 @@
 // --- map initial -------------------------------------------------------
 var map = new BMap.Map("allmap",{
     minZoom: 8,
-    maxZoom: 14,
+    // maxZoom: 14,
     enableMapClick: false
 });
 map.setMapStyle({style:'grayscale'});

@@ -11,6 +11,7 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" role="form" id="new-app-form">
+                            <input type="text" id="is-new-app" name="is-new-app" value="1" hidden="hidden"/>
                             <div class="form-group">
                                 <label for="new-app-name" class="col-sm-2 control-label">应用名</label>
                                 <div class="col-sm-10">
@@ -30,46 +31,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <button type="button" class="btn btn-success btn-block" onclick="$('#new-app-form').submit()">保存更改</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div th:fragment="edit-app-modal">
-        <div class="modal fade" id="edit-app-modal" tabindex="-1" role="dialog" aria-labelledby="edit-app-modal-title">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="edit-app-modal-title">编辑应用</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal" role="form" id="edit-app-form">
-                            <div class="form-group">
-                                <label for="edit-app-name" class="col-sm-2 control-label">应用名</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="edit-app-name" id="edit-app-name"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="edit-app-description" class="col-sm-2 control-label">应用描述</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control"
-                                              name="edit-app-description"
-                                              rows="5"
-                                              required="true"
-                                              placeholder="输入应用描述"
-                                              id="edit-app-description"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-10 col-sm-offset-2">
-                                    <button type="button" class="btn btn-success btn-block" onclick="$('#edit-app-form').submit()">保存更改</button>
+                                    <button type="button" class="btn btn-success btn-block" onclick="$('#new-app-form').submit()" id="app-confirm-btn">新建应用</button>
                                 </div>
                             </div>
                         </form>
@@ -89,6 +51,7 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" role="form" id="new-sensor-form">
+                            <input type="text" id="is-new-sensor" name="is-new-sensor" value="1" sensor-id="0" hidden="hidden"/>
                             <div class="form-group">
                                 <label for="new-sensor-name" class="col-sm-2 control-label">传感器名称</label>
                                 <div class="col-sm-10">
@@ -140,7 +103,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <button type="button" class="btn btn-success btn-block" onclick="$('#new-sensor-form').submit()">新建传感器</button>
+                                    <button type="button" class="btn btn-success btn-block" onclick="$('#new-sensor-form').submit()" id="sensor-confirm-btn">新建传感器</button>
                                 </div>
                             </div>
                         </form>
