@@ -87,4 +87,14 @@ public class MainController {
 
         return "app";
     }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/class")
+    public String classes(){
+        return "class";
+    }
 }

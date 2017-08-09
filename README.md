@@ -31,3 +31,4 @@
 * themeleaf常用属性（include）：http://www.cnblogs.com/hjwublog/p/5051732.html
 * themeleaf常用属性（url传参）：http://blog.csdn.net/mygzs/article/details/52472039
 * spring-boot-jpa更新数据时指定事务：http://blog.csdn.net/hanghangde/article/details/53241150
+* jpa数据映射关系：http://blog.csdn.net/lyg_2012/article/details/70195062

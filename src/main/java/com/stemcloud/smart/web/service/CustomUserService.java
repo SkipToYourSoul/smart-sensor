@@ -1,14 +1,15 @@
 package com.stemcloud.smart.web.service;
 
-import com.stemcloud.smart.web.dao.UserInfoRepository;
-import com.stemcloud.smart.web.domain.UserInfo;
+import com.stemcloud.smart.web.config.SecurityUser;
+import com.stemcloud.smart.web.dao.SysUserRepository;
+import com.stemcloud.smart.web.domain.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Belongs to smart-sensor
@@ -16,24 +17,29 @@ import java.util.List;
  * Description: 将用户权限交给spring security进行管控
  */
 @Service
-public class CustomUserService /*implements UserDetailsService*/ {
-    /*private static final Logger logger = LoggerFactory.getLogger(CustomUserService.class);
+public class CustomUserService implements UserDetailsService {
+    private static final Logger logger = LoggerFactory.getLogger(CustomUserService.class);
 
     @Autowired
-    UserInfoRepository userInfoRepository;
+    SysUserRepository sysUserRepository;
 
+    /**
+     * 登陆表单提交后，转向此处进行验证处理
+     * @param username
+     * @return SecurityUser
+     * @throws UsernameNotFoundException
+     */
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        UserInfo userInfo = userInfoRepository.findByUser(s);
-        if (userInfo == null){
-            logger.info("用户不存在");
-            throw new UsernameNotFoundException("用户不存在");
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        SysUser user = sysUserRepository.findByUsername(username);
+        if (user == null){
+            logger.info("the user is not exist!");
+            throw new UsernameNotFoundException("the user is not exist!");
         }
+        logger.info("user:"+username);
+        logger.info("username:"+user.getUsername()+";password:"+user.getPassword());
 
-        // 添加权限
-        List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority(userInfo.getPermission()));
-
-        return new User(userInfo.getUser(), userInfo.getPassword(), authorities);
-    }*/
+        SecurityUser securityUser = new SecurityUser(user);
+        return securityUser;
+    }
 }

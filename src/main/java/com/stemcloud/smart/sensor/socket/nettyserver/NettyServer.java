@@ -34,12 +34,12 @@ public class NettyServer implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        try {
+        /*try {
             runServer(socketConfig.getPort());
         } catch (InterruptedException e) {
             System.out.println("Server start failure." + e);
             logger.error("Server Start Failure. ->" + e.getMessage(), e);
-        }
+        }*/
     }
 
     /**

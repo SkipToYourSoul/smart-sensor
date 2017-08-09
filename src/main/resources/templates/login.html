@@ -1,30 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>用户登陆</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="source/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{source/bootstrap/bootstrap.min.css}"/>
 
     <!-- form validation -->
-    <link rel="stylesheet" href="source/validation/formValidation.min.css"/>
+    <link rel="stylesheet" th:href="@{source/validation/formValidation.min.css}"/>
 
-    <link rel="stylesheet" href="css/login.css"/>
+    <link rel="stylesheet" th:href="@{css/login.css}"/>
 </head>
 <body>
     <div class="container">
         <div class="login-container">
             <div id="output"></div>
-            <h3><strong>login</strong></h3>
+            <h3><strong>用户登陆</strong></h3>
             <div class="avatar"></div>
+            <p th:if="${param.error}" class="bg-danger">有错误，请重试</p>
             <div class="form-box">
-                <form id="login_form">
+                <form id="login_form" role="form" name="form" th:action="@{/login}" method="post">
                     <div class="form-group">
-                        <input name="account" type="text" placeholder="用户名"/>
+                        <input name="username" type="text" placeholder="用户名"/>
                     </div>
                     <input name="password" type="password" placeholder="密码"/>
-                    <button type="button" class="btn btn-info btn-block login" onclick="$('#login_form').submit()">登陆</button>
+                    <!--<button type="button" class="btn btn-info btn-block login" onclick="$('#login_form').submit()">登陆</button>-->
+                    <input type="submit" id="login" value="Login" class="btn btn-info btn-block login"/><!--登陆</input>-->
                 </form>
             </div>
         </div>
@@ -38,7 +40,7 @@
     <script src="source/validation/bootstrap.min.js"></script>
 
     <script>
-        $('#login_form').formValidation({
+        /*$('#login_form').formValidation({
             framework: 'bootstrap',
             fields: {
                 account: { validators: { notEmpty: { message: 'The user_name is required'} } }
@@ -68,7 +70,7 @@
 
         function error_message(message) {
             $("#output").addClass("alert alert-danger animated fadeInUp").html("<strong>" + message + "</strong>");
-        }
+        }*/
     </script>
 </body>
 </html>
