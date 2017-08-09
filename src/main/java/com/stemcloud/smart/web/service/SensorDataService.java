@@ -49,8 +49,13 @@ public class SensorDataService {
     public int saveNewApp(Map<String, String> queryParams){
         String name = queryParams.get("new-app-name");
         String description = queryParams.get("new-app-description");
-        AppInfo appInfo = appInfoRepository.save(new AppInfo(name, "liye", description, dateFormat.format(new Date()),0));
-        return appInfo.getId();
+
+        AppInfo appInfo = new AppInfo();
+        appInfo.setCreator("liye");
+        appInfo.setName(name);
+        appInfo.setDescription(description);
+
+        return appInfoRepository.save(appInfo).getId();
     }
 
     public int saveEditApp(Map<String, String> queryParams){

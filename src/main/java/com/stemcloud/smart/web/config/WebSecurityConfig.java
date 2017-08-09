@@ -42,8 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
-                .antMatchers("/").permitAll()   /* 访问主页无需认证权限 */
-                .antMatchers("/app/**").permitAll()    /* 访问app页无需认证权限 */
+                .antMatchers("/","/app/**").permitAll()   /* 访问这些页面无需认证权限 */
                 .antMatchers("/map/sensor").permitAll()
                 .antMatchers("/source/**").permitAll()
                 .antMatchers("/js/**").permitAll()

@@ -15,23 +15,12 @@ public class SysRole {
     private Long id;
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private SysUser sysUser;
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public SysUser getSysUser() {
-        return sysUser;
-    }
-
-    public void setSysUser(SysUser sysUser) {
-        this.sysUser = sysUser;
     }
 
     public String getName() {

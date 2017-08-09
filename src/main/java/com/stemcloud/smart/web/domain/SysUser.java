@@ -1,6 +1,13 @@
 package com.stemcloud.smart.web.domain;
 
+import org.hibernate.annotations.*;
+import org.hibernate.sql.Update;
+
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,14 +23,28 @@ public class SysUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "email")
     private String email;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(updatable = false)
     private Date createTime;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sysUser")
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
+    @Column(updatable = false,
+            columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private Date updateTime;
+
+    @ManyToMany(cascade = {CascadeType.REFRESH},fetch = FetchType.EAGER)
     private Set<SysRole> sysRoles = new HashSet<SysRole>();
 
     public Long getId() {
@@ -66,12 +87,19 @@ public class SysUser {
         this.createTime = createTime;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sysUser")
     public Set<SysRole> getSysRoles() {
         return sysRoles;
     }
 
     public void setSysRoles(Set<SysRole> sysRoles) {
         this.sysRoles = sysRoles;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

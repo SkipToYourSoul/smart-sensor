@@ -1,6 +1,9 @@
 package com.stemcloud.smart.web.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Belongs to smart-sensor
@@ -23,26 +26,16 @@ public class AppInfo {
     @Column(name = "app_description")
     private String description;
 
-    @Column(name = "app_create_time")
-    private String createTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(name = "app_create_time", updatable = false)
+    private Date createTime;
 
     @Column(name = "app_modify_time")
     private String modifyTime;
 
     @Column(name = "is_deleted")
     private int isDeleted;
-
-    public AppInfo(String name, String creator, String description, String createTime, int isDeleted) {
-        this.name = name;
-        this.creator = creator;
-        this.description = description;
-        this.createTime = createTime;
-        this.isDeleted = isDeleted;
-    }
-
-
-
-    public AppInfo(){}
 
     public int getId() {
         return id;
@@ -76,11 +69,11 @@ public class AppInfo {
         this.description = description;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
