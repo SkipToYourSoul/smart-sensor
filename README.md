@@ -34,3 +34,4 @@
 * jpa数据映射关系：http://blog.csdn.net/lyg_2012/article/details/70195062
 * jpa时间戳操作:http://blog.csdn.net/sushengmiyan/article/details/50360451
 * spring-boot与spring security整合后post 403：http://blog.csdn.net/sinat_28454173/article/details/52251004
+* spring security获取登陆用户信息：http://blog.csdn.net/tomcat_2014/article/details/50725723

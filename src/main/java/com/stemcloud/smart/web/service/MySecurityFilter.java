@@ -58,7 +58,8 @@ public class MySecurityFilter extends AbstractSecurityInterceptor implements Fil
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         logger.info("-------- Do filter --------");
 
-        logger.info("Address: " + servletRequest.getLocalAddr());
+        logger.info("Name: " + servletRequest.getLocalName());
+        logger.info("Remote: " + servletRequest.getRemoteAddr() + " - " + servletRequest.getRemoteHost());
 
         FilterInvocation fi = new FilterInvocation( servletRequest, servletResponse, filterChain );
         InterceptorStatusToken token = super.beforeInvocation(fi);

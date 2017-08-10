@@ -11,4 +11,5 @@ import java.util.List;
  * Description:
  */
 public interface SysRoleRepository extends CrudRepository<SysRole, Long> {
+    SysRole findByName(String name);
 }

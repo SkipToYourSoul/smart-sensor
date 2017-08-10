@@ -40,7 +40,7 @@ public class CustomAccessDecisionManager implements AccessDecisionManager {
             }
         }
 
-        throw new AccessDeniedException("权限不足");
+        throw new AccessDeniedException("Authentication denied!");
     }
 
     @Override

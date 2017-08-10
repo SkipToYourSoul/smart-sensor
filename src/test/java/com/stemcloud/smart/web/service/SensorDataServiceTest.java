@@ -34,7 +34,7 @@ public class SensorDataServiceTest {
     SensorInfoRepository sensorInfoRepository;
 
     @Autowired
-    SysUserRepository sysUserRepository;
+    UserManagementService userManagementService;
 
     @Test
     public void generateTestApp(){
@@ -59,14 +59,7 @@ public class SensorDataServiceTest {
 
     @Test
     public void generateUser(){
-        SysUser sysUser = new SysUser();
-
-        sysUser.setUsername("cat");
-
-        BCryptPasswordEncoder bc=new BCryptPasswordEncoder(4);
-        sysUser.setPassword(bc.encode("cat"));
-
-        long userId = sysUserRepository.save(sysUser).getId();
-        logger.info("New user: " + userId);
+        // userManagementService.registerAdminUser("root", "root", "liye@qiyi.com");
+        userManagementService.registerUser("user","user","");
     }
 }

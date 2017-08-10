@@ -66,9 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.addFilterBefore(mySecurityFilter(), FilterSecurityInterceptor.class)   /* 添加自定义拦截器 */
                 .authorizeRequests()
-                .antMatchers("/", "/app/**", "/map/sensor").permitAll()   /* 访问这些页面无需认证权限 */
+                .antMatchers("/index/**").permitAll()   /*  允许访问主页数据无需认证权限  */
                 .antMatchers("/source/**", "/js/**", "/css/**", "/img/**").permitAll()  /* 访问相关资源无需认证权限 */
-                // .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()   /* 其他所有资源都需要认证，登陆后访问 */
                 // .antMatchers("/class").hasAuthority("ROLE_ADMIN") /* 登陆后只有ADMIN角色可以访问class页面 */
                 .and()

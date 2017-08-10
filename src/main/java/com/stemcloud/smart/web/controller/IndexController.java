@@ -20,7 +20,7 @@ public class IndexController {
     @Autowired
     SensorDataService sensorDataService;
 
-    @GetMapping(value = "/map/sensor")
+    @GetMapping(value = "/index/map/sensor")
     public List<SensorInfo> getSensorInfo(){
         return sensorDataService.getShowSensorInfo();
     }
