@@ -14,7 +14,7 @@ import java.util.List;
  * Description:
  */
 public interface SensorInfoRepository extends CrudRepository<SensorInfo, Integer> {
-    List<SensorInfo> findByIsShow(int isShow);
+    List<SensorInfo> findByIsShare(int isShare);
 
     List<SensorInfo> findByAppId(int appId);
 

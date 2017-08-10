@@ -1,13 +1,9 @@
 package com.stemcloud.smart.web.domain;
 
-import org.hibernate.annotations.*;
-import org.hibernate.sql.Update;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,10 +20,10 @@ public class SysUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Column(name = "email")
@@ -42,7 +38,7 @@ public class SysUser {
     @UpdateTimestamp
     @Column(updatable = false,
             columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
-    private Date updateTime;
+    private Date modifyTime;
 
     @ManyToMany(cascade = {CascadeType.REFRESH},fetch = FetchType.EAGER)
     private Set<SysRole> sysRoles = new HashSet<SysRole>();
@@ -95,11 +91,7 @@ public class SysUser {
         this.sysRoles = sysRoles;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public Date getModifyTime() {
+        return modifyTime;
     }
 }

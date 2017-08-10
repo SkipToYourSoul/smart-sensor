@@ -1,6 +1,10 @@
 package com.stemcloud.smart.web.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Belongs to smart-sensor
@@ -14,22 +18,22 @@ public class SensorInfo {
     @GeneratedValue
     private int id;
 
-    @Column(name = "sensor_name")
+    @Column(name = "sensor_name", nullable = false)
     private String name;
 
-    @Column(name = "sensor_code")
+    @Column(name = "sensor_code", nullable = false)
     private String code;
 
-    @Column(name = "sensor_creator")
+    @Column(name = "sensor_creator", nullable = false)
     private String creator;
 
-    @Column(name = "sensor_owner")
-    private String owner;
-
-    @Column(name = "sensor_type")
+    @Column(name = "sensor_type", nullable = false)
     private int type;
 
+    @Column(length = 20, precision = 6)
     private Double longitude;
+
+    @Column(length = 20, precision = 6)
     private Double latitude;
 
     @Column(name = "sensor_city")
@@ -41,36 +45,25 @@ public class SensorInfo {
     @Column(name = "sensor_app_id")
     private int appId;
 
-    @Column(name = "is_show")
-    private int isShow;
-
-    @Column(name = "sensor_create_time")
-    private String createTime;
-
-    @Column(name = "sensor_modify_time")
-    private String modifyTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(updatable = false)
+    private Date createTime;
 
     @Column(name = "is_deleted")
-    private int isDeleted;
+    private int isDeleted = 0;
 
-    public SensorInfo(String name, String code, String creator, String owner, int type, Double longitude, Double latitude, String city, String description, int appId, int isShow, String createTime, int isDeleted) {
-        this.name = name;
-        this.code = code;
-        this.creator = creator;
-        this.owner = owner;
-        this.type = type;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.city = city;
-        this.description = description;
-        this.appId = appId;
-        this.isShow = isShow;
-        this.createTime = createTime;
-        this.isDeleted = isDeleted;
-    }
+    @Column(name = "is_monitor")
+    private int isMonitor = 0;
 
-    public SensorInfo() {
-    }
+    @Column(name = "is_shared")
+    private int isShare = 0;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
+    @Column(updatable = false,
+            columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private Date modifyTime;
 
     public int getId() {
         return id;
@@ -102,14 +95,6 @@ public class SensorInfo {
 
     public void setCreator(String creator) {
         this.creator = creator;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     public int getType() {
@@ -160,28 +145,8 @@ public class SensorInfo {
         this.appId = appId;
     }
 
-    public int getIsShow() {
-        return isShow;
-    }
-
-    public void setIsShow(int isShow) {
-        this.isShow = isShow;
-    }
-
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(String modifyTime) {
-        this.modifyTime = modifyTime;
     }
 
     public int getIsDeleted() {
@@ -190,5 +155,25 @@ public class SensorInfo {
 
     public void setIsDeleted(int isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public int getIsMonitor() {
+        return isMonitor;
+    }
+
+    public void setIsMonitor(int isMonitor) {
+        this.isMonitor = isMonitor;
+    }
+
+    public int getIsShare() {
+        return isShare;
+    }
+
+    public void setIsShare(int isShare) {
+        this.isShare = isShare;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
     }
 }

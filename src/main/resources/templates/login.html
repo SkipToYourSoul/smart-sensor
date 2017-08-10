@@ -25,8 +25,7 @@
                         <input name="username" type="text" placeholder="用户名"/>
                     </div>
                     <input name="password" type="password" placeholder="密码"/>
-                    <!--<button type="button" class="btn btn-info btn-block login" onclick="$('#login_form').submit()">登陆</button>-->
-                    <input type="submit" id="login" value="Login" class="btn btn-info btn-block login"/><!--登陆</input>-->
+                    <button type="submit" class="btn btn-info btn-block login">登陆</button>
                 </form>
             </div>
         </div>
@@ -40,37 +39,12 @@
     <script src="source/validation/bootstrap.min.js"></script>
 
     <script>
-        /*$('#login_form').formValidation({
+        $('#login_form').formValidation({
             framework: 'bootstrap',
             fields: {
-                account: { validators: { notEmpty: { message: 'The user_name is required'} } }
+                username: { validators: { notEmpty: { message: 'The user_name is required'} } }
             }
-        }).on('success.form.fv', function(evt) {
-            evt.preventDefault();
-
-            var parameters = $(this).serialize();
-            $.ajax({
-                type: "POST",
-                url: "/loginPost",
-                data: parameters,
-                error: function(error_message) {
-                    error_message("服务器错误，请联系管理员")
-                },
-                success: function(data) {
-                    if (data.success == true)
-                        window.location.href = '/';
-                    else{
-                        error_message("密码错误，请重试")
-                    }
-                }
-            });
-        }).on('err.form.fv', function (evt) {
-            error_message("服务器错误，请联系管理员")
         });
-
-        function error_message(message) {
-            $("#output").addClass("alert alert-danger animated fadeInUp").html("<strong>" + message + "</strong>");
-        }*/
     </script>
 </body>
 </html>

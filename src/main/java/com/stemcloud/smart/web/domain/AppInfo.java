@@ -1,8 +1,11 @@
 package com.stemcloud.smart.web.domain;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -17,10 +20,10 @@ public class AppInfo {
     @GeneratedValue
     private int id;
 
-    @Column(name = "app_name")
+    @Column(name = "app_name", nullable = false)
     private String name;
 
-    @Column(name = "app_creator")
+    @Column(name = "app_creator", nullable = false)
     private String creator;
 
     @Column(name = "app_description")
@@ -31,11 +34,15 @@ public class AppInfo {
     @Column(name = "app_create_time", updatable = false)
     private Date createTime;
 
-    @Column(name = "app_modify_time")
-    private String modifyTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
+    @Column(name = "app_modify_time",
+            updatable = false,
+            columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private Date modifyTime;
 
     @Column(name = "is_deleted")
-    private int isDeleted;
+    private int isDeleted = 0;
 
     public int getId() {
         return id;
@@ -73,15 +80,11 @@ public class AppInfo {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getModifyTime() {
+    public Date getModifyTime() {
         return modifyTime;
     }
 
-    public void setModifyTime(String modifyTime) {
+    public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
 

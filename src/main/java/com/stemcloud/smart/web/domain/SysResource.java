@@ -16,8 +16,6 @@ public class SysResource {
 
     private String resourceUrl;
 
-    private int resourceId;
-
     private String remark;
 
     public Long getId() {
@@ -34,14 +32,6 @@ public class SysResource {
 
     public void setResourceUrl(String resourceUrl) {
         this.resourceUrl = resourceUrl;
-    }
-
-    public int getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(int resourceId) {
-        this.resourceId = resourceId;
     }
 
     public String getRemark() {

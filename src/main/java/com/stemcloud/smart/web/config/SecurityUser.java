@@ -35,6 +35,8 @@ public class SecurityUser extends SysUser implements UserDetails {
         if(userRoles != null)
         {
             for (SysRole role : userRoles) {
+                System.out.println("The user " + this.getUsername() + " has the role " + role.getName());
+
                 SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
                 authorities.add(authority);
             }

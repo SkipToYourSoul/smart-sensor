@@ -1,6 +1,8 @@
 package com.stemcloud.smart.web.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Belongs to smart-sensor
@@ -14,6 +16,9 @@ public class SysRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @ManyToMany(cascade = {CascadeType.REFRESH},fetch = FetchType.EAGER)
+    private Set<SysResource> sysResources = new HashSet<SysResource>();
 
     public Long getId() {
         return id;
@@ -29,5 +34,13 @@ public class SysRole {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<SysResource> getSysResources() {
+        return sysResources;
+    }
+
+    public void setSysResources(Set<SysResource> sysResources) {
+        this.sysResources = sysResources;
     }
 }

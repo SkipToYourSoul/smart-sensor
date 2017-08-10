@@ -1,6 +1,7 @@
 package com.stemcloud.smart.web.domain;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Belongs to smart-sensor
@@ -25,14 +26,8 @@ public class SensorData {
 
     private String value;
 
-    private String timestamp;
-
-    public SensorData(int sensorId, String entrance, int type, String value) {
-        this.sensorId = sensorId;
-        this.entrance = entrance;
-        this.type = type;
-        this.value = value;
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     public SensorData(){}
 
@@ -76,11 +71,11 @@ public class SensorData {
         this.value = value;
     }
 
-    public String getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 }
