@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.service;
+package com.stemcloud.smart.web.service.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,16 +12,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Belongs to smart-sensor
  * Author: liye on 2017/8/10
- * Description: access decision manager
+ * Description: access decision manager, 用于判断当前用户访问当前url是否有权限
  */
 @Service
 public class CustomAccessDecisionManager implements AccessDecisionManager {
-    private static final Logger logger = LoggerFactory.getLogger(CustomAccessDecisionManager.class);
+    private Logger logger = LoggerFactory.getLogger(CustomAccessDecisionManager.class);
 
     @Override
     public void decide(Authentication authentication, Object o, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {

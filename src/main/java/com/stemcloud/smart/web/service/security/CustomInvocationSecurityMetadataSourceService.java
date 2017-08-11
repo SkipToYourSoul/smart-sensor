@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.service;
+package com.stemcloud.smart.web.service.security;
 
 import com.stemcloud.smart.web.dao.SysRoleRepository;
 import com.stemcloud.smart.web.domain.SysResource;
@@ -20,11 +20,11 @@ import java.util.*;
 /**
  * Belongs to smart-sensor
  * Author: liye on 2017/8/10
- * Description: user -> role -> resource
+ * Description: 根据user -> role -> resource的关系定义权限map
  */
 @Service
 public class CustomInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource {
-    private static final Logger logger = LoggerFactory.getLogger(CustomInvocationSecurityMetadataSourceService.class);
+    private Logger logger = LoggerFactory.getLogger(CustomInvocationSecurityMetadataSourceService.class);
 
     @Autowired
     SysRoleRepository sysRoleRepository;

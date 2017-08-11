@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Controller
 public class MainController {
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
+    private Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @Autowired
     SensorViewService sensorViewService;

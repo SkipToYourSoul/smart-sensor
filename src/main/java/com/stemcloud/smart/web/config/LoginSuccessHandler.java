@@ -2,6 +2,8 @@ package com.stemcloud.smart.web.config;
 
 import com.stemcloud.smart.web.domain.SysRole;
 import com.stemcloud.smart.web.domain.SysUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
@@ -17,19 +19,16 @@ import java.util.Set;
  * Description: 登陆成功后执行
  */
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+    private Logger logger = LoggerFactory.getLogger(LoginSuccessHandler.class);
+
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException,
             ServletException {
         //获得授权后可得到用户信息   可使用SUserService进行数据库操作
         SysUser userDetails = (SysUser) authentication.getPrincipal();
-        Set<SysRole> roles = userDetails.getSysRoles();
-
-        for (SysRole sysRole : roles){
-            System.out.println(sysRole.getName());
-        }
 
         //输出登录提示信息
-        System.out.println("管理员 " + userDetails.getUsername() + " 登录");
-        System.out.println("IP :"+getIpAddress(request));
+        logger.info("Login user: " + userDetails.getUsername());
+        logger.info("IP: "+getIpAddress(request));
 
         super.onAuthenticationSuccess(request, response, authentication);
     }

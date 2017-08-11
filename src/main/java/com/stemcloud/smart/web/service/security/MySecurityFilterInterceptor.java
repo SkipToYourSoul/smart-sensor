@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.service;
+package com.stemcloud.smart.web.service.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,16 +12,17 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
  * Belongs to smart-sensor
  * Author: liye on 2017/8/10
- * Description:
+ * Description: security filter, judge user access before request
  */
 @Component
-public class MySecurityFilter extends AbstractSecurityInterceptor implements Filter {
-    private static final Logger logger = LoggerFactory.getLogger(MySecurityFilter.class);
+public class MySecurityFilterInterceptor extends AbstractSecurityInterceptor implements Filter {
+    private Logger logger = LoggerFactory.getLogger(MySecurityFilterInterceptor.class);
 
     @Autowired
     private CustomInvocationSecurityMetadataSourceService invocationSecurityMetadataSourceService;
@@ -56,10 +57,8 @@ public class MySecurityFilter extends AbstractSecurityInterceptor implements Fil
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        logger.info("-------- Do filter --------");
-
-        logger.info("Name: " + servletRequest.getLocalName());
-        logger.info("Remote: " + servletRequest.getRemoteAddr() + " - " + servletRequest.getRemoteHost());
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        logger.info("-------- Do filter - Request Path:" + request.getRequestURI());
 
         FilterInvocation fi = new FilterInvocation( servletRequest, servletResponse, filterChain );
         InterceptorStatusToken token = super.beforeInvocation(fi);

@@ -1,6 +1,6 @@
-package com.stemcloud.smart.web.service;
+package com.stemcloud.smart.web.service.security;
 
-import com.stemcloud.smart.web.config.SecurityUser;
+import com.stemcloud.smart.web.domain.security.SecurityUser;
 import com.stemcloud.smart.web.dao.SysUserRepository;
 import com.stemcloud.smart.web.domain.SysUser;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CustomUserService implements UserDetailsService {
-    private static final Logger logger = LoggerFactory.getLogger(CustomUserService.class);
+    private Logger logger = LoggerFactory.getLogger(CustomUserService.class);
 
     @Autowired
     SysUserRepository sysUserRepository;
