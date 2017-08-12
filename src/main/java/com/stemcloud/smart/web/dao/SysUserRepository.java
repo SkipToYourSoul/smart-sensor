@@ -1,6 +1,6 @@
 package com.stemcloud.smart.web.dao;
 
-import com.stemcloud.smart.web.domain.SysUser;
+import com.stemcloud.smart.web.domain.security.SysUser;
 import org.springframework.data.repository.CrudRepository;
 
 /**

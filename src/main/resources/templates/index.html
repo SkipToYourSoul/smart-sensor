@@ -6,12 +6,11 @@
     <title>Smart-Sensor</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="source/bootstrap/bootstrap.min.css"/>
-    <link rel="stylesheet" href="source/bootstrap/bootstrap-select.min.css"/>
+    <link rel="stylesheet" th:href="@{source/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{source/bootstrap/bootstrap-select.min.css}"/>
+    <link rel="stylesheet" th:href="@{source/bootstrap/font-awesome.min.css}"/>
 
-    <link rel="stylesheet" href="source/bootstrap/font-awesome.min.css"/>
-
-    <link rel="stylesheet" href="css/nav.css"/>
+    <link rel="stylesheet" th:href="@{css/nav.css}"/>
 </head>
 <body>
     <div class="navbar-wrapper" th:include="/module/nav::nav">
@@ -62,23 +61,23 @@
         <p align="center">@STEM.CLOUD - <strong>SMART SENSOR</strong></p>
     </footer>
 
-    <script src="source/jquery.min.js"></script>
-    <script src="source/bootstrap/bootstrap.min.js"></script>
+    <script th:src="@{source/jquery.min.js}"></script>
+    <script th:src="@{source/bootstrap/bootstrap.min.js}"></script>
 
-    <script dataType="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
-    <script dataType="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
-    <script dataType="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+    <script dataType="text/javascript" th:src="@{http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM}"></script>
+    <script dataType="text/javascript" th:src="@{http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js}"></script>
+    <script dataType="text/javascript" th:src="@{http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js}"></script>
 
 
-    <script src="source/messenger/messenger.min.js"></script>
-    <script src="source/bootstrap/bootstrap-select.min.js"></script>
+    <script th:src="@{source/messenger/messenger.min.js}"></script>
+    <script th:src="@{source/bootstrap/bootstrap-select.min.js}"></script>
 
-    <script src="source/echarts/echarts.common.min.js"></script>
-    <script src="source/echarts/infographic.js"></script>
+    <script th:src="@{source/echarts/echarts.common.min.js}"></script>
+    <script th:src="@{source/echarts/infographic.js}"></script>
 
-    <script src="js/common.js"></script>
-    <script src="js/index-chart.js"></script>
-    <script src="js/index-map.js"></script>
+    <script th:src="@{js/common.js}"></script>
+    <script th:src="@{js/index-chart.js}"></script>
+    <script th:src="@{js/index-map.js}"></script>
 
 </body>
 </html>

@@ -31,6 +31,9 @@
             <ul class="nav navbar-nav pull-right" style="border-left:solid 1px #d9d9de; margin-right: 10px">
                 <li class=""><a th:href="@{/login}"><i class="fa fa-spinner fa-pulse fa-fw"></i>&nbsp; 登陆</a></li>
                 <li class=""><a href="#"><i class="fa fa-user-circle fa-fw"></i>&nbsp; 注册</a></li>
+                <li><form th:action="@{/logout}" method="post">
+                    <input type="submit" class="btn btn-primary" value="注销"/>
+                </form></li>
             </ul>
         </div>
     </nav>

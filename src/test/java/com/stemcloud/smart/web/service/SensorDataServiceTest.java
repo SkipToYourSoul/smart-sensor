@@ -2,20 +2,15 @@ package com.stemcloud.smart.web.service;
 
 import com.stemcloud.smart.web.dao.AppInfoRepository;
 import com.stemcloud.smart.web.dao.SensorInfoRepository;
-import com.stemcloud.smart.web.dao.SysUserRepository;
 import com.stemcloud.smart.web.domain.AppInfo;
 import com.stemcloud.smart.web.domain.SensorInfo;
-import com.stemcloud.smart.web.domain.SysUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.junit.Assert.*;
 
 /**
  * Belongs to smart-sensor
@@ -60,6 +55,6 @@ public class SensorDataServiceTest {
     @Test
     public void generateUser(){
         // userManagementService.registerAdminUser("root", "root", "liye@qiyi.com");
-        userManagementService.registerUser("user","user","");
+        userManagementService.registerUser("teacher","teacher","", "ROLE_TEACHER");
     }
 }

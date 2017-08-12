@@ -1,6 +1,7 @@
-package com.stemcloud.smart.web.domain;
+package com.stemcloud.smart.web.domain.security;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Belongs to smart-sensor
@@ -14,9 +15,13 @@ public class SysResource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = true)
     private String resourceUrl;
 
     private String remark;
+
+    @Column(nullable = true)
+    private String method;
 
     public Long getId() {
         return id;
@@ -40,5 +45,13 @@ public class SysResource {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 }

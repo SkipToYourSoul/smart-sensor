@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.FilterInvocation;
-import org.springframework.stereotype.Component;
+import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
+import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -20,22 +19,15 @@ import java.io.IOException;
  * Author: liye on 2017/8/10
  * Description: security filter, judge user access before request
  */
-@Component
+@Service
 public class MySecurityFilterInterceptor extends AbstractSecurityInterceptor implements Filter {
     private Logger logger = LoggerFactory.getLogger(MySecurityFilterInterceptor.class);
 
     @Autowired
-    private CustomInvocationSecurityMetadataSourceService invocationSecurityMetadataSourceService;
+    private FilterInvocationSecurityMetadataSource securityMetadataSource;
 
     @Autowired
-    private CustomAccessDecisionManager accessDecisionManager;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @PostConstruct
-    public void init(){
-        super.setAuthenticationManager(authenticationManager);
+    public void setCustomAccessDecisionManager(CustomAccessDecisionManager accessDecisionManager){
         super.setAccessDecisionManager(accessDecisionManager);
     }
 
@@ -47,7 +39,7 @@ public class MySecurityFilterInterceptor extends AbstractSecurityInterceptor imp
     @Override
     public SecurityMetadataSource obtainSecurityMetadataSource() {
         // logger.info("-------- obtainSecurityMetadataSource --------");
-        return this.invocationSecurityMetadataSourceService;
+        return this.securityMetadataSource;
     }
 
     @Override

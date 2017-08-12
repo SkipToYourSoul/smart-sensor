@@ -1,8 +1,8 @@
 package com.stemcloud.smart.web.service.security;
 
 import com.stemcloud.smart.web.dao.SysRoleRepository;
-import com.stemcloud.smart.web.domain.SysResource;
-import com.stemcloud.smart.web.domain.SysRole;
+import com.stemcloud.smart.web.domain.security.SysResource;
+import com.stemcloud.smart.web.domain.security.SysRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -32,6 +33,7 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
     private static Map<String, Collection<ConfigAttribute>> resourceMap = null;
 
     /**
+     * init the auth when the application start
      * key: resource url, eg: /app
      * value: ConfigAttribute List
      */
@@ -67,6 +69,12 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
         logger.info("-------- Complete the authentication --------");
     }
 
+    /**
+     * 返回结果给CustomAccessDecisionManager的decide方法
+     * @param o
+     * @return
+     * @throws IllegalArgumentException
+     */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         FilterInvocation filterInvocation = (FilterInvocation) o;
@@ -74,13 +82,13 @@ public class CustomInvocationSecurityMetadataSourceService implements FilterInvo
             loadResourceDefine();
         }
 
+        RequestMatcher requestMatcher;
         for (String resURL : resourceMap.keySet()) {
-            RequestMatcher requestMatcher = new AntPathRequestMatcher(resURL);
+            requestMatcher = new AntPathRequestMatcher(resURL);
             if (requestMatcher.matches(filterInvocation.getHttpRequest())) {
                 return resourceMap.get(resURL);
             }
         }
-
         return null;
     }
 

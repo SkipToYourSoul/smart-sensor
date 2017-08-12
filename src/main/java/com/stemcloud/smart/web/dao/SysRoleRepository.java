@@ -1,9 +1,7 @@
 package com.stemcloud.smart.web.dao;
 
-import com.stemcloud.smart.web.domain.SysRole;
+import com.stemcloud.smart.web.domain.security.SysRole;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
 
 /**
  * Belongs to smart-sensor

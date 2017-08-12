@@ -45,7 +45,7 @@ var opts = {
 
 $.ajax({
     type: "get",
-    url: current_address + "/index/map/sensor",
+    url: current_address + "index/map/sensor",
     dataType: "json",
     success: function (sensor) {
         var markers = [];

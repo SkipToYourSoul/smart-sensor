@@ -2,8 +2,8 @@ package com.stemcloud.smart.web.service;
 
 import com.stemcloud.smart.web.dao.SysRoleRepository;
 import com.stemcloud.smart.web.dao.SysUserRepository;
-import com.stemcloud.smart.web.domain.SysRole;
-import com.stemcloud.smart.web.domain.SysUser;
+import com.stemcloud.smart.web.domain.security.SysRole;
+import com.stemcloud.smart.web.domain.security.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,19 +44,19 @@ public class UserManagementService {
         logger.info("New user: " + userId);
     }
 
-    public void registerUser(String username, String password, String email){
+    public void registerUser(String username, String password, String email, String role){
         SysUser sysUser = new SysUser();
 
         sysUser.setUsername(username);
         sysUser.setPassword(new BCryptPasswordEncoder(4).encode(password));
         sysUser.setEmail(email);
 
-        SysRole sysRole = sysRoleRepository.findByName("ROLE_USER");
+        SysRole sysRole = sysRoleRepository.findByName(role);
         Set<SysRole> set = new HashSet<SysRole>();
         set.add(sysRole);
         sysUser.setSysRoles(set);
 
         long userId = sysUserRepository.save(sysUser).getId();
-        logger.info("New user: " + userId);
+        logger.info("New user: " + userId + " has the role " + role);
     }
 }

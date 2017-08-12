@@ -2,7 +2,7 @@ package com.stemcloud.smart.web.service.security;
 
 import com.stemcloud.smart.web.domain.security.SecurityUser;
 import com.stemcloud.smart.web.dao.SysUserRepository;
-import com.stemcloud.smart.web.domain.SysUser;
+import com.stemcloud.smart.web.domain.security.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +36,8 @@ public class CustomUserService implements UserDetailsService {
             logger.info("the user is not exist!");
             throw new UsernameNotFoundException("the user is not exist!");
         }
-        logger.info("user:"+username);
         logger.info("username:"+user.getUsername()+";password:"+user.getPassword());
 
-        SecurityUser securityUser = new SecurityUser(user);
-        return securityUser;
+        return new SecurityUser(user);
     }
 }

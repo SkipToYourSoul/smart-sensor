@@ -2,6 +2,9 @@ package com.stemcloud.smart.web.config;
 
 import com.stemcloud.smart.web.service.security.CustomUserService;
 import com.stemcloud.smart.web.service.security.MySecurityFilterInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,9 +25,11 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Bean
-    MySecurityFilterInterceptor mySecurityFilter(){
+    MySecurityFilterInterceptor mySecurityFilterInterceptor() {
+        logger.info("============= Get Filter Bean ==============");
         return new MySecurityFilterInterceptor();
     }
 
@@ -47,14 +52,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    public void configure(WebSecurity webSecurity) throws Exception {
-        super.configure(webSecurity);
-    }
-
     protected void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(customUserService()).passwordEncoder(passwordEncoder());
         // 不删除凭据，以便记住用户
         builder.eraseCredentials(false);
+    }
+
+    public void configure(WebSecurity webSecurity){
+        /* 访问时忽略静态相关资源 */
+        webSecurity.ignoring().antMatchers("/source/**", "/js/**", "/css/**", "/img/**");
+
+        /* 访问时忽略主页以及相关资源 */
+        webSecurity.ignoring().antMatchers("/", "/index/**");
     }
 
     /**
@@ -63,29 +72,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception
      */
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.addFilterBefore(mySecurityFilter(), FilterSecurityInterceptor.class)   /* 添加自定义拦截器 */
-                .authorizeRequests()
-                .antMatchers("/index/**", "/login").permitAll()   /*  允许访问主页数据以及登陆页面无需认证权限  */
-                .antMatchers("/source/**", "/js/**", "/css/**", "/img/**").permitAll()  /* 访问相关资源无需认证权限 */
+        httpSecurity.authorizeRequests()
                 .anyRequest().authenticated()   /* 其他所有资源都需要认证，登陆后访问 */
-                // .antMatchers("/class").hasAuthority("ROLE_ADMIN") /* 登陆后只有ADMIN角色可以访问class页面 */
                 .and()
                 /* 登陆相关设置 */
                 .formLogin()
                 .loginPage("/login")
-                // .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/")
                 .failureUrl("/login?error")
-                .permitAll()
-                .successHandler(loginSuccessHandler())  /* 成功之后跳转 */
+                .permitAll()    /*  登陆页面用户任意访问  */
+                .successHandler(loginSuccessHandler())  /* 登陆成功之后执行 */
                 .and()
                 /* 退出登陆，回到主页 */
                 .logout()
                 .logoutSuccessUrl("/")
-                .permitAll()
+                .permitAll()   /*  注销行为用户任意访问  */
                 .invalidateHttpSession(true)
                 .and()
                 /* 开启cookie保存用户数据 */
                 .rememberMe()
                 .tokenValiditySeconds(60 * 60 * 24 * 7);    /* 设置cookie有效期 */
+        httpSecurity.addFilterBefore(mySecurityFilterInterceptor(), FilterSecurityInterceptor.class);   /* 添加自定义拦截器 */
+        httpSecurity.csrf().disable();
     }
 }

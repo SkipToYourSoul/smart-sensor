@@ -1,7 +1,5 @@
 package com.stemcloud.smart.web.domain.security;
 
-import com.stemcloud.smart.web.domain.SysRole;
-import com.stemcloud.smart.web.domain.SysUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,8 +38,7 @@ public class SecurityUser extends SysUser implements UserDetails {
         {
             for (SysRole role : userRoles) {
                 logger.info("The user " + this.getUsername() + " has the role " + role.getName());
-
-                SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
+                GrantedAuthority authority = new SimpleGrantedAuthority(role.getName());
                 authorities.add(authority);
             }
         }

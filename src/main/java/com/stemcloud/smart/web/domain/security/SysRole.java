@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.domain;
+package com.stemcloud.smart.web.domain.security;
 
 import javax.persistence.*;
 import java.util.HashSet;
