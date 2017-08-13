@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SensorDataServiceTest {
+public class AppManagementDataServiceTest {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
@@ -38,7 +38,7 @@ public class SensorDataServiceTest {
         appInfo.setCreator("liye");
         appInfo.setDescription("description");
 
-        int appId = appInfoRepository.save(appInfo).getId();
+        long appId = appInfoRepository.save(appInfo).getId();
         logger.info("New app: " + appId);
 
         SensorInfo sensorInfo = new SensorInfo();
@@ -48,7 +48,7 @@ public class SensorDataServiceTest {
         sensorInfo.setType(1);
         sensorInfo.setAppId(appId);
 
-        int sensorId = sensorInfoRepository.save(sensorInfo).getId();
+        long sensorId = sensorInfoRepository.save(sensorInfo).getId();
         logger.info("New sensor: " + sensorId);
     }
 

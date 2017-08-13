@@ -1,7 +1,7 @@
 package com.stemcloud.smart.web.controller;
 
 import com.stemcloud.smart.web.domain.SensorInfo;
-import com.stemcloud.smart.web.service.SensorDataService;
+import com.stemcloud.smart.web.service.AppManagementDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("/")
 public class IndexController {
     @Autowired
-    SensorDataService sensorDataService;
+    AppManagementDataService appManagementDataService;
 
     @GetMapping(value = "/index/map/sensor")
     public List<SensorInfo> getSensorInfo(){
-        return sensorDataService.getShowSensorInfo();
+        return appManagementDataService.getShowSensorInfo();
     }
 }

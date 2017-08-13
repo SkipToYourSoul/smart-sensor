@@ -2,7 +2,7 @@ package com.stemcloud.smart.web.controller;
 
 import com.stemcloud.smart.web.domain.SensorData;
 import com.stemcloud.smart.web.domain.SensorInfo;
-import com.stemcloud.smart.web.service.SensorDataService;
+import com.stemcloud.smart.web.service.AppManagementDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +22,23 @@ public class AppController {
     private static final Logger logger = LoggerFactory.getLogger(AppController.class);
 
     @Autowired
-    SensorDataService sensorDataService;
+    AppManagementDataService appManagementDataService;
 
     @GetMapping("/sensor/data")
     public List<SensorData> getSensorData(@RequestParam int sensorId){
-        return sensorDataService.getSensorDataBySensorId(sensorId);
+        return appManagementDataService.getSensorDataBySensorId(sensorId);
     }
 
     @PostMapping("/new/app")
-    public int newApp(@RequestParam Map<String, String> queryParams){
+    public long newApp(@RequestParam Map<String, String> queryParams){
         int isNewApp = Integer.parseInt(queryParams.get("is-new-app"));
         if (isNewApp == 1){
-            int appId = sensorDataService.saveNewApp(queryParams);
+            long appId = appManagementDataService.saveNewApp(queryParams);
             logger.info("New app " + appId);
             return appId;
         } else if (isNewApp == 0){
             int appId = Integer.valueOf(queryParams.get("id"));
-            sensorDataService.saveEditApp(queryParams);
+            appManagementDataService.saveEditApp(queryParams);
             logger.info("Edit app " + appId);
             return appId;
         }
@@ -51,11 +51,11 @@ public class AppController {
         int isNewSensor = Integer.parseInt(queryParams.get("is-new-sensor"));
 
         if (isNewSensor == 1) {
-            SensorInfo sensorInfo = sensorDataService.saveNewSensor(queryParams);
+            SensorInfo sensorInfo = appManagementDataService.saveNewSensor(queryParams);
             logger.info("New sensor: " + sensorInfo.getId());
         } else if (isNewSensor == 0){
             int sensorId = Integer.parseInt(queryParams.get("sensorId"));
-            int ret = sensorDataService.saveEditSensor(sensorId, queryParams);
+            int ret = appManagementDataService.saveEditSensor(sensorId, queryParams);
             logger.info("Update sensor: " + sensorId + " return state: " + ret);
         }
 
@@ -65,7 +65,7 @@ public class AppController {
     @GetMapping(value = "/delete/sensor")
     public String deleteSensor(@RequestParam int id){
         try {
-            sensorDataService.deleteSensor(id);
+            appManagementDataService.deleteSensor(id);
             logger.info("Delete sensor: " + id);
         } catch (Exception e){
             return "failure";

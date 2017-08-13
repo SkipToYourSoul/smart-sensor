@@ -16,11 +16,11 @@ import java.util.Map;
 /**
  * Belongs to smart-sensor
  * Author: liye on 2017/8/4
- * Description: return data for ajax
+ * Description: some basic operation of app and sensor data
  */
 @Service
 @Transactional
-public class SensorDataService {
+public class AppManagementDataService {
     @Autowired
     SensorInfoRepository sensorInfoRepository;
 
@@ -42,7 +42,7 @@ public class SensorDataService {
         return sensorDataRepository.findBySensorId(sensorId);
     }
 
-    public int saveNewApp(Map<String, String> queryParams){
+    public long saveNewApp(Map<String, String> queryParams){
         String name = queryParams.get("new-app-name");
         String description = queryParams.get("new-app-description");
 
@@ -58,9 +58,8 @@ public class SensorDataService {
         int id = Integer.valueOf(queryParams.get("id"));
         String name = queryParams.get("new-app-name");
         String description = queryParams.get("new-app-description");
-        int ret = appInfoRepository.updateAppInfo(id, name, description);
 
-        return ret;
+        return appInfoRepository.updateAppInfo(id, name, description);
     }
 
     public SensorInfo saveNewSensor(Map<String, String> queryParams){

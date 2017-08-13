@@ -4,7 +4,6 @@ import com.stemcloud.smart.web.service.security.CustomUserService;
 import com.stemcloud.smart.web.service.security.MySecurityFilterInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -63,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring().antMatchers("/source/**", "/js/**", "/css/**", "/img/**");
 
         /* 访问时忽略主页以及相关资源 */
-        webSecurity.ignoring().antMatchers("/", "/index/**");
+        webSecurity.ignoring().antMatchers("/", "/index/**", "/denied");
     }
 
     /**

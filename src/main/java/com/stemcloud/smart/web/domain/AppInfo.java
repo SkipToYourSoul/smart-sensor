@@ -18,7 +18,7 @@ import java.util.Date;
 public class AppInfo {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
     @Column(name = "app_name", nullable = false)
     private String name;
@@ -44,11 +44,11 @@ public class AppInfo {
     @Column(name = "is_deleted")
     private int isDeleted = 0;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

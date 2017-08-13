@@ -14,7 +14,9 @@ import java.util.List;
  * Description:
  */
 public interface AppInfoRepository extends CrudRepository<AppInfo, Integer> {
-    public List<AppInfo> findByCreatorOrderByCreateTime(String creator);
+    List<AppInfo> findByCreatorOrderByCreateTime(String creator);
+
+    AppInfo findByCreatorAndId(String creator, long id);
 
     @Query(value = "UPDATE base_app_info SET app_name = :name, app_description = :description WHERE id = :id", nativeQuery = true)
     @Modifying

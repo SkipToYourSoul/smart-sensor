@@ -7,15 +7,15 @@
     <title>Smart-Sensor</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="source/bootstrap/bootstrap.min.css"/>
-    <link rel="stylesheet" href="source/bootstrap/bootstrap-select.min.css"/>
+    <link rel="stylesheet" th:href="@{source/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{source/bootstrap/bootstrap-select.min.css}"/>
 
-    <link rel="stylesheet" href="source/bootstrap/font-awesome.min.css"/>
-    <link rel="stylesheet" href="source/loading/fakeLoader.css"/>
-    <link rel="stylesheet" href="source/validation/formValidation.min.css"/>
+    <link rel="stylesheet" th:href="@{source/bootstrap/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{source/loading/fakeLoader.css}"/>
+    <link rel="stylesheet" th:href="@{source/validation/formValidation.min.css}"/>
 
-    <link rel="stylesheet" href="css/nav.css"/>
-    <link rel="stylesheet" href="css/app-sidebar.css"/>
+    <link rel="stylesheet" th:href="@{css/nav.css}"/>
+    <link rel="stylesheet" th:href="@{css/app-sidebar.css}"/>
 </head>
 <body>
     <div class="navbar-wrapper" th:include="/module/nav::nav">
@@ -26,20 +26,16 @@
             <!-- 应用展示、应用相关操作 -->
             <div class="col-sm-3 col-md-2 sidebar">
                 <strong><i class="fa fa-bookmark-o"></i>&nbsp; 我的应用</strong>
-                <div style="margin-top: 10px" id="app-group">
+                <div style="margin-top: 10px" id="app-group" th:if="${apps}">
                     <ul class="nav nav-sidebar">
-                        <th:block th:if="${not #lists.isEmpty(apps)}">
-                            <th:block th:each="app,index:${apps}">
-                                <li th:class="${currentAppIndex eq index.count}?'active':''"><a th:text="${app.name}" th:href="@{/app(id=${app.id})}" th:class="|app-${index.count}|"></a></li>
-                            </th:block>
+                        <th:block th:each="app,index:${apps}">
+                            <li th:class="${currentAppIndex eq index.count}?'active':''"><a th:text="${app.name}" th:href="@{/app(id=${app.id})}" th:class="|app-${index.count}|"></a></li>
                         </th:block>
                     </ul>
                 </div>
                 <hr/>
                 <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#new-app-modal" todo="new">新建应用</button>
-                <th:block th:if="${not #lists.isEmpty(apps)}">
-                    <button class="btn btn-info btn-block" data-toggle="modal" data-target="#new-app-modal" todo="edit">编辑应用</button>
-                </th:block>
+                <button th:if="${not #lists.isEmpty(apps)}" class="btn btn-info btn-block" data-toggle="modal" data-target="#new-app-modal" todo="edit">编辑应用</button>
             </div>
 
             <!-- 应用内容 -->
@@ -170,8 +166,8 @@
     <div th:include="/module/modal::new-app-modal"></div>
     <div th:include="/module/modal::new-sensor-modal"></div>
 
-    <script src="source/jquery.min.js"></script>
-    <script src="source/bootstrap/bootstrap.min.js"></script>
+    <script th:src="@{source/jquery.min.js}"></script>
+    <script th:src="@{source/bootstrap/bootstrap.min.js}"></script>
 
     <script th:inline="javascript">
         var currentAppId = [[${currentAppId}]];
@@ -182,19 +178,19 @@
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
 
-    <script src="source/messenger/messenger.min.js"></script>
-    <script src="source/bootstrap/bootstrap-select.min.js"></script>
-    <script src="source/loading/fakeLoader.min.js"></script>
-    <script src="source/bootbox/bootbox.min.js"></script>
+    <script th:src="@{source/messenger/messenger.min.js}"></script>
+    <script th:src="@{source/bootstrap/bootstrap-select.min.js}"></script>
+    <script th:src="@{source/loading/fakeLoader.min.js}"></script>
+    <script th:src="@{source/bootbox/bootbox.min.js}"></script>
 
-    <script src="source/validation/formValidation.min.js"></script>
-    <script src="source/validation/bootstrap.min.js"></script>
+    <script th:src="@{source/validation/formValidation.min.js}"></script>
+    <script th:src="@{source/validation/bootstrap.min.js}"></script>
 
-    <script src="source/echarts/echarts.common.min.js"></script>
-    <script src="source/echarts/infographic.js"></script>
+    <script th:src="@{source/echarts/echarts.common.min.js}"></script>
+    <script th:src="@{source/echarts/infographic.js}"></script>
 
-    <script src="js/common.js"></script>
-    <script src="js/app-chart.js"></script>
-    <script src="js/app-controller.js"></script>
+    <script th:src="@{js/common.js}"></script>
+    <script th:src="@{js/app-chart.js}"></script>
+    <script th:src="@{js/app-controller.js}"></script>
 </body>
 </html>

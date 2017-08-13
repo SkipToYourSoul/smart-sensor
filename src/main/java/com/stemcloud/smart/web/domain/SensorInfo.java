@@ -16,7 +16,7 @@ import java.util.Date;
 public class SensorInfo {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
     @Column(name = "sensor_name", nullable = false)
     private String name;
@@ -43,7 +43,7 @@ public class SensorInfo {
     private String description;
 
     @Column(name = "sensor_app_id")
-    private int appId;
+    private long appId;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
@@ -65,11 +65,11 @@ public class SensorInfo {
             columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date modifyTime;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -137,11 +137,11 @@ public class SensorInfo {
         this.description = description;
     }
 
-    public int getAppId() {
+    public long getAppId() {
         return appId;
     }
 
-    public void setAppId(int appId) {
+    public void setAppId(long appId) {
         this.appId = appId;
     }
 

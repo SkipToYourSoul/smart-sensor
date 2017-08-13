@@ -1,12 +1,10 @@
 package com.stemcloud.smart.web.controller;
 
-import com.stemcloud.smart.sensor.config.SocketConfig;
-import com.stemcloud.smart.sensor.socket.nettyserver.NettyServer;
 import com.stemcloud.smart.web.dao.AppInfoRepository;
 import com.stemcloud.smart.web.dao.SensorInfoRepository;
 import com.stemcloud.smart.web.domain.AppInfo;
 import com.stemcloud.smart.web.domain.SensorInfo;
-import com.stemcloud.smart.web.service.SensorViewService;
+import com.stemcloud.smart.web.service.ViewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +30,7 @@ public class MainController {
     private Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @Autowired
-    SensorViewService sensorViewService;
-
-    @Autowired
-    AppInfoRepository appInfoRepository;
+    ViewService viewService;
 
     @Autowired
     SensorInfoRepository sensorInfoRepository;
@@ -44,59 +41,51 @@ public class MainController {
         SecurityContextImpl securityContextImpl = (SecurityContextImpl) request
                 .getSession().getAttribute("SPRING_SECURITY_CONTEXT");
         if (securityContextImpl != null)
-            System.out.println("Username:"
-                + securityContextImpl.getAuthentication().getName());
-        else
-            System.out.println("Not login user!");
-
+            model.addAttribute("loginUser", securityContextImpl.getAuthentication().getName());
 
         model.addAttribute("inIndex", true);
         return "index";
     }
 
     @GetMapping("/app")
-    public String app(@RequestParam(value = "id", required = false) Integer id, Model model){
+    public String app(@RequestParam(value = "id", required = false, defaultValue = "0") Integer id, Model model,
+                      HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // --- get login user name
+        String currentUser = viewService.getCurrentLoginUser(request);
+
         // --- get app info according current user
-        String currentUser = "liye";
-        List<AppInfo> apps = appInfoRepository.findByCreatorOrderByCreateTime(currentUser);
+        List<AppInfo> apps = viewService.getAppInfoByCurrentUser(currentUser);
         logger.info("FIND " + apps.size() + " APPS By " + currentUser);
 
-        // add app attribute
-        model.addAttribute("apps", apps);
-        if (apps.size() == 0)
-            return "app";
-
-        // --- check the app id
-        int currentAppId = apps.get(0).getId();
-        int currentAppIndex = 1;
-        if (id != null) {
-            Boolean isUserApp = false;
-            for (int i=0; i < apps.size(); i++){
-                if (id == apps.get(i).getId()){
-                    currentAppId = id;
-                    currentAppIndex = i+1;
-                    isUserApp = true;
-                    break;
+        // ---
+        if (apps.size() != 0){
+            long currentAppId = apps.get(0).getId();
+            int currentAppIndex = 1;
+            if (viewService.isAppBelongCurrentUser(id, currentUser)){
+                for (int i=0; i < apps.size(); i++){
+                    if (id == apps.get(i).getId()){
+                        currentAppId = id;
+                        currentAppIndex = i+1;
+                        break;
+                    }
                 }
+            } else {
+                logger.warn("The user: " + currentUser + " has not the app " + id);
+                response.sendRedirect("/app?id=" + currentAppId);
             }
-            if (!isUserApp){
-                logger.warn("The app " + id + " does not belong the user " + currentUser);
-            }
+
+            // --- get first app's sensor info
+            List<SensorInfo> sensors = viewService.getSensorInfoByAppId(currentAppId);
+            logger.info("FIND " + sensors.size() + " SENSORS By " + currentUser);
+
+            // --- get attribute
+            model.addAttribute("apps", apps);
+            model.addAttribute("sensors", sensors);
+            model.addAttribute("currentAppId", currentAppId);
+            model.addAttribute("currentAppIndex", currentAppIndex);
         }
 
-        // --- get first app's sensor info
-        List<SensorInfo> sensors = new ArrayList<SensorInfo>();
-        sensors = sensorInfoRepository.findByAppId(currentAppId);
-        logger.info("FIND " + sensors.size() + " SENSORS By " + currentUser);
-
-        // --- get sensor attribute
-        model.addAttribute("sensors", sensors);
-
-        model.addAttribute("currentAppId", currentAppId);
-        model.addAttribute("currentAppIndex", currentAppIndex);
-
         model.addAttribute("inApp", true);
-
         return "app";
     }
 
@@ -108,5 +97,10 @@ public class MainController {
     @GetMapping("/class")
     public String classes(){
         return "class";
+    }
+
+    @GetMapping("/denied")
+    public String denied(){
+        return "denied";
     }
 }

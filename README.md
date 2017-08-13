@@ -21,7 +21,6 @@
 * /lib/*.sql文件存储了用到的MYSQL数据表
 
 
-
 ### 参考链接
 
 * thymeleaf比较符号：http://www.bubuko.com/infodetail-413210.html
@@ -32,6 +31,8 @@
 * themeleaf常用属性（url传参）：http://blog.csdn.net/mygzs/article/details/52472039
 * spring-boot-jpa更新数据时指定事务：http://blog.csdn.net/hanghangde/article/details/53241150
 * jpa数据映射关系：http://blog.csdn.net/lyg_2012/article/details/70195062
-* jpa时间戳操作:http://blog.csdn.net/sushengmiyan/article/details/50360451
+* jpa时间戳操作：http://blog.csdn.net/sushengmiyan/article/details/50360451
 * spring-boot与spring security整合后post 403：http://blog.csdn.net/sinat_28454173/article/details/52251004
 * spring security获取登陆用户信息：http://blog.csdn.net/tomcat_2014/article/details/50725723
+* spring-boot 自定义403页面：http://www.cnblogs.com/zgghb/p/5823132.html
+* thymeleaf+spring-security：http://www.thymeleaf.org/doc/articles/springsecurity.html

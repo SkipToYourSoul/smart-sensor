@@ -50,7 +50,7 @@ public class MySecurityFilterInterceptor extends AbstractSecurityInterceptor imp
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        logger.info("-------- Do filter - Request Path:" + request.getRequestURI());
+        // logger.info("-------- Do filter - Request Path:" + request.getRequestURI());
 
         FilterInvocation fi = new FilterInvocation( servletRequest, servletResponse, filterChain );
         InterceptorStatusToken token = super.beforeInvocation(fi);
