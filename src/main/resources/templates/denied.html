@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>页面出错了</title>
+
+    <link rel="stylesheet" th:href="@{source/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{source/bootstrap/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{css/nav.css}"/>
 </head>
 <body>
-    <h1>DENIED</h1>
+    <div class="navbar-wrapper" th:include="/module/nav::nav">
+    </div>
+    <div class="container">
+        <h1 th:if="${param.error403}" class="text-center"><strong>403ERROR：</strong>你的权限无法访问这个页面</h1>
+        <h1 th:if="${param.error404}" class="text-center"><strong>404ERROR：</strong>未找到该页面</h1>
+        <h1 th:if="${param.error500}" class="text-center"><strong>500ERROR：</strong>服务器异常</h1>
+        <h2 class="text-center"><a th:href="@{/}">回到主页</a></h2>
+
+        <hr style="height:1px;border:none;border-top:1px solid #9d9d9d;"/>
+        <footer>
+            <p align="center">@STEM.CLOUD - <strong>SMART SENSOR</strong></p>
+        </footer>
+    </div>
+
+    <script th:src="@{source/jquery.min.js}"></script>
+    <script th:src="@{source/bootstrap/bootstrap.min.js}"></script>
 </body>
 </html>

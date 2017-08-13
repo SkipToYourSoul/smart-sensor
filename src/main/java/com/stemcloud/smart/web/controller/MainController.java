@@ -4,6 +4,7 @@ import com.stemcloud.smart.web.dao.AppInfoRepository;
 import com.stemcloud.smart.web.dao.SensorInfoRepository;
 import com.stemcloud.smart.web.domain.AppInfo;
 import com.stemcloud.smart.web.domain.SensorInfo;
+import com.stemcloud.smart.web.service.AppManagementDataService;
 import com.stemcloud.smart.web.service.ViewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,20 +30,26 @@ import java.util.List;
 public class MainController {
     private Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    @Autowired
-    ViewService viewService;
+    private final ViewService viewService;
+    private final AppManagementDataService appManagementDataService;
 
     @Autowired
-    SensorInfoRepository sensorInfoRepository;
+    public MainController(ViewService viewService, AppManagementDataService appManagementDataService) {
+        this.viewService = viewService;
+        this.appManagementDataService = appManagementDataService;
+    }
 
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request) {
-
-        SecurityContextImpl securityContextImpl = (SecurityContextImpl) request
-                .getSession().getAttribute("SPRING_SECURITY_CONTEXT");
-        if (securityContextImpl != null)
-            model.addAttribute("loginUser", securityContextImpl.getAuthentication().getName());
-
+        String loginUser = viewService.getCurrentLoginUser(request);
+        if (loginUser != null) {
+            logger.info("Current login user: " + loginUser);
+            model.addAttribute("loginUser", loginUser);
+            model.addAttribute("sensors", appManagementDataService.getSensorInfoByCreatorAndShared(loginUser));
+        } else {
+            logger.info("No login user!");
+            model.addAttribute("sensors", appManagementDataService.getSharedSensorInfo());
+        }
         model.addAttribute("inIndex", true);
         return "index";
     }
@@ -52,6 +59,8 @@ public class MainController {
                       HttpServletRequest request, HttpServletResponse response) throws IOException {
         // --- get login user name
         String currentUser = viewService.getCurrentLoginUser(request);
+        if (currentUser == null)
+            response.sendRedirect("/login");
 
         // --- get app info according current user
         List<AppInfo> apps = viewService.getAppInfoByCurrentUser(currentUser);

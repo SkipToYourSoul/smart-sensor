@@ -43,27 +43,19 @@ var opts = {
     title : "<b>传感器信息</b>" // 信息窗口标题
 };
 
-$.ajax({
-    type: "get",
-    url: current_address + "index/map/sensor",
-    dataType: "json",
-    success: function (sensor) {
-        var markers = [];
-        for (var row in sensor){
-            var d = sensor[row];
-            var info = "<hr/>" +
-                "<p>NAME: " + d['name'] + "</p>" +
-                "<p>CREATOR: " + d['creator'] + "</p>" +
-                "<p>DESCRIPTION: " + d['description'] + "</p>";
-            var id = d['id'];
-            markers.push(createMarker(d, info, id));
+function init_markers() {
+    var markers = [];
+    for (var row in sensors){
+        var d = sensors[row];
+        var info = "<hr/>" +
+            "<p>NAME: " + d['name'] + "</p>" +
+            "<p>CREATOR: " + d['creator'] + "</p>" +
+            "<p>DESCRIPTION: " + d['description'] + "</p>";
+        var id = d['id'];
+        markers.push(createMarker(d, info, id));
     }
-        var markerCluster = new BMapLib.MarkerClusterer(map, {markers: markers});
-    },
-    error: function (err_msg) {
-        message_info('加载传感器数据出错', 'error', 3);
-    }
-});
+    var markerCluster = new BMapLib.MarkerClusterer(map, {markers: markers});
+}
 
 createMarker = function (d, info, id) {
     var _marker = new BMap.Marker(new BMap.Point(d['longitude'], d['latitude']));
@@ -74,10 +66,12 @@ createMarker = function (d, info, id) {
         this.closeInfoWindow();
     });
     _marker.addEventListener("click", function(e){
-        chart_line.setOption(chart_line_option(id));
+        index_big_chart.setOption(chart_line_option(id));
     });
     return _marker;
 };
+
+init_markers();
 
 // ---------------------------------------------------------------------------
 

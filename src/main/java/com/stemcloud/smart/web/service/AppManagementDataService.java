@@ -21,17 +21,27 @@ import java.util.Map;
 @Service
 @Transactional
 public class AppManagementDataService {
-    @Autowired
-    SensorInfoRepository sensorInfoRepository;
+    private final SensorInfoRepository sensorInfoRepository;
+    private final SensorDataRepository sensorDataRepository;
+    private final AppInfoRepository appInfoRepository;
 
     @Autowired
-    SensorDataRepository sensorDataRepository;
+    public AppManagementDataService(SensorInfoRepository sensorInfoRepository, SensorDataRepository sensorDataRepository, AppInfoRepository appInfoRepository) {
+        this.sensorInfoRepository = sensorInfoRepository;
+        this.sensorDataRepository = sensorDataRepository;
+        this.appInfoRepository = appInfoRepository;
+    }
 
-    @Autowired
-    AppInfoRepository appInfoRepository;
-
-    public List<SensorInfo> getShowSensorInfo(){
+    public List<SensorInfo> getSharedSensorInfo(){
         return sensorInfoRepository.findByIsShare(1);
+    }
+
+    public List<SensorInfo> getSensorInfoByCreator(String creator){
+        return sensorInfoRepository.findByCreator(creator);
+    }
+
+    public List<SensorInfo> getSensorInfoByCreatorAndShared(String creator){
+        return sensorInfoRepository.findByCreatorOrIsShare(creator, 1);
     }
 
     public List<SensorData> getSensorDataByAppId(int appId){
@@ -42,12 +52,12 @@ public class AppManagementDataService {
         return sensorDataRepository.findBySensorId(sensorId);
     }
 
-    public long saveNewApp(Map<String, String> queryParams){
+    public long saveNewApp(Map<String, String> queryParams, String user){
         String name = queryParams.get("new-app-name");
         String description = queryParams.get("new-app-description");
 
         AppInfo appInfo = new AppInfo();
-        appInfo.setCreator("liye");
+        appInfo.setCreator(user);
         appInfo.setName(name);
         appInfo.setDescription(description);
 
@@ -62,27 +72,31 @@ public class AppManagementDataService {
         return appInfoRepository.updateAppInfo(id, name, description);
     }
 
-    public SensorInfo saveNewSensor(Map<String, String> queryParams){
+    public SensorInfo saveNewSensor(Map<String, String> queryParams, String user){
         int appId = Integer.parseInt(queryParams.get("appId"));
 
         String name = queryParams.get("new-sensor-name");
         String code = queryParams.get("new-sensor-code");
         int type = Integer.parseInt(queryParams.get("new-sensor-type"));
         String city = queryParams.get("new-sensor-city");
-        double longitude = Double.parseDouble(queryParams.get("new-sensor-longitude"));
-        double latitude = Double.parseDouble(queryParams.get("new-sensor-latitude"));
         String description = queryParams.get("new-sensor-description");
 
         SensorInfo sensorInfo = new SensorInfo();
         sensorInfo.setName(name);
         sensorInfo.setCode(code);
         sensorInfo.setType(type);
-        sensorInfo.setCity(city);
-        sensorInfo.setLongitude(longitude);
-        sensorInfo.setLatitude(latitude);
         sensorInfo.setDescription(description);
         sensorInfo.setAppId(appId);
-        sensorInfo.setCreator("liye");
+        sensorInfo.setCreator(user);
+
+        if (!queryParams.get("new-sensor-longitude").trim().isEmpty()){
+            sensorInfo.setLongitude(Double.parseDouble(queryParams.get("new-sensor-longitude")));
+        }
+        if (!queryParams.get("new-sensor-latitude").trim().isEmpty()){
+            sensorInfo.setLatitude(Double.parseDouble(queryParams.get("new-sensor-latitude")));
+        }
+        if (!city.trim().isEmpty())
+            sensorInfo.setCity(city);
 
         return sensorInfoRepository.save(sensorInfo);
     }

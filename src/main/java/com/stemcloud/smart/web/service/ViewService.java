@@ -19,17 +19,20 @@ import java.util.List;
  */
 @Service
 public class ViewService {
-    @Autowired
-    AppInfoRepository appInfoRepository;
+    private final AppInfoRepository appInfoRepository;
+    private final SensorInfoRepository sensorInfoRepository;
 
     @Autowired
-    SensorInfoRepository sensorInfoRepository;
+    public ViewService(AppInfoRepository appInfoRepository, SensorInfoRepository sensorInfoRepository) {
+        this.appInfoRepository = appInfoRepository;
+        this.sensorInfoRepository = sensorInfoRepository;
+    }
 
     public String getCurrentLoginUser(HttpServletRequest request){
         SecurityContextImpl securityContextImpl = (SecurityContextImpl) request
                 .getSession().getAttribute("SPRING_SECURITY_CONTEXT");
         if (securityContextImpl == null)
-            throw new UsernameNotFoundException("The user is not exist!");
+            return null;
 
         return securityContextImpl.getAuthentication().getName();
     }

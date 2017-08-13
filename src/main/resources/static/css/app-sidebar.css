@@ -47,7 +47,8 @@
 /* Main content */
 .main {
     padding: 20px;
-    background-color: rgba(245, 245, 245, 0.7);
+    // background-color: rgba(245, 245, 245, 0.7);
+    background-color: #dedede;
 }
 @media (min-width: 768px) {
   .main {

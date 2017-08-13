@@ -22,6 +22,6 @@ public class IndexController {
 
     @GetMapping(value = "/index/map/sensor")
     public List<SensorInfo> getSensorInfo(){
-        return appManagementDataService.getShowSensorInfo();
+        return appManagementDataService.getSharedSensorInfo();
     }
 }

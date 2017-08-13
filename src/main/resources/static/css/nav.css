@@ -33,3 +33,12 @@ body{
 .navbar a, .dropdown-menu>li>a, .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover, .navbar-toggle{
     color: rgba(154, 154, 154, 1);
 }
+
+.logo-img {
+    height: 60px;
+}
+
+.login-ul {
+    border-left:solid 1px #d9d9de;
+    margin-right: 10px;
+}

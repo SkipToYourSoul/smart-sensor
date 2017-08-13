@@ -1,10 +1,10 @@
 /**
- * Belongs to
+ * Belongs to smart-sensor
  * Author: liye on 2017/7/28
  * Description:
  */
 
-var chart_line = echarts.init(document.getElementById('chart-line'));
+var index_big_chart = echarts.init(document.getElementById('chart-line'));
 
 var xData = function() {
     var data = [];
@@ -148,11 +148,12 @@ var chart_line_option = function (title) {
         ]
     };
 };
-chart_line.setOption(chart_line_option(1));
+index_big_chart.setOption(chart_line_option(1));
 
+// --- pie chart
 var pie_chart1 = echarts.init(document.getElementById('chart-pie-1'), 'infographic');
 var pie_chart2 = echarts.init(document.getElementById('chart-pie-2'));
-var pie_chart_option = function(title) {
+var pie_chart_option = function(title, legend, data) {
     return {
         title : {
             text: title
@@ -162,7 +163,7 @@ var pie_chart_option = function(title) {
             formatter: "{b}: {c} ({d}%)"
         },
         legend: {
-            data:['上海', '北京'],
+            data: legend,
             left:'center',
             top:'bottom'
         },
@@ -190,14 +191,64 @@ var pie_chart_option = function(title) {
                         show: false
                     }
                 },
-                data:[
-                    {value:3, name:'上海'},
-                    {value:1, name:'北京'}
-                ]
+                data: data
             }
         ]
     };
 };
 
-pie_chart1.setOption(pie_chart_option('传感器城市分布'));
-pie_chart2.setOption(pie_chart_option('传感器型号分布'));
+function init_pie_chart() {
+    // --- init data
+    var city_data = [], city_legend = [], city_mid_data = {};
+    var type_data = [], type_legend = [], type_mid_data = {};
+    var type_dict = {
+        1: "数值型传感器",
+        2: "图像传感器"
+    };
+
+    for (var row in sensors){
+        var sensor = sensors[row];
+        var city = sensor['city'];
+        var type = type_dict[sensor['type']];
+        if (type_legend.indexOf(type) == -1){
+            type_legend.push(type);
+            type_mid_data[type] = 1;
+        } else {
+            type_mid_data[type] += 1;
+        }
+
+        if (city == null)
+            continue;
+        if (city_legend.indexOf(city) == -1){
+            city_legend.push(city);
+            city_mid_data[city] = 1;
+        } else {
+            city_mid_data[city] += 1;
+        }
+    }
+
+    for (var city in city_mid_data){
+        city_data.push({
+            name: city,
+            value: city_mid_data[city]
+        });
+    }
+
+    for (var type in type_mid_data){
+        type_data.push({
+            name: type,
+            value: type_mid_data[type]
+        });
+    }
+
+    pie_chart1.setOption(pie_chart_option('传感器城市分布', city_legend, city_data));
+    pie_chart2.setOption(pie_chart_option('传感器型号分布', type_legend, type_data));
+}
+
+init_pie_chart();
+
+window.onresize = function () {
+    pie_chart1.resize();
+    pie_chart2.resize();
+    index_big_chart.resize();
+};

@@ -16,6 +16,10 @@ import java.util.List;
 public interface SensorInfoRepository extends CrudRepository<SensorInfo, Integer> {
     List<SensorInfo> findByIsShare(int isShare);
 
+    List<SensorInfo> findByCreator(String creator);
+
+    List<SensorInfo> findByCreatorOrIsShare(String creator, int isShare);
+
     List<SensorInfo> findByAppId(long appId);
 
     @Query(value = "UPDATE base_sensor_info SET sensor_name = :name, " +

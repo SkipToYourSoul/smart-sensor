@@ -11,58 +11,61 @@
     <link rel="stylesheet" th:href="@{source/bootstrap/font-awesome.min.css}"/>
 
     <link rel="stylesheet" th:href="@{css/nav.css}"/>
+    <link rel="stylesheet" th:href="@{css/custom.css}"/>
 </head>
 <body>
     <div class="navbar-wrapper" th:include="/module/nav::nav">
     </div>
 
     <div class="container-fluid">
-        <div class="row" style="margin-top: 10px">
-            <div class="col-sm-8 col-md-8">
-                <h4><i class="fa fa-map-o"></i><b>&nbsp; SENSOR MAP</b></h4>
-                <hr style="margin-top: 0"/>
-                <div id="allmap"
-                     style="width: 100%; height: 600px; overflow: hidden">
-                    <strong>地图无法加载</strong>
+        <div class="row index-row">
+            <div class="col-sm-8">
+                <h4><i class="fa fa-map-o"></i><b>&nbsp; 传感器地图：</b><small>共享位置的传感器将在地图上显示</small></h4>
+                <hr/>
+                <div id="allmap" class="index-map-container">
+                    <strong>由于网络原因，地图无法加载</strong>
                 </div>
-                <div style="margin-top: 10px">
-                    <div class="col-sm-2">
+                <div class="row index-row">
+                    <div class="col-sm-3">
                         <select class="selectpicker form-control" title="更改地图主题" id="theme-select">
                             <option value="1">灰色（突出信息）</option>
                             <option value="2">默认</option>
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <button class="btn btn-info btn-block" onclick="toMark()">回到传感器中心</button>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 col-md-4">
+            <div class="col-sm-4">
                 <h4><i class="fa fa-bar-chart-o"></i>
-                <b>&nbsp; SENSOR CHART</b></h4>
-                <hr style="margin-top: 0"/>
+                <b>&nbsp; 传感器统计数据：</b><small>点击地图上的mark点可查看相应数据</small></h4>
+                <hr/>
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <div style="height:200px" id="chart-pie-1"></div>
+                        <div class="index-small-chart" id="chart-pie-1"></div>
                     </div>
                     <div class="col-sm-6">
-                        <div style="height:200px" id="chart-pie-2"></div>
+                        <div class="index-small-chart" id="chart-pie-2"></div>
                     </div>
                 </div>
-                <div style="height: 400px;margin-top: 20px" id="chart-line"></div>
-
+                <div class="index-big-chart" id="chart-line"></div>
             </div>
         </div>
-    </div>
 
-    <hr/>
-    <footer>
-        <p align="center">@STEM.CLOUD - <strong>SMART SENSOR</strong></p>
-    </footer>
+        <hr/>
+        <footer>
+            <p align="center">@STEM.CLOUD - <strong>SMART SENSOR</strong></p>
+        </footer>
+    </div>
 
     <script th:src="@{source/jquery.min.js}"></script>
     <script th:src="@{source/bootstrap/bootstrap.min.js}"></script>
+
+    <script th:inline="javascript">
+        var sensors = [[${sensors}]];
+    </script>
 
     <script dataType="text/javascript" th:src="@{http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM}"></script>
     <script dataType="text/javascript" th:src="@{http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js}"></script>
