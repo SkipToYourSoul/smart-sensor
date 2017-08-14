@@ -15,8 +15,7 @@
     <link rel="stylesheet" th:href="@{source/loading/fakeLoader.css}"/>
     <link rel="stylesheet" th:href="@{source/validation/formValidation.min.css}"/>
 
-    <link rel="stylesheet" th:href="@{css/nav.css}"/>
-    <link rel="stylesheet" th:href="@{css/app-sidebar.css}"/>
+    <link rel="stylesheet" th:href="@{css/custom.css}"/>
 </head>
 <body>
     <div class="navbar-wrapper" th:include="/module/nav::nav">
@@ -156,10 +155,7 @@
                     </th:block>
                 </div>
 
-                <hr style="height:1px;border:none;border-top:1px solid #9d9d9d;" />
-                <footer>
-                    <p align="center">@STEM.CLOUD - <strong>SMART SENSOR</strong></p>
-                </footer>
+                <div th:include="/module/footer::sub-footer"></div>
             </div>
         </div>
     </div>

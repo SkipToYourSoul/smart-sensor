@@ -1,24 +1,26 @@
 body{background: #fff /*url(http://subtlepatterns.com/patterns/sativa.png);*/}
 html,body{
     position: relative;
+    text-align: center;
     height: 100%;
 }
 
-/*.login{
-    width: 152px;
-    height: 84px;
-    float: right;
-    position: absolute;
-    text-align: center;
-    border-left:solid 1px #d9d9de ;
-    top: 0px;
-    right: 0px;
-}*/
+.login-title {
+    color: #555;
+    font-size: 18px;
+    font-weight: 400;
+    display: block;
+}
+
+.login-sub-title {
+    font-size: 16px;
+    color: #9d9d9d;
+}
 
 .login-container{
     position: relative;
     width: 400px;
-    margin: 100px auto;
+    margin: 30px auto;
     padding: 20px 40px 40px;
     text-align: center;
     background: #fff;
@@ -64,42 +66,31 @@ html,body{
     -ms-transform: rotateZ(-2deg);
 }
 
-.avatar{
-    width: 100px;height: 100px;
-    margin: 10px auto 30px;
-    border-radius: 100%;
-    border: 2px solid #aaa;
-    background-size: cover;
-    background-image: url(../img/smile.jpg)
-}
-
-.avatar-error{
-    background-image: url(../img/cry.jpg)
-}
-
 .form-box input{
     width: 100%;
     padding: 10px;
     text-align: center;
-    height:40px;
+    height:50px;
     border: 1px solid #ccc;;
     background: #fafafa;
-    transition:0.2s ease-in-out;
-
 }
 
 .form-box input:focus{
     outline: 0;
-    background: #eee;
 }
 
 .form-box input[type="text"]{
-    border-radius: 5px 5px 5px 5px;
+    margin-top: 20px;
     text-transform: lowercase;
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
-.form-box input[type="password"]{
-    border-radius: 5px 5px 5px 5px;
+input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .form-box button.login{
