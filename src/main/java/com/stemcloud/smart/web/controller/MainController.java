@@ -9,6 +9,7 @@ import com.stemcloud.smart.web.service.ViewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +28,7 @@ import java.util.List;
  * Description: main controller of html template
  */
 @Controller
-public class MainController {
+public class MainController implements ErrorController {
     private Logger logger = LoggerFactory.getLogger(MainController.class);
 
     private final ViewService viewService;
@@ -111,5 +112,15 @@ public class MainController {
     @GetMapping("/denied")
     public String denied(){
         return "denied";
+    }
+
+    @GetMapping("/error")
+    public String error(){
+        return "denied";
+    }
+
+    @Override
+    public String getErrorPath() {
+        return "/error";
     }
 }

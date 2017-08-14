@@ -9,7 +9,6 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.FilterInvocation;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +22,6 @@ import java.util.Collection;
 @Service
 public class CustomAccessDecisionManager implements AccessDecisionManager {
     private Logger logger = LoggerFactory.getLogger(CustomAccessDecisionManager.class);
-
-    AntPathRequestMatcher indexMatcher = new AntPathRequestMatcher("/");
-    AntPathRequestMatcher indexDataMatcher = new AntPathRequestMatcher("/index/**");
 
     /**
      * decide 方法用作判定是否拥有权限
