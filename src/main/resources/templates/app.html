@@ -16,6 +16,7 @@
     <link rel="stylesheet" th:href="@{source/validation/formValidation.min.css}"/>
 
     <link rel="stylesheet" th:href="@{source/video/video-js.min.css}"/>
+    <link rel="stylesheet" th:href="@{source/timeline/timeline.css}"/>
 
     <link rel="stylesheet" th:href="@{css/custom.css}"/>
 </head>
@@ -112,15 +113,18 @@
                                                 <div class="col-xs-12 col-sm-9">
                                                     <div class="camera-sensor-content" th:id="|sensor-content-${sensor.id}|">
                                                         <video id="my-video" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto"
-                                                               poster="//vjs.zencdn.net/v/oceans.png" data-setup="{}">
+                                                               poster="/img/oceans.png" data-setup="{}">
                                                             <source src="//vjs.zencdn.net/v/oceans.mp4" type='video/mp4'/>
                                                             <p class="vjs-no-js">
                                                                 To view this video please enable JavaScript, and consider upgrading to a web browser that
                                                                 <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
                                                             </p>
                                                         </video>
+
+                                                        <div id="my-timeline" style="height:400px; margin-top: 30px"></div>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-xs-12 col-sm-3">
                                                     <p><strong>传感器信息</strong></p>
                                                     <hr/>
@@ -181,6 +185,7 @@
     <script th:src="@{source/echarts/infographic.js}"></script>
 
     <script th:src="@{source/video/video.min.js}"></script>
+    <script th:src="@{source/timeline/timeline.js}"></script>
 
     <script th:src="@{js/common.js}"></script>
     <script th:src="@{js/app-chart.js}"></script>
