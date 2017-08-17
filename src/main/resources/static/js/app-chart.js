@@ -43,7 +43,7 @@ function initialSensorChart(sensorId, chart) {
                 var row = sensor[i];
                 chartSeriesData.push({
                     value:[
-                        row['timestamp'],
+                        row['dataTime'],
                         row['value']]
                 });
             }

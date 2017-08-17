@@ -7,12 +7,12 @@ import java.util.Date;
 
 /**
  * Belongs to smart-sensor
- * Author: liye on 2017/8/2
- * Description: value sensor
+ * Author: liye on 2017/8/17
+ * Description: camera sensor
  */
 @Entity
-@Table(name = "sensor_value_data")
-public class SensorData {
+@Table(name = "sensor_camera_data")
+public class SensorCamera {
     @Id
     @GeneratedValue
     private long id;
@@ -26,8 +26,11 @@ public class SensorData {
     @Column(name = "sensor_type", nullable = false)
     private int type;
 
+    @Column(name = "source_path", nullable = false)
+    private String sourcePath;
+
     @Column(nullable = false)
-    private String value;
+    private int duration;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_time", nullable = false)
@@ -49,7 +52,6 @@ public class SensorData {
     }
 
     public int getSensorId() {
-
         return sensorId;
     }
 
@@ -73,12 +75,20 @@ public class SensorData {
         this.type = type;
     }
 
-    public String getValue() {
-        return value;
+    public String getSourcePath() {
+        return sourcePath;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setSourcePath(String sourcePath) {
+        this.sourcePath = sourcePath;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public Date getDataTime() {

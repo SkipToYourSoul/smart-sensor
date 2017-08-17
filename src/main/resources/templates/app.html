@@ -110,26 +110,35 @@
                                                 </div>
                                             </div>
                                             <div th:case="2">
-                                                <div class="col-xs-12 col-sm-9">
-                                                    <div class="camera-sensor-content" th:id="|sensor-content-${sensor.id}|">
-                                                        <video id="my-video" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto"
-                                                               poster="/img/oceans.png" data-setup="{}">
-                                                            <source src="//vjs.zencdn.net/v/oceans.mp4" type='video/mp4'/>
-                                                            <p class="vjs-no-js">
-                                                                To view this video please enable JavaScript, and consider upgrading to a web browser that
-                                                                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                                                            </p>
-                                                        </video>
-
-                                                        <div id="my-timeline" style="height:400px; margin-top: 30px"></div>
-                                                    </div>
+                                                <div class="camera-sensor-content">
+                                                    <ul class="nav nav-tabs" role="tablist">
+                                                        <li role="presentation" class="active"><a th:href="@{|#sensor-content-${sensor.id}|}" role="tab" data-toggle="tab">传感器数据</a></li>
+                                                        <li role="presentation"><a th:href="@{|#sensor-info-${sensor.id}|}" role="tab" data-toggle="tab">传感器信息</a></li>
+                                                    </ul>
                                                 </div>
+                                                <div class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane fade in active" th:id="|sensor-content-${sensor.id}|">
+                                                        <div class="col-xs-12 col-sm-6">
+                                                            <div class="camera-sensor-tab" th:id="|sensor-camera-${sensor.id}|">
+                                                                <video id="my-video" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto"
+                                                                       data-setup="{}">
+                                                                    <p class="vjs-no-js">video</p>
+                                                                </video>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-6">
+                                                            <div th:id="|sensor-photo-${sensor.id}|" class="photo-sensor-tab">
+                                                                <div id="my-timeline"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                                <div class="col-xs-12 col-sm-3">
-                                                    <p><strong>传感器信息</strong></p>
-                                                    <hr/>
-                                                    <button class="btn btn-success" onclick="videoPlay()">play</button>
-                                                    <button class="btn btn-danger" onclick="videoPause()">pause</button>
+                                                    <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
+                                                        <p><strong>传感器信息</strong></p>
+                                                        <hr/>
+                                                        <button class="btn btn-success" onclick="videoPlay()">play</button>
+                                                        <button class="btn btn-danger" onclick="videoPause()">pause</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

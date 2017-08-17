@@ -1,7 +1,9 @@
 package com.stemcloud.smart.web.service;
 
+import com.stemcloud.smart.web.dao.SysResourceRepository;
 import com.stemcloud.smart.web.dao.SysRoleRepository;
 import com.stemcloud.smart.web.dao.SysUserRepository;
+import com.stemcloud.smart.web.domain.security.SysResource;
 import com.stemcloud.smart.web.domain.security.SysRole;
 import com.stemcloud.smart.web.domain.security.SysUser;
 import org.slf4j.Logger;
@@ -28,21 +30,8 @@ public class UserManagementService {
     @Autowired
     private SysRoleRepository sysRoleRepository;
 
-    public void registerAdminUser(String username, String password, String email){
-        SysUser sysUser = new SysUser();
-
-        sysUser.setUsername(username);
-        sysUser.setPassword(new BCryptPasswordEncoder(4).encode(password));
-        sysUser.setEmail(email);
-
-        SysRole sysRole = sysRoleRepository.findByName("ROLE_ADMIN");
-        Set<SysRole> set = new HashSet<SysRole>();
-        set.add(sysRole);
-        sysUser.setSysRoles(set);
-
-        long userId = sysUserRepository.save(sysUser).getId();
-        logger.info("New user: " + userId);
-    }
+    @Autowired
+    private SysResourceRepository sysResourceRepository;
 
     public void registerUser(String username, String password, String email, String role){
         SysUser sysUser = new SysUser();
@@ -58,5 +47,32 @@ public class UserManagementService {
 
         long userId = sysUserRepository.save(sysUser).getId();
         logger.info("New user: " + userId + " has the role " + role);
+    }
+
+    public void initRoleResource(){
+        // --- init resource
+        SysResource resource = new SysResource();
+        resource.setResourceUrl("/app**");
+        resource.setRemark("应用页");
+        final SysResource appResource = sysResourceRepository.save(resource);
+
+        resource.setResourceUrl("/class**");
+        resource.setRemark("课程页");
+        final SysResource classResource = sysResourceRepository.save(resource);
+
+        // --- init role
+        SysRole role = new SysRole();
+        role.setName("ROLE_ADMIN");
+        Set<SysResource> adminSysResources = new HashSet<SysResource>(){
+            {
+                add(appResource);
+                add(classResource);
+            }
+        };
+        role.setSysResources(adminSysResources);
+        sysRoleRepository.save(role);
+
+        // --- register user
+        registerUser("root", "root", "root@root.com", "ROLE_ADMIN");
     }
 }

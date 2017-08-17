@@ -31,6 +31,9 @@ public class AppManagementDataServiceTest {
     @Autowired
     UserManagementService userManagementService;
 
+    @Autowired
+    SensorDataService sensorDataService;
+
     @Test
     public void generateTestApp(){
         AppInfo appInfo = new AppInfo();
@@ -54,7 +57,16 @@ public class AppManagementDataServiceTest {
 
     @Test
     public void generateUser(){
-        // userManagementService.registerAdminUser("root", "root", "liye@qiyi.com");
         userManagementService.registerUser("teacher","teacher","", "ROLE_TEACHER");
+    }
+
+    @Test
+    public void initWhenFirstRunApplication(){
+        userManagementService.initRoleResource();
+    }
+
+    @Test
+    public void generateRandomData() {
+        sensorDataService.generateRandomData();
     }
 }

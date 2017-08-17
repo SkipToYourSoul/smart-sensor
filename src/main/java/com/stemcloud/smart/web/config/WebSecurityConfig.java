@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(customUserService()).passwordEncoder(passwordEncoder());
         // 不删除凭据，以便记住用户
-        builder.eraseCredentials(false);
+        // builder.eraseCredentials(false);
     }
 
     public void configure(WebSecurity webSecurity){
@@ -80,17 +80,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error")
                 .permitAll()    /*  登陆页面用户任意访问  */
-                .successHandler(loginSuccessHandler())  /* 登陆成功之后执行 */
+                // .successHandler(loginSuccessHandler())  /* 登陆成功之后执行 */
                 .and()
                 /* 退出登陆，回到主页 */
                 .logout()
                 .logoutSuccessUrl("/")
                 .permitAll()   /*  注销行为用户任意访问  */
-                .invalidateHttpSession(true)
-                .and()
+                //.invalidateHttpSession(true)
+                //.and()
                 /* 开启cookie保存用户数据 */
-                .rememberMe()
-                .tokenValiditySeconds(60 * 60 * 24 * 7);    /* 设置cookie有效期 */
+                /*.rememberMe()
+                .tokenValiditySeconds(60 * 60 * 24 * 7)*/;    /* 设置cookie有效期 */
         httpSecurity.addFilterBefore(mySecurityFilterInterceptor(), FilterSecurityInterceptor.class);   /* 添加自定义拦截器 */
         httpSecurity.csrf().disable();
     }

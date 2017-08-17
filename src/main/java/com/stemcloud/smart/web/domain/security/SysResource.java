@@ -20,9 +20,6 @@ public class SysResource {
 
     private String remark;
 
-    @Column(nullable = true)
-    private String method;
-
     public Long getId() {
         return id;
     }
@@ -45,13 +42,5 @@ public class SysResource {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
     }
 }

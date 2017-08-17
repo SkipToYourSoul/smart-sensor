@@ -188,8 +188,19 @@ hr {
 }
 
 .camera-sensor-content{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.camera-sensor-tab{
     padding-top: 10px;
     padding-bottom: 10px;
+}
+
+.photo-sensor-tab{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 400px;
 }
 
 /** footer **/

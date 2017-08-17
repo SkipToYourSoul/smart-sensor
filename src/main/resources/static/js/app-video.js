@@ -4,7 +4,16 @@
  *  Description:
  */
 
-var video_player = videojs('my-video', { }, function () {
+var video_option = {
+    poster : '/img/oceans.png',
+    sources:[
+        {
+            src: '//vjs.zencdn.net/v/oceans.mp4',
+            type: 'video/mp4'
+        }
+    ]
+};
+var video_player = videojs('my-video', video_option, function () {
     console.log('the video player is ready');
 });
 
@@ -31,11 +40,6 @@ video_player.on("pause", function(){
 
 var storyjs_jsonp_data = {
     "title": {
-        "media": {
-            "url": "/img/oceans.png",
-            "caption": "Whitney Houston performing on her My Love is Your Love Tour in Hamburg.",
-            "credit": "flickr/<a href='http://www.flickr.com/photos/tm_10001/'>tm_10001</a>"
-        },
         "text": {
             "headline": "视频片段一<br/> 时长46秒",
             "text": "<p>视频片段描述</p>"
@@ -46,7 +50,7 @@ var storyjs_jsonp_data = {
         "media": {
             "url": "/img/1.jpg",
             "caption": "视频截图1：0.00",
-            "credit": "Cissy Houston photo:<a href='http://www.flickr.com/photos/11447043@N00/418180903/'>Tom Marcello</a><br/><a href='http://commons.wikimedia.org/wiki/File%3ADionne_Warwick_television_special_1969.JPG'>Dionne Warwick: CBS Television via Wikimedia Commons</a>"
+            "thumbnail": "/img/1.jpg"
         },
         "start_date": {
             "year": 2017,
@@ -54,29 +58,17 @@ var storyjs_jsonp_data = {
             "day": 16,
             "hour": 20,
             "minute": 19
+        },
+        "text": {
+            "text": "<p>视频截图1：0.00</p>"
         },
         "unique_id": 1
     },
     {
         "media": {
-            "url": "/img/2.jpg",
-            "caption": "视频截图2：0.10",
-            "credit": "<a href=\"http://unidiscmusic.com\">Unidisc Music</a>"
-        },
-        "start_date": {
-            "year": 2017,
-            "month": 8,
-            "day": 16,
-            "hour": 20,
-            "minute": 19
-        },
-        "unique_id": 2
-    },
-    {
-        "media": {
             "url": "/img/3.jpg",
             "caption": "视频截图3：0.10",
-            "credit": "<a href=\"http://unidiscmusic.com\">Unidisc Music</a>"
+            "thumbnail": "/img/3.jpg"
         },
         "start_date": {
             "year": 2017,
@@ -93,7 +85,8 @@ var storyjs_jsonp_data = {
 var additionalOptions = {
     start_at_slide: 0,
     slide_padding_lr: 20,
-    scale_factor: 0.5
+    scale_factor: 0.5,
+    timenav_height: 200
 };
 
 var timeline = new TL.Timeline('my-timeline', storyjs_jsonp_data, additionalOptions);
