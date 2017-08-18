@@ -21,7 +21,7 @@ public class SensorCameraPhotos {
     private int sensorId;
 
     @Column(name = "video_id", nullable = false)
-    private int videoId;
+    private long videoId;
 
     @Column(name = "source_path", nullable = false)
     private String sourcePath;
@@ -52,11 +52,11 @@ public class SensorCameraPhotos {
         this.sensorId = sensorId;
     }
 
-    public int getVideoId() {
+    public long getVideoId() {
         return videoId;
     }
 
-    public void setVideoId(int videoId) {
+    public void setVideoId(long videoId) {
         this.videoId = videoId;
     }
 

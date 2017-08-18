@@ -67,7 +67,6 @@ public class MainController implements ErrorController {
         List<AppInfo> apps = viewService.getAppInfoByCurrentUser(currentUser);
         logger.info("FIND " + apps.size() + " APPS By " + currentUser);
 
-        // ---
         if (apps.size() != 0){
             long currentAppId = apps.get(0).getId();
             int currentAppIndex = 1;

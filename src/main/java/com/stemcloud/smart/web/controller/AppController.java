@@ -2,7 +2,9 @@ package com.stemcloud.smart.web.controller;
 
 import com.stemcloud.smart.web.domain.SensorData;
 import com.stemcloud.smart.web.domain.SensorInfo;
+import com.stemcloud.smart.web.domain.view.Video;
 import com.stemcloud.smart.web.service.AppManagementDataService;
+import com.stemcloud.smart.web.service.SensorDataService;
 import com.stemcloud.smart.web.service.ViewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +24,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/app")
 public class AppController {
-    private static final Logger logger = LoggerFactory.getLogger(AppController.class);
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final AppManagementDataService appManagementDataService;
     private final ViewService viewService;
@@ -32,9 +35,24 @@ public class AppController {
         this.viewService = viewService;
     }
 
+    @Autowired
+    SensorDataService sensorDataService;
+
     @GetMapping("/sensor/data")
     public List<SensorData> getSensorData(@RequestParam int sensorId){
         return appManagementDataService.getSensorDataBySensorId(sensorId);
+    }
+
+    @GetMapping("/sensor/camera")
+    public Map<String ,Video> getSensorCamera(@RequestParam int sensorId){
+        logger.info("==========" + sensorId);
+
+        List<Video> videos = sensorDataService.getSensorCameraBySensorId(sensorId);
+        Map<String ,Video> videoMap = new HashMap<String, Video>();
+        for (int i=1; i<=videos.size(); i++)
+            videoMap.put("video" + i, videos.get(i-1));
+
+        return videoMap;
     }
 
     @PostMapping("/new/app")

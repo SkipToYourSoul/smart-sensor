@@ -17,6 +17,10 @@ var video_player = videojs('my-video', video_option, function () {
     console.log('the video player is ready');
 });
 
+function initSensorVideo(){
+
+}
+
 function videoPlay() {
     video_player.play();
     timeline.goToNext();

@@ -167,6 +167,9 @@ function deleteSensor(evt) {
     });
 }
 
+// --------------------------
+//
+// --------------------------
 function monitorSensorChart(evt) {
     var $button = $(evt);
     var sensorIndex = evt.getAttribute('data');

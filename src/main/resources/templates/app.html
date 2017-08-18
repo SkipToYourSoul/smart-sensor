@@ -119,16 +119,16 @@
                                                 <div class="tab-content">
                                                     <div role="tabpanel" class="tab-pane fade in active" th:id="|sensor-content-${sensor.id}|">
                                                         <div class="col-xs-12 col-sm-6">
-                                                            <div class="camera-sensor-tab" th:id="|sensor-camera-${sensor.id}|">
-                                                                <video id="my-video" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto"
+                                                            <div class="camera-sensor-tab">
+                                                                <video th:id="|sensor-camera-${sensor.id}|" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto"
                                                                        data-setup="{}">
                                                                     <p class="vjs-no-js">video</p>
                                                                 </video>
                                                             </div>
                                                         </div>
                                                         <div class="col-xs-12 col-sm-6">
-                                                            <div th:id="|sensor-photo-${sensor.id}|" class="photo-sensor-tab">
-                                                                <div id="my-timeline"></div>
+                                                            <div class="photo-sensor-tab">
+                                                                <div th:id="|sensor-photo-${sensor.id}|"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -200,5 +200,6 @@
     <script th:src="@{js/app-chart.js}"></script>
     <script th:src="@{js/app-video.js}"></script>
     <script th:src="@{js/app-controller.js}"></script>
+    <script th:src="@{js/app-entry.js}"></script>
 </body>
 </html>

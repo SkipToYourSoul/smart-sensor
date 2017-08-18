@@ -3,34 +3,6 @@
  *  Author: liye on 2017/8/1
  *  Description:
  */
-
-if (sensors.length > 0){
-    // --- init chart
-    var $loading = $("#fakeLoader");
-    $loading.fakeLoader({
-        timeToHide: 5000,
-        spinner:"spinner4",
-        bgColor:"rgba(154, 154, 154, 0.7)"
-    });
-
-    // --- init sensor content
-    var charts = [];
-    for (var i in sensors){
-        var row = sensors[i];
-        // --- chart
-        if (row['type'] == 1){
-            var chart = echarts.init(document.getElementById('sensor-content-' + row['id']));
-            initialSensorChart(row['id'], chart);
-            charts.push(chart);
-        }
-    }
-    window.onresize = function () {
-        for (var i in charts)
-            charts[i].resize();
-    };
-    $loading.fadeOut();
-}
-
 function initialSensorChart(sensorId, chart) {
     $.ajax({
         type: "get",
@@ -44,13 +16,16 @@ function initialSensorChart(sensorId, chart) {
                 chartSeriesData.push({
                     value:[
                         row['dataTime'],
-                        row['value']]
+                        row['value']
+                    ]
                 });
             }
             chart.setOption(chartOption(chartSeriesData));
+            return true;
         },
         error: function (err_msg) {
             message_info('加载传感器数据出错，传感器编号：' + sensorId, 'error', 3);
+            return false;
         }
     });
 }
