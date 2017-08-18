@@ -18,7 +18,7 @@ public class SensorCamera {
     private long id;
 
     @Column(name = "sensor_id", nullable = false)
-    private int sensorId;
+    private long sensorId;
 
     @Column(name = "data_entry", nullable = false)
     private String entrance;
@@ -51,11 +51,11 @@ public class SensorCamera {
         return modifyTime;
     }
 
-    public int getSensorId() {
+    public long getSensorId() {
         return sensorId;
     }
 
-    public void setSensorId(int sensorId) {
+    public void setSensorId(long sensorId) {
         this.sensorId = sensorId;
     }
 

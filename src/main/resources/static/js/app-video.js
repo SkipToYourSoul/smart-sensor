@@ -3,6 +3,28 @@
  *  Author: liye on 2017/8/15
  *  Description:
  */
+var video_list = [];
+
+function initSensorCamera(sensorId) {
+    $.ajax({
+        type: "get",
+        url: current_address + "/sensor/camera",
+        async: false,
+        data: {sensorId: sensorId},
+        dataType: "json",
+        success: function (videos) {
+            video_list = videos;
+        },
+        error: function (err_msg) {
+            message_info('加载传感器数据出错，传感器编号：' + sensorId, 'error', 3);
+        }
+    });
+
+    var video_player = videojs('sensor-camera-' + sensorId, video_list[0]['option'], function () {
+        console.log('the video player is ready');
+    });
+}
+
 
 var video_option = {
     poster : '/img/oceans.png',
@@ -13,15 +35,13 @@ var video_option = {
         }
     ]
 };
-var video_player = videojs('my-video', video_option, function () {
-    console.log('the video player is ready');
-});
+
 
 function initSensorVideo(){
 
 }
 
-function videoPlay() {
+/*function videoPlay() {
     video_player.play();
     timeline.goToNext();
 
@@ -39,7 +59,7 @@ function videoPause() {
 
 video_player.on("pause", function(){
     console.log("pause");
-});
+});*/
 
 
 var storyjs_jsonp_data = {
@@ -93,4 +113,4 @@ var additionalOptions = {
     timenav_height: 200
 };
 
-var timeline = new TL.Timeline('my-timeline', storyjs_jsonp_data, additionalOptions);
+// var timeline = new TL.Timeline('sensor-photo-2', storyjs_jsonp_data, additionalOptions);

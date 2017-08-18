@@ -21,11 +21,9 @@ function initialSensorChart(sensorId, chart) {
                 });
             }
             chart.setOption(chartOption(chartSeriesData));
-            return true;
         },
         error: function (err_msg) {
             message_info('加载传感器数据出错，传感器编号：' + sensorId, 'error', 3);
-            return false;
         }
     });
 }

@@ -6,9 +6,9 @@ import com.stemcloud.smart.web.dao.SensorDataRepository;
 import com.stemcloud.smart.web.domain.SensorCamera;
 import com.stemcloud.smart.web.domain.SensorCameraPhotos;
 import com.stemcloud.smart.web.domain.SensorData;
-import com.stemcloud.smart.web.domain.view.Event;
-import com.stemcloud.smart.web.domain.view.Timeline;
-import com.stemcloud.smart.web.domain.view.Video;
+import com.stemcloud.smart.web.view.Event;
+import com.stemcloud.smart.web.view.Timeline;
+import com.stemcloud.smart.web.view.Video;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +28,26 @@ import java.util.Random;
 public class SensorDataService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    SensorDataRepository dataRepository;
+    private final SensorDataRepository dataRepository;
+    private final SensorCameraRepository cameraRepository;
+    private final SensorCameraPhotosRepository cameraPhotosRepository;
 
     @Autowired
-    SensorCameraRepository cameraRepository;
+    public SensorDataService(SensorDataRepository dataRepository, SensorCameraRepository cameraRepository, SensorCameraPhotosRepository cameraPhotosRepository) {
+        this.dataRepository = dataRepository;
+        this.cameraRepository = cameraRepository;
+        this.cameraPhotosRepository = cameraPhotosRepository;
+    }
 
-    @Autowired
-    SensorCameraPhotosRepository cameraPhotosRepository;
+    public List<SensorData> getSensorDataByAppId(int appId){
+        return dataRepository.findSensorDataByAppId(appId);
+    }
 
-    public List<Video> getSensorCameraBySensorId(int id){
+    public List<SensorData> getSensorDataBySensorId(long sensorId) {
+        return dataRepository.findBySensorId(sensorId);
+    }
+
+    public List<Video> getSensorCameraBySensorId(long id){
         List<Video> videos = new ArrayList<Video>();
         List<SensorCamera> sensorCameras = cameraRepository.findBySensorId(id);
 
@@ -50,18 +60,26 @@ public class SensorDataService {
             int duration = camera.getDuration();
             Date date = camera.getDataTime();
 
-            Event title = new Event("视频片段: " + videoId, "视频时长: " + duration);
+            Event title = new Event();
+            title.setText("视频片段: " + videoId, "视频时长: " + duration);
             List<Event> events = new ArrayList<Event>();
 
             if (cameraPhotos.size() > 0){
                 poster = cameraPhotos.get(0).getSourcePath();
-                for (int i=1; i <= cameraPhotos.size(); i++){
-                    SensorCameraPhotos photo = cameraPhotos.get(i-1);
+                for (int i=1; i < cameraPhotos.size(); i++){
+                    SensorCameraPhotos photo = cameraPhotos.get(i);
                     int timeInVideo = photo.getTimeInVideo();
                     Date startTime = new Date(date.getTime() + timeInVideo*1000);
                     String url = photo.getSourcePath();
 
-                    events.add(new Event(startTime, url, i, timeInVideo));
+                    Event event = new Event();
+                    event.setMedia(url, timeInVideo);
+                    event.setStart_date(startTime);
+                    event.setEnd_date(startTime);
+                    event.setUnique_id(i);
+
+                    events.add(event);
+                    logger.info(event.toString());
                 }
             }
 

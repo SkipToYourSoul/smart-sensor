@@ -6,6 +6,14 @@
 
 var charts_list = [];
 var video_list = [];
+var timeline_list = [];
+
+var additionalOptions = {
+    start_at_slide: 0,
+    slide_padding_lr: 20,
+    scale_factor: 0.5,
+    timenav_height: 200
+};
 
 function initSensorData() {
     if (sensors.length <= 0)
@@ -23,24 +31,39 @@ function initSensorData() {
     for (var i=0; i < sensors.length; i++){
         var row = sensors[i];
         var id = row['id'];
-        // --- chart
-        if (row['type'] == 1){
+        var type = row['type'];
+
+        var data = sensorData[id];
+        if (type == 1){
             var chart = echarts.init(document.getElementById('sensor-content-' + id));
             chart.showLoading();
-            if (initialSensorChart(id, chart))
-                chart.hideLoading();
+            var chartSeriesData = [];
+            for (var j in data){
+                chartSeriesData.push({
+                    value:[
+                        data[j]['dataTime'],
+                        data[j]['value']
+                    ]
+                });
+            }
+            chart.setOption(chartOption(chartSeriesData));
+            chart.hideLoading();
             charts_list.push(chart);
-        } else if (row['type'] == 2){
+        } else if (type == 2){
+            var video_player = videojs('sensor-camera-' + id, data[0]['option'], function () {
+                console.log('the video player is ready');
+            });
+            video_list.push(video_player);
 
+            var timeline = new TL.Timeline('sensor-photo-' + id, data[0]['timeline'], additionalOptions);
         }
     }
 
-
-    window.onresize = function () {
-        for (var i in charts)
-            charts_list[i].resize();
-    };
     $loading.fadeOut();
 }
 
 initSensorData();
+window.onresize = function () {
+    for (var i in charts_list)
+        charts_list[i].resize();
+};

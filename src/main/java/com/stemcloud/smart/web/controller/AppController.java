@@ -2,7 +2,7 @@ package com.stemcloud.smart.web.controller;
 
 import com.stemcloud.smart.web.domain.SensorData;
 import com.stemcloud.smart.web.domain.SensorInfo;
-import com.stemcloud.smart.web.domain.view.Video;
+import com.stemcloud.smart.web.view.Video;
 import com.stemcloud.smart.web.service.AppManagementDataService;
 import com.stemcloud.smart.web.service.SensorDataService;
 import com.stemcloud.smart.web.service.ViewService;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,31 +27,25 @@ public class AppController {
 
     private final AppManagementDataService appManagementDataService;
     private final ViewService viewService;
+    private final SensorDataService sensorDataService;
 
     @Autowired
-    public AppController(AppManagementDataService appManagementDataService, ViewService viewService) {
+    public AppController(AppManagementDataService appManagementDataService, ViewService viewService, SensorDataService sensorDataService) {
         this.appManagementDataService = appManagementDataService;
         this.viewService = viewService;
+        this.sensorDataService = sensorDataService;
     }
-
-    @Autowired
-    SensorDataService sensorDataService;
 
     @GetMapping("/sensor/data")
     public List<SensorData> getSensorData(@RequestParam int sensorId){
-        return appManagementDataService.getSensorDataBySensorId(sensorId);
+        return sensorDataService.getSensorDataBySensorId(sensorId);
     }
 
     @GetMapping("/sensor/camera")
-    public Map<String ,Video> getSensorCamera(@RequestParam int sensorId){
+    public List<Video> getSensorCamera(@RequestParam int sensorId){
         logger.info("==========" + sensorId);
-
         List<Video> videos = sensorDataService.getSensorCameraBySensorId(sensorId);
-        Map<String ,Video> videoMap = new HashMap<String, Video>();
-        for (int i=1; i<=videos.size(); i++)
-            videoMap.put("video" + i, videos.get(i-1));
-
-        return videoMap;
+        return videos;
     }
 
     @PostMapping("/new/app")

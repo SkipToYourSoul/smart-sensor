@@ -22,13 +22,11 @@ import java.util.Map;
 @Transactional
 public class AppManagementDataService {
     private final SensorInfoRepository sensorInfoRepository;
-    private final SensorDataRepository sensorDataRepository;
     private final AppInfoRepository appInfoRepository;
 
     @Autowired
-    public AppManagementDataService(SensorInfoRepository sensorInfoRepository, SensorDataRepository sensorDataRepository, AppInfoRepository appInfoRepository) {
+    public AppManagementDataService(SensorInfoRepository sensorInfoRepository, AppInfoRepository appInfoRepository) {
         this.sensorInfoRepository = sensorInfoRepository;
-        this.sensorDataRepository = sensorDataRepository;
         this.appInfoRepository = appInfoRepository;
     }
 
@@ -42,14 +40,6 @@ public class AppManagementDataService {
 
     public List<SensorInfo> getSensorInfoByCreatorAndShared(String creator){
         return sensorInfoRepository.findByCreatorOrIsShare(creator, 1);
-    }
-
-    public List<SensorData> getSensorDataByAppId(int appId){
-        return sensorDataRepository.findSensorDataByAppId(appId);
-    }
-
-    public List<SensorData> getSensorDataBySensorId(int sensorId) {
-        return sensorDataRepository.findBySensorId(sensorId);
     }
 
     public long saveNewApp(Map<String, String> queryParams, String user){
