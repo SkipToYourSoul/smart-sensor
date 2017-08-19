@@ -21,4 +21,6 @@ public interface AppInfoRepository extends CrudRepository<AppInfo, Integer> {
     @Query(value = "UPDATE base_app_info SET app_name = :name, app_description = :description WHERE id = :id", nativeQuery = true)
     @Modifying
     Integer updateAppInfo(@Param("id") int id, @Param("name") String name, @Param("description") String description);
+
+    Integer deleteById(long id);
 }

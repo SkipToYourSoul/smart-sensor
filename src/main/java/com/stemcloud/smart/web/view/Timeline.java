@@ -13,10 +13,12 @@ import java.util.List;
 public class Timeline {
     private Event title;
     private List<Event> events;
+    private Era era;
 
-    public Timeline(Event title, List<Event> events) {
+    public Timeline(Event title, List<Event> events, Era era) {
         this.title = title;
         this.events = events;
+        this.era = era;
     }
 
     public Event getTitle() {
@@ -33,6 +35,14 @@ public class Timeline {
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    public Era getEra() {
+        return era;
+    }
+
+    public void setEra(Era era) {
+        this.era = era;
     }
 
     @Override

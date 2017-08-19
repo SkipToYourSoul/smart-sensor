@@ -5,7 +5,7 @@
  */
 
 // --------------------------
-// new and edit app
+// new, edit and delete app
 // --------------------------
 $new_app_form = $('#new-app-form');
 $new_app_form.formValidation({
@@ -55,6 +55,35 @@ $new_app_modal.on('show.bs.modal', function (event) {
         $('#new-app-description').val(apps[currentAppIndex - 1]['description']);
     }
 });
+
+function deleteApp(evt){
+    bootbox.confirm({
+        title: "删除应用?",
+        message: "确认删除应用吗? 应用相关的传感器相关数据也会被删除.",
+        buttons: {
+            cancel: {
+                label: '<i class="fa fa-times"></i> 取消'
+            },
+            confirm: {
+                label: '<i class="fa fa-check"></i> 确认删除'
+            }
+        },
+        callback: function (result) {
+            if (result){
+                $.ajax({
+                    type: 'get',
+                    url: current_address + '/delete/app?id=' + currentAppId,
+                    success: function (id) {
+                        location.replace(location.href);
+                    },
+                    error: function (id) {
+                        message_info("操作失败", 'error');
+                    }
+                });
+            }
+        }
+    });
+}
 
 // --------------------------
 // new, edit and delete sensor

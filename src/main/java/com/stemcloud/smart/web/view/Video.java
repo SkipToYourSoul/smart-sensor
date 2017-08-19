@@ -41,6 +41,7 @@ public class Video {
     public class VideoConfig {
         private String poster;
         private List<Map> sources;
+        private List<String> techOrder;
 
         private VideoConfig(String poster, final String src){
             this.poster = poster;
@@ -51,6 +52,10 @@ public class Video {
             List<Map> list = new ArrayList<Map>();
             list.add(map);
             this.sources = list;
+            List<String> techOrder = new ArrayList<String>();
+            techOrder.add("html5");
+            techOrder.add("flash");
+            this.techOrder = techOrder;
         }
 
         @Override
@@ -75,6 +80,14 @@ public class Video {
 
         public void setSources(List<Map> sources) {
             this.sources = sources;
+        }
+
+        public List<String> getTechOrder() {
+            return techOrder;
+        }
+
+        public void setTechOrder(List<String> techOrder) {
+            this.techOrder = techOrder;
         }
     }
 

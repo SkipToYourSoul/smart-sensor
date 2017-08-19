@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
-    <title>Smart-Sensor</title>
+    <title>STEM云传感器应用页</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon.ico}"/>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" th:href="@{source/bootstrap/bootstrap.min.css}"/>
@@ -36,8 +37,7 @@
                         </th:block>
                     </ul>
                 </div>
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#new-app-modal" todo="new">新建应用</button>
-                <button th:if="${not #lists.isEmpty(apps)}" class="btn btn-info btn-block" data-toggle="modal" data-target="#new-app-modal" todo="edit">编辑应用</button>
+                <button class="btn btn-block" data-toggle="modal" data-target="#new-app-modal" todo="new">新建应用</button>
             </div>
 
             <!-- 应用内容 -->
@@ -74,8 +74,14 @@
                         </div>
 
                         <!-- 应用按钮组 -->
-                        <div class="btn-group overview-app-btn-group">
-                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#new-sensor-modal">新建传感器</button>
+                        <div class="overview-app-btn-group">
+                            <div class="btn-group">
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#new-sensor-modal">新建传感器</button>
+                            </div>
+                            <div class="btn-group pull-right">
+                                <button class="btn btn-info" data-toggle="modal" data-target="#new-app-modal" todo="edit">编辑应用</button>
+                                <button class="btn btn-danger" onclick="deleteApp(this)">删除应用</button>
+                            </div>
                         </div>
 
                         <!-- 传感器信息 -->
@@ -118,11 +124,16 @@
                                                 </div>
                                                 <div class="tab-content">
                                                     <div role="tabpanel" class="tab-pane fade in active" th:id="|sensor-content-${sensor.id}|">
+                                                        <div class="col-xs-12 col-sm-12 camera-sensor-tool">
+                                                            <label>选取视频片段：</label>
+                                                            <select class="selectpicker" th:id="|sensor-video-select-${sensor.id}|">
+                                                            </select>
+                                                        </div>
                                                         <div class="col-xs-12 col-sm-6">
                                                             <div class="camera-sensor-tab">
                                                                 <video th:id="|sensor-camera-${sensor.id}|" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto"
                                                                        data-setup="{}">
-                                                                    <p class="vjs-no-js">video</p>
+                                                                    <p class="vjs-no-js">播放视频需要启用 JavaScript, 推荐使用<a href="http://videojs.com/html5-video-support/" target="_blank">支持HTML5</a>的浏览器访问。</p>
                                                                 </video>
                                                             </div>
                                                         </div>
@@ -198,8 +209,7 @@
     <script th:src="@{source/timeline/timeline.js}"></script>
 
     <script th:src="@{js/common.js}"></script>
-    <script th:src="@{js/app-chart.js}"></script>
-    <script th:src="@{js/app-video.js}"></script>
+    <script th:src="@{js/app-option.js}"></script>
     <script th:src="@{js/app-controller.js}"></script>
     <script th:src="@{js/app-entry.js}"></script>
 </body>

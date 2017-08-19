@@ -31,5 +31,5 @@ public interface SensorInfoRepository extends CrudRepository<SensorInfo, Integer
                              @Param("longitude") double longitude, @Param("latitude") double latitude,
                              @Param("city") String city, @Param("description") String description);
 
-    Integer deleteById(int id);
+    Integer deleteById(long id);
 }

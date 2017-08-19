@@ -103,7 +103,11 @@ public class AppManagementDataService {
         return sensorInfoRepository.updateSensorInfo(sensorId, name, code, type, longitude, latitude, city, description);
     }
 
-    public int deleteSensor(int id){
+    public int deleteSensor(long id){
         return sensorInfoRepository.deleteById(id);
+    }
+
+    public int deleteApp(long id){
+        return appInfoRepository.deleteById(id);
     }
 }

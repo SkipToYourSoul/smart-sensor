@@ -6,6 +6,7 @@ import com.stemcloud.smart.web.dao.SensorDataRepository;
 import com.stemcloud.smart.web.domain.SensorCamera;
 import com.stemcloud.smart.web.domain.SensorCameraPhotos;
 import com.stemcloud.smart.web.domain.SensorData;
+import com.stemcloud.smart.web.view.Era;
 import com.stemcloud.smart.web.view.Event;
 import com.stemcloud.smart.web.view.Timeline;
 import com.stemcloud.smart.web.view.Video;
@@ -47,9 +48,14 @@ public class SensorDataService {
         return dataRepository.findBySensorId(sensorId);
     }
 
-    public List<Video> getSensorCameraBySensorId(long id){
+    /**
+     * get camera data: video, timeline
+     * @param sensorId sensor id
+     * @return List<Video>
+     */
+    public List<Video> getSensorCameraBySensorId(long sensorId){
         List<Video> videos = new ArrayList<Video>();
-        List<SensorCamera> sensorCameras = cameraRepository.findBySensorId(id);
+        List<SensorCamera> sensorCameras = cameraRepository.findBySensorId(sensorId);
 
         for (SensorCamera camera : sensorCameras){
             long videoId = camera.getId();
@@ -60,10 +66,17 @@ public class SensorDataService {
             int duration = camera.getDuration();
             Date date = camera.getDataTime();
 
+            // --- title
             Event title = new Event();
-            title.setText("视频片段: " + videoId, "视频时长: " + duration);
-            List<Event> events = new ArrayList<Event>();
+            title.setText("视频片段: " + videoId, "视频时长: " + duration + "s");
 
+            // --- era
+            Era era = new Era();
+            era.setStart_date(date);
+            era.setEnd_date(new Date(date.getTime() + duration*1000));
+
+            // --- events
+            List<Event> events = new ArrayList<Event>();
             if (cameraPhotos.size() > 0){
                 poster = cameraPhotos.get(0).getSourcePath();
                 for (int i=1; i < cameraPhotos.size(); i++){
@@ -83,7 +96,7 @@ public class SensorDataService {
                 }
             }
 
-            Timeline cameraTimeline = new Timeline(title, events);
+            Timeline cameraTimeline = new Timeline(title, events, era);
             videos.add(new Video(poster, sourcePath, cameraTimeline));
         }
         return videos;

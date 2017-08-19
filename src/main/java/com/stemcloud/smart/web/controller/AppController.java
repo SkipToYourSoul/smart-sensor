@@ -84,10 +84,21 @@ public class AppController {
     }
 
     @GetMapping(value = "/delete/sensor")
-    public String deleteSensor(@RequestParam int id){
+    public String deleteSensor(@RequestParam long id){
         try {
             appManagementDataService.deleteSensor(id);
             logger.info("Delete sensor: " + id);
+        } catch (Exception e){
+            return "failure";
+        }
+        return "success";
+    }
+
+    @GetMapping(value = "/delete/app")
+    public String deleteApp(@RequestParam long id){
+        try {
+            appManagementDataService.deleteApp(id);
+            logger.info("Delete app: " + id);
         } catch (Exception e){
             return "failure";
         }

@@ -1,5 +1,7 @@
 package com.stemcloud.smart.web.view;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -17,7 +19,7 @@ public class Event {
 
     private EventMedia media = null;
 
-    private int unique_id = -2;
+    private int unique_id = -1;
 
     public EventText getText() {
         return text;
@@ -45,7 +47,7 @@ public class Event {
 
         this.start_date = new EventDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
                 calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE));
+                calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
     }
 
     public EventDate getEnd_date() {
@@ -58,7 +60,7 @@ public class Event {
 
         this.end_date = new EventDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1,
                 calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE));
+                calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
     }
 
     public int getUnique_id() {
@@ -74,160 +76,14 @@ public class Event {
         String toStr = "Event{";
         if (null != this.text)
             toStr += "text=" + text.toString() + ",";
-        /*if (null != start_date)
+        if (null != start_date)
             toStr += "startDate=" + start_date.toString() + ",";
         if (null != end_date)
-            toStr += "endDate=" + end_date.toString() + ",";*/
+            toStr += "endDate=" + end_date.toString() + ",";
         if (null != media)
             toStr += "media=" + media.toString() + ",";
         toStr += "}";
 
         return toStr;
-    }
-
-    public class EventText{
-        private String headline = "";
-        private String text = "";
-
-        private EventText(String headline, String text) {
-            this.headline = headline;
-            this.text = text;
-        }
-
-        public String getHeadline() {
-            return headline;
-        }
-
-        public void setHeadline(String headline) {
-            this.headline = headline;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-
-        @Override
-        public String toString() {
-            return "EventText{" +
-                    "headline='" + headline + '\'' +
-                    ", text='" + text + '\'' +
-                    '}';
-        }
-    }
-
-    public class EventDate{
-        private int year = -1;
-        private int month = -1;
-        private int day = -1;
-        private int hour = -1;
-        private int minute = -1;
-
-        private EventDate(int year, int month, int day, int hour, int minute) {
-            this.year = year;
-            this.month = month;
-            this.day = day;
-            this.hour = hour;
-            this.minute = minute;
-        }
-
-        public int getYear() {
-            return year;
-        }
-
-        public void setYear(int year) {
-            this.year = year;
-        }
-
-        public int getMonth() {
-            return month;
-        }
-
-        public void setMonth(int month) {
-            this.month = month;
-        }
-
-        public int getDay() {
-            return day;
-        }
-
-        public void setDay(int day) {
-            this.day = day;
-        }
-
-        public int getHour() {
-            return hour;
-        }
-
-        public void setHour(int hour) {
-            this.hour = hour;
-        }
-
-        public int getMinute() {
-            return minute;
-        }
-
-        public void setMinute(int minute) {
-            this.minute = minute;
-        }
-
-        @Override
-        public String toString() {
-            return "EventDate{" +
-                    "year=" + year +
-                    ", month=" + month +
-                    ", day=" + day +
-                    ", hour=" + hour +
-                    ", minute=" + minute +
-                    '}';
-        }
-    }
-
-    public class EventMedia{
-        private String url = "";
-        private String caption = "";
-        private String thumbnail = "";
-
-        private EventMedia(String url, String caption, String thumbnail) {
-            this.url = url;
-            this.caption = caption;
-            this.thumbnail = thumbnail;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public String getCaption() {
-            return caption;
-        }
-
-        public void setCaption(String caption) {
-            this.caption = caption;
-        }
-
-        public String getThumbnail() {
-            return thumbnail;
-        }
-
-        public void setThumbnail(String thumbnail) {
-            this.thumbnail = thumbnail;
-        }
-
-        @Override
-        public String toString() {
-            return "EventMedia{" +
-                    "url='" + url + '\'' +
-                    ", caption='" + caption + '\'' +
-                    ", thumbnail='" + thumbnail + '\'' +
-                    '}';
-        }
     }
 }
