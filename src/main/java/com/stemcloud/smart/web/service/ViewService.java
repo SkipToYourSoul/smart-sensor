@@ -42,7 +42,7 @@ public class ViewService {
     }
 
     public List<SensorInfo> getSensorInfoByAppId(long appId){
-        return sensorInfoRepository.findByAppId(appId);
+        return sensorInfoRepository.findByAppIdOrderByType(appId);
     }
 
     public boolean isAppBelongCurrentUser(long appId, String user){

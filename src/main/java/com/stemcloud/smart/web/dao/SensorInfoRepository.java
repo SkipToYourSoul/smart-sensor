@@ -20,7 +20,7 @@ public interface SensorInfoRepository extends CrudRepository<SensorInfo, Integer
 
     List<SensorInfo> findByCreatorOrIsShare(String creator, int isShare);
 
-    List<SensorInfo> findByAppId(long appId);
+    List<SensorInfo> findByAppIdOrderByType(long appId);
 
     @Query(value = "UPDATE base_sensor_info SET sensor_name = :name, " +
             "sensor_code = :code, sensor_type = :sType, longitude = :longitude, latitude = :latitude, sensor_city = :city, " +

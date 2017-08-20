@@ -5,8 +5,8 @@
  */
 
 var charts_list = [];
-var current_video_player;
-var current_timeline;
+var video_players = {};
+var timelines = {};
 
 function initSensorData() {
     if (sensors.length <= 0)
@@ -26,16 +26,15 @@ function initSensorData() {
         var id = row['id'];
         var type = row['type'];
 
-        var data = sensorData[id];
         if (type == 1){
             var chart = echarts.init(document.getElementById('sensor-content-' + id));
             chart.showLoading();
             var chartSeriesData = [];
-            for (var j in data){
+            for (var j in sensorData[id]){
                 chartSeriesData.push({
                     value:[
-                        data[j]['dataTime'],
-                        data[j]['value']
+                        sensorData[id][j]['dataTime'],
+                        sensorData[id][j]['value']
                     ]
                 });
             }
@@ -43,27 +42,27 @@ function initSensorData() {
             chart.hideLoading();
             charts_list.push(chart);
         } else if (type == 2){
-            if (data == null || data.length == 0) {
+            if (sensorData[id] == null || sensorData[id].length == 0) {
                 console.info("empty data");
                 continue;
             }
 
-            current_video_player = videojs('sensor-camera-' + id, data[0]['option'], function () {
+            video_players[id] = videojs('sensor-camera-' + id, sensorData[id][0]['option'], function () {
                 console.log('the video player is ready');
             });
-            current_timeline = new TL.Timeline('sensor-photo-' + id, data[0]['timeline'], timelineOptions);
+            timelines[id] = new TL.Timeline('sensor-photo-' + id, sensorData[id][0]['timeline'], timelineOptions);
 
             // --- select
             var $video_select = $('#sensor-video-select-' + id);
-            for (var k=0; k<data.length; k++)
+            for (var k=0; k<sensorData[id].length; k++)
                 $video_select.html($video_select.html() + '<option value="' + k + '">视频片段' + (k+1) + '</option>');
 
             $video_select.change(function () {
-                console.info(this.value);
-                current_video_player.poster(data[this.value]['option']['poster']);
-                current_video_player.src(data[this.value]['option']['sources']);
+                var id = this.id.split('-')[3];
+                video_players[id].poster(sensorData[id][this.value]['option']['poster']);
+                video_players[id].src(sensorData[id][this.value]['option']['sources']);
 
-                current_timeline = new TL.Timeline('sensor-photo-' + id, data[this.value]['timeline'], timelineOptions);
+                timelines[id] = new TL.Timeline('sensor-photo-' + id, sensorData[id][this.value]['timeline'], timelineOptions);
             });
         }
     }
@@ -73,13 +72,23 @@ function initSensorData() {
 
 initSensorData();
 
-var selectChange = function (id, data) {
-
-};
-
-
-
 window.onresize = function () {
     for (var i in charts_list)
         charts_list[i].resize();
 };
+
+function videoPlay(evt) {
+    var current_sensor_id = evt.id.split('-')[3];
+    var current_video_index = $('#sensor-video-select-' + current_sensor_id).val();
+
+    video_players[current_sensor_id].play();
+    timelines[current_sensor_id].goToNext();
+}
+
+function videoPause(evt) {
+    var current_sensor_id = evt.id.split('-')[3];
+    var current_video_index = $('#sensor-video-select-' + current_sensor_id).val();
+
+    video_players[current_sensor_id].pause();
+    timelines[current_sensor_id].goToStart();
+}

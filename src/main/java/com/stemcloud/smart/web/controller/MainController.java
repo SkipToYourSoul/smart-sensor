@@ -57,21 +57,29 @@ public class MainController implements ErrorController {
     }
 
     @GetMapping("/app")
-    public String app(@RequestParam(value = "id", required = false, defaultValue = "0") Integer id, Model model,
+    public String app(@RequestParam(value = "id", required = false) Integer id, Model model,
                       HttpServletRequest request, HttpServletResponse response) throws IOException {
         // --- get login user name
         String currentUser = viewService.getCurrentLoginUser(request);
         if (currentUser == null)
             response.sendRedirect("/login");
 
+        model.addAttribute("inApp", true);
+
         // --- get app info according current user
         List<AppInfo> apps = viewService.getAppInfoByCurrentUser(currentUser);
         logger.info("FIND " + apps.size() + " APPS By " + currentUser);
 
+        if (id != null && !viewService.isAppBelongCurrentUser(id, currentUser)){
+            logger.warn("The user: " + currentUser + " has not the app " + id);
+            response.sendRedirect("/app");
+        }
+
         if (apps.size() != 0){
             long currentAppId = apps.get(0).getId();
             int currentAppIndex = 1;
-            if (viewService.isAppBelongCurrentUser(id, currentUser)){
+
+            if (id != null)
                 for (int i=0; i < apps.size(); i++){
                     if (id == apps.get(i).getId()){
                         currentAppId = id;
@@ -79,10 +87,6 @@ public class MainController implements ErrorController {
                         break;
                     }
                 }
-            } else {
-                logger.warn("The user: " + currentUser + " has not the app " + id);
-                response.sendRedirect("/app?id=" + currentAppId);
-            }
 
             // --- get first app's sensor info
             List<SensorInfo> sensors = viewService.getSensorInfoByAppId(currentAppId);
@@ -109,7 +113,6 @@ public class MainController implements ErrorController {
             model.addAttribute("sensorData", sensorData);
         }
 
-        model.addAttribute("inApp", true);
         return "app";
     }
 

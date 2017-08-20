@@ -57,18 +57,20 @@ public class SensorDataService {
         List<Video> videos = new ArrayList<Video>();
         List<SensorCamera> sensorCameras = cameraRepository.findBySensorId(sensorId);
 
+        int count = 0;
         for (SensorCamera camera : sensorCameras){
+            count += 1;
             long videoId = camera.getId();
             List<SensorCameraPhotos> cameraPhotos = cameraPhotosRepository.findByVideoIdOrderByTimeInVideo(videoId);
 
             String sourcePath = camera.getSourcePath();
-            String poster = "";
+            String poster = "/img/oceans.png";
             int duration = camera.getDuration();
             Date date = camera.getDataTime();
 
             // --- title
             Event title = new Event();
-            title.setText("视频片段: " + videoId, "视频时长: " + duration + "s");
+            title.setText("视频片段: " + count, "视频时长: " + duration + "s");
 
             // --- era
             Era era = new Era();
@@ -92,7 +94,7 @@ public class SensorDataService {
                     event.setUnique_id(i);
 
                     events.add(event);
-                    logger.info(event.toString());
+                    // logger.info(event.toString());
                 }
             }
 

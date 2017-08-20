@@ -128,6 +128,11 @@
                                                             <label>选取视频片段：</label>
                                                             <select class="selectpicker" th:id="|sensor-video-select-${sensor.id}|">
                                                             </select>
+
+                                                            <div class="btn-group pull-right">
+                                                                <button class="btn btn-success" onclick="videoPlay(this)" th:id="|sensor-video-play-${sensor.id}|">play</button>
+                                                                <button class="btn btn-danger" onclick="videoPause(this)" th:id="|sensor-video-pause-${sensor.id}|">pause</button>
+                                                            </div>
                                                         </div>
                                                         <div class="col-xs-12 col-sm-6">
                                                             <div class="camera-sensor-tab">
@@ -139,16 +144,22 @@
                                                         </div>
                                                         <div class="col-xs-12 col-sm-6">
                                                             <div class="photo-sensor-tab">
-                                                                <div th:id="|sensor-photo-${sensor.id}|"></div>
+                                                                <div th:id="|sensor-photo-${sensor.id}|">
+                                                                    <h3>暂无时间轴数据</h3>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
-                                                        <p><strong>传感器信息</strong></p>
-                                                        <hr/>
-                                                        <button class="btn btn-success" onclick="videoPlay()">play</button>
-                                                        <button class="btn btn-danger" onclick="videoPause()">pause</button>
+                                                        <div class="camera-sensor-info">
+                                                            <p><strong>传感器信息</strong></p>
+                                                            <hr/>
+                                                            <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
+                                                            <p><strong>传感器编号：</strong><span th:text="${sensor.code}"></span></p>
+                                                            <p><strong>传感器位置：</strong><span th:text="|${sensor.city} - (${sensor.longitude}, ${sensor.latitude})|"></span></p>
+                                                            <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

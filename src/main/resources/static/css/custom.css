@@ -192,6 +192,12 @@ hr {
     padding-right: 10px;
 }
 
+.camera-sensor-info{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
 .camera-sensor-tool{
     margin-top: 10px;
 }
