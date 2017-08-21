@@ -62,7 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity.ignoring().antMatchers("/source/**", "/js/**", "/css/**", "/img/**");
 
         /* 访问时忽略主页以及相关资源 */
-        webSecurity.ignoring().antMatchers("/", "/index/**", "/denied");
+        webSecurity.ignoring().antMatchers(/*"/", "/index*", "/denied"*/);
     }
 
     /**
@@ -72,6 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
+                .antMatchers("/", "/index/**", "/denied").permitAll()   /*  主页以及主页相关数据无需登录权限认证  */
                 .anyRequest().authenticated()   /* 其他所有资源都需要认证，登陆后访问 */
                 .and()
                 /* 登陆相关设置 */

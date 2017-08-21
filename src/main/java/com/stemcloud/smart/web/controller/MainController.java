@@ -46,7 +46,6 @@ public class MainController implements ErrorController {
         String loginUser = viewService.getCurrentLoginUser(request);
         if (loginUser != null) {
             logger.info("Current login user: " + loginUser);
-            model.addAttribute("loginUser", loginUser);
             model.addAttribute("sensors", appManagementDataService.getSensorInfoByCreatorAndShared(loginUser));
         } else {
             logger.info("No login user!");
