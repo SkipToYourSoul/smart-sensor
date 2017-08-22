@@ -4,11 +4,13 @@ public class EventMedia{
     private String url = "";
     private String caption = "";
     private String thumbnail = "";
+    int timeInVideo = 0;
 
-    public EventMedia(String url, String caption, String thumbnail) {
+    public EventMedia(String url, String caption, String thumbnail, int timeInVideo) {
         this.url = url;
         this.caption = caption;
         this.thumbnail = thumbnail;
+        this.timeInVideo = timeInVideo;
     }
 
     public String getUrl() {
@@ -33,6 +35,14 @@ public class EventMedia{
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public int getTimeInVideo() {
+        return timeInVideo;
+    }
+
+    public void setTimeInVideo(int timeInVideo) {
+        this.timeInVideo = timeInVideo;
     }
 
     @Override

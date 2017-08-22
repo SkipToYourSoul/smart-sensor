@@ -99,24 +99,39 @@
                                     <!-- load different content according to sensor.type -->
                                     <div class="panel-body">
                                         <div class="row" th:switch="${sensor.type}">
-                                            <!-- type = 1 -->
+                                            <!-- type = 1 value -->
                                             <div th:case="1">
-                                                <div class="col-xs-12 col-sm-9">
-                                                    <div class="value-sensor-content" th:id="|sensor-content-${sensor.id}|"></div>
+                                                <div class="tab-sensor-content">
+                                                    <ul class="nav nav-tabs" role="tablist">
+                                                        <li role="presentation" class="active"><a th:href="@{|#sensor-content-${sensor.id}|}" role="tab" data-toggle="tab">传感器数据</a></li>
+                                                        <li role="presentation"><a th:href="@{|#sensor-info-${sensor.id}|}" role="tab" data-toggle="tab">传感器信息</a></li>
+                                                    </ul>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-3">
-                                                    <div class="value-sensor-info">
-                                                        <p><strong>传感器信息</strong></p>
-                                                        <hr/>
-                                                        <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
-                                                        <p><strong>传感器编号：</strong><span th:text="${sensor.code}"></span></p>
-                                                        <p><strong>传感器位置：</strong><span th:text="|${sensor.city} - (${sensor.longitude}, ${sensor.latitude})|"></span></p>
-                                                        <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
+                                                <div class="tab-content">
+                                                    <div role="tabpanel" class="tab-pane fade in active" th:id="|sensor-content-${sensor.id}|">
+                                                        <div class="col-xs-12 col-sm-9">
+                                                            <div class="value-sensor-content" th:id="|sensor-chart-${sensor.id}|"></div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-sm-3">
+                                                            some basic operations of chart
+                                                        </div>
+                                                    </div>
+                                                    <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
+                                                        <div class="tab-sensor-info">
+                                                            <p><strong>传感器信息</strong></p>
+                                                            <hr/>
+                                                            <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
+                                                            <p><strong>传感器编号：</strong><span th:text="${sensor.code}"></span></p>
+                                                            <p><strong>传感器位置：</strong><span th:text="|${sensor.city} - (${sensor.longitude}, ${sensor.latitude})|"></span></p>
+                                                            <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <!-- type = 2 camera -->
                                             <div th:case="2">
-                                                <div class="camera-sensor-content">
+                                                <div class="tab-sensor-content">
                                                     <ul class="nav nav-tabs" role="tablist">
                                                         <li role="presentation" class="active"><a th:href="@{|#sensor-content-${sensor.id}|}" role="tab" data-toggle="tab">传感器数据</a></li>
                                                         <li role="presentation"><a th:href="@{|#sensor-info-${sensor.id}|}" role="tab" data-toggle="tab">传感器信息</a></li>
@@ -152,7 +167,7 @@
                                                     </div>
 
                                                     <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
-                                                        <div class="camera-sensor-info">
+                                                        <div class="tab-sensor-info">
                                                             <p><strong>传感器信息</strong></p>
                                                             <hr/>
                                                             <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>

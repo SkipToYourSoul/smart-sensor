@@ -34,7 +34,7 @@ public class Event {
     }
 
     public void setMedia(String url, int time) {
-        this.media = new EventMedia(url, "图片时间：" + time + "s", url);
+        this.media = new EventMedia(url, "图片时间：" + time + "s", url, time);
     }
 
     public EventDate getStart_date() {

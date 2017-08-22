@@ -7,6 +7,7 @@
 var charts_list = [];
 var video_players = {};
 var timelines = {};
+var timelineVideoIndex = {};
 
 function initSensorData() {
     if (sensors.length <= 0)
@@ -27,7 +28,7 @@ function initSensorData() {
         var type = row['type'];
 
         if (type == 1){
-            var chart = echarts.init(document.getElementById('sensor-content-' + id));
+            var chart = echarts.init(document.getElementById('sensor-chart-' + id));
             chart.showLoading();
             var chartSeriesData = [];
             for (var j in sensorData[id]){
@@ -51,6 +52,7 @@ function initSensorData() {
                 console.log('the video player is ready');
             });
             timelines[id] = new TL.Timeline('sensor-photo-' + id, sensorData[id][0]['timeline'], timelineOptions);
+            boundEvent(id, 0);
 
             // --- select
             var $video_select = $('#sensor-video-select-' + id);
@@ -63,6 +65,7 @@ function initSensorData() {
                 video_players[id].src(sensorData[id][this.value]['option']['sources']);
 
                 timelines[id] = new TL.Timeline('sensor-photo-' + id, sensorData[id][this.value]['timeline'], timelineOptions);
+                boundEvent(id, this.value);
             });
         }
     }
@@ -77,12 +80,28 @@ window.onresize = function () {
         charts_list[i].resize();
 };
 
+function boundEvent(id, index){
+    timelineVideoIndex = {};
+    for (var i in sensorData[id][index]['timeline']['events']){
+        var time_in_video = sensorData[id][index]['timeline']['events'][i]['media']['timeInVideo'];
+        timelineVideoIndex[time_in_video] = i;
+    }
+
+    video_players[id].on('timeupdate', function (evt) {
+        var current_video = video_players[id];
+        var seconds = Math.floor(current_video.currentTime());
+        if (timelineVideoIndex.hasOwnProperty( seconds )) {
+            timelines[id].goTo( Number(timelineVideoIndex[seconds]) + 1);
+        }
+        console.log("current time: " + current_video.currentTime());
+    });
+}
+
 function videoPlay(evt) {
     var current_sensor_id = evt.id.split('-')[3];
     var current_video_index = $('#sensor-video-select-' + current_sensor_id).val();
 
     video_players[current_sensor_id].play();
-    timelines[current_sensor_id].goToNext();
 }
 
 function videoPause(evt) {
@@ -90,5 +109,4 @@ function videoPause(evt) {
     var current_video_index = $('#sensor-video-select-' + current_sensor_id).val();
 
     video_players[current_sensor_id].pause();
-    timelines[current_sensor_id].goToStart();
 }

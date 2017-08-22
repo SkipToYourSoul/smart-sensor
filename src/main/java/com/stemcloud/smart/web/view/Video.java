@@ -47,8 +47,16 @@ public class Video {
             this.poster = poster;
             Map<String, String> map = new HashMap<String, String>(){{
                 put("src", src);
-                put("type", "video/mp4");
             }};
+            if (src.endsWith("mp4"))
+                map.put("type", "video/mp4");
+            else if (src.endsWith("webm"))
+                map.put("type", "video/webm");
+            else if (src.endsWith("ogv"))
+                map.put("type", "video/ogg");
+            else
+                map.put("type", "video/mp4");
+
             List<Map> list = new ArrayList<Map>();
             list.add(map);
             this.sources = list;
