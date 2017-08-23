@@ -6,10 +6,7 @@ import com.stemcloud.smart.web.dao.SensorDataRepository;
 import com.stemcloud.smart.web.domain.SensorCamera;
 import com.stemcloud.smart.web.domain.SensorCameraPhotos;
 import com.stemcloud.smart.web.domain.SensorData;
-import com.stemcloud.smart.web.view.Era;
-import com.stemcloud.smart.web.view.Event;
-import com.stemcloud.smart.web.view.Timeline;
-import com.stemcloud.smart.web.view.Video;
+import com.stemcloud.smart.web.view.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +41,26 @@ public class SensorDataService {
         return dataRepository.findSensorDataByAppId(appId);
     }
 
-    public List<SensorData> getSensorDataBySensorId(long sensorId) {
+    public List<SensorData> getSensorDataBySensorId(long sensorId){
         return dataRepository.findBySensorId(sensorId);
+    }
+
+    /**
+     * time series data for echarts
+     * @param sensorId
+     * @return
+     */
+    public List<TimeSeries> getSensorTimeSeriesDataBySensorId(long sensorId) {
+        List<SensorData> sensorData = dataRepository.findBySensorId(sensorId);
+        List<TimeSeries> list = new ArrayList();
+
+        for (SensorData data : sensorData) {
+            Date date = data.getDataTime();
+            String value = data.getValue();
+            list.add(new TimeSeries(date, value));
+        }
+
+        return list;
     }
 
     /**

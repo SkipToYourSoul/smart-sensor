@@ -30,16 +30,7 @@ function initSensorData() {
         if (type == 1){
             var chart = echarts.init(document.getElementById('sensor-chart-' + id));
             chart.showLoading();
-            var chartSeriesData = [];
-            for (var j in sensorData[id]){
-                chartSeriesData.push({
-                    value:[
-                        sensorData[id][j]['dataTime'],
-                        sensorData[id][j]['value']
-                    ]
-                });
-            }
-            chart.setOption(chartOption(chartSeriesData));
+            chart.setOption(chartOption(sensorData[id]));
             chart.hideLoading();
             charts_list.push(chart);
         } else if (type == 2){
@@ -110,3 +101,17 @@ function videoPause(evt) {
 
     video_players[current_sensor_id].pause();
 }
+
+$('#start-picker').datetimepicker({
+    autoclose: true,
+    todayBtn: true,
+    minView: 2,
+    format: "yyyy-mm-dd"
+});
+
+$('#end-picker').datetimepicker({
+    autoclose: true,
+    todayBtn: true,
+    minView: 2,
+    format: "yyyy-mm-dd"
+});

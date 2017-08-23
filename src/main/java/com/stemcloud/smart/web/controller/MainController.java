@@ -102,7 +102,7 @@ public class MainController implements ErrorController {
             for (SensorInfo sensor: sensors){
                 long sensorId = sensor.getId();
                 if (sensor.getType() == 1){
-                    sensorData.put(sensorId, sensorDataService.getSensorDataBySensorId(sensorId));
+                    sensorData.put(sensorId, sensorDataService.getSensorTimeSeriesDataBySensorId(sensorId));
                 } else if (sensor.getType() == 2){
                     sensorData.put(sensorId, sensorDataService.getSensorCameraBySensorId(sensorId));
                 } else if (sensor.getType() == 3){
