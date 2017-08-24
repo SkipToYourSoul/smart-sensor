@@ -1,6 +1,4 @@
-package com.stemcloud.smart.web.view;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+package com.stemcloud.smart.web.view.timeline;
 
 import java.util.Calendar;
 import java.util.Date;

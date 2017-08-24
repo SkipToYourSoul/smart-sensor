@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.view;
+package com.stemcloud.smart.web.view.timeline;
 
 import java.util.Calendar;
 import java.util.Date;

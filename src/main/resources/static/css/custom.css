@@ -170,6 +170,12 @@ hr {
     }
 }
 
+.data-recorder-form{
+    background-color: #dddddd;
+    border-radius: 5px;
+    padding: 10px 10px 5px 10px;
+}
+
 /** sensor content **/
 .value-sensor-content{
     height: 400px;

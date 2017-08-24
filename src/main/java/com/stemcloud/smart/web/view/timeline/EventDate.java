@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.view;
+package com.stemcloud.smart.web.view.timeline;
 
 /**
  * Belongs to smart-sensor

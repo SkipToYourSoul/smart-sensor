@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.view;
+package com.stemcloud.smart.web.view.timeline;
 
 public class EventMedia{
     private String url = "";

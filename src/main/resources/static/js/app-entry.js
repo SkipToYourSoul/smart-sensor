@@ -105,13 +105,13 @@ function videoPause(evt) {
 $('#start-picker').datetimepicker({
     autoclose: true,
     todayBtn: true,
-    minView: 2,
-    format: "yyyy-mm-dd"
+    todayHighlight: true,
+    format: "yyyy-mm-dd hh:ii:ss"
 });
 
 $('#end-picker').datetimepicker({
     autoclose: true,
     todayBtn: true,
-    minView: 2,
-    format: "yyyy-mm-dd"
+    todayHighlight: true,
+    format: "yyyy-mm-dd hh:ii:ss"
 });

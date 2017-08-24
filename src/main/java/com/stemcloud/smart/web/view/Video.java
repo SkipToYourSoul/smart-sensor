@@ -1,12 +1,8 @@
 package com.stemcloud.smart.web.view;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.stemcloud.smart.web.view.timeline.Timeline;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Belongs to smart-sensor
@@ -16,6 +12,8 @@ import java.util.Map;
 public class Video {
     private VideoConfig option;
     private Timeline timeline;
+    private Date startTime;
+    private Date endTime;
 
     public Video(String poster, String src, Timeline timeline){
         this.option = new VideoConfig(poster, src);

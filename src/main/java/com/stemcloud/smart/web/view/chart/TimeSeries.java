@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.view;
+package com.stemcloud.smart.web.view.chart;
 
 import java.util.ArrayList;
 import java.util.Date;

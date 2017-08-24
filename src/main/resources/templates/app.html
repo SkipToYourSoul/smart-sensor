@@ -77,7 +77,9 @@
                         <!-- 应用按钮组 -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <i class="fa fa-plug"></i>&nbsp;<strong>应用操作按钮</strong>
+                                <div class="panel-title">
+                                    <i class="fa fa-plug"></i>&nbsp;<strong>应用操作按钮</strong>
+                                </div>
                             </div>
                             <div class="panel-body">
                                 <div class="btn-group">
@@ -93,28 +95,92 @@
                         </div>
 
                         <!-- 数据回放面板 -->
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <i class="fa fa-video-camera"></i>&nbsp;<strong>数据回放</strong>
-                            </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <span>开始时间：</span><input type="text" id="start-picker" class="form-control"/>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <input type="text" id="end-picker" class="form-control"/>
-                                    </div>
-                                    <div class="col-sm-3 col-sm-offset-3">
-                                        <div class="btn-group pull-right">
-                                            <button class="btn btn-default">PLAY</button>
-                                            <button class="btn btn-default">PAUSE</button>
-                                            <button class="btn btn-default">RESET</button>
-                                        </div>
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="data-recorder-panel-heading">
+                                    <div class="panel-title">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#data-recorder-panel-body"
+                                           aria-expanded="true" aria-controls="data-recorder-panel-body">
+                                            <i class="fa fa-video-camera"></i>&nbsp;<strong>数据回放</strong>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    GOGOGO
+                                <div id="data-recorder-panel-body" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="data-recorder-panel-heading">
+                                    <div class="panel-body">
+                                        <!-- 数据配置 -->
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <form id="data-recorder-form" class="form-horizontal data-recorder-form">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">数据起始时间：</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="input-group">
+                                                                <input type="text" id="start-picker" name="start-picker" class="form-control"/>
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">数据结束时间：</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="input-group">
+                                                                <input type="text" id="end-picker" name="end-picker" class="form-control"/>
+                                                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">选取传感器：</label>
+                                                        <div class="col-sm-9">
+                                                            <div class="checkbox">
+                                                                <th:block th:each="sensor,index:${sensors}">
+                                                                    <label><input type="checkbox" th:value="${sensor.id}" th:text="${sensor.name}"/></label>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-offset-3 col-sm-9">
+                                                            <button type="submit" class="btn btn-default btn-block">
+                                                                <i class="fa fa-check-circle-o"></i>&nbsp;构建回放数据</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <h3>数据时间范围：</h3>
+                                                <small>请谨慎选取时间范围，超出范围的数据将不会在回放数据中出现</small>
+                                                <p>sensor1:2017-08-22 19:00 - 2017-08-23 19:00</p>
+                                            </div>
+                                        </div>
+
+                                        <hr/>
+
+                                        <!-- 数据展示 -->
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div id="data-recorder-chart">
+                                                    Chart
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div id="data-recorder-video">
+                                                    Video
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="btn-group pull-right">
+                                                    <button class="btn btn-default">PLAY</button>
+                                                    <button class="btn btn-default">PAUSE</button>
+                                                    <button class="btn btn-default">RESET</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

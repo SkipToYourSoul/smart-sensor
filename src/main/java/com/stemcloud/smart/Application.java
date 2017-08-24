@@ -18,14 +18,4 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
-
-    @Bean
-    public EmbeddedServletContainerCustomizer containerCustomizer(){
-        return new EmbeddedServletContainerCustomizer() {
-            @Override
-            public void customize(ConfigurableEmbeddedServletContainer container) {
-                container.setSessionTimeout(60 * 60 * 2); //单位为S
-            }
-        };
-    }
 }

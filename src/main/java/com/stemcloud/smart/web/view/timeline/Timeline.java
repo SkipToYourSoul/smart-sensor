@@ -1,8 +1,5 @@
-package com.stemcloud.smart.web.view;
+package com.stemcloud.smart.web.view.timeline;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.io.Serializable;
 import java.util.List;
 
 /**

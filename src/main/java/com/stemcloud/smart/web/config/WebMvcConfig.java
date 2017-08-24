@@ -46,6 +46,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return new EmbeddedServletContainerCustomizer() {
             @Override
             public void customize(ConfigurableEmbeddedServletContainer container) {
+                // session timeout, 单位为s
+                container.setSessionTimeout(60 * 60 * 2);
                 container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/denied?error403"));
                 container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/denied?error404"));
                 container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/denied?error500"));

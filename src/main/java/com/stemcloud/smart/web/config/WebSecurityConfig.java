@@ -91,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 /* 开启cookie保存用户数据 */
                 .rememberMe()
-                .tokenValiditySeconds(60 * 60 * 24 * 7);    /* 设置cookie有效期 */
+                .tokenValiditySeconds(60 * 60 * 24);    /* 设置cookie有效期 */
         httpSecurity.addFilterBefore(mySecurityFilterInterceptor(), FilterSecurityInterceptor.class);   /* 添加自定义拦截器 */
         httpSecurity.csrf().disable();
     }
