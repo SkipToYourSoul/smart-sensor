@@ -6,7 +6,8 @@ import com.stemcloud.smart.web.dao.SensorDataRepository;
 import com.stemcloud.smart.web.domain.SensorCamera;
 import com.stemcloud.smart.web.domain.SensorCameraPhotos;
 import com.stemcloud.smart.web.domain.SensorData;
-import com.stemcloud.smart.web.view.*;
+import com.stemcloud.smart.web.view.Chart;
+import com.stemcloud.smart.web.view.Video;
 import com.stemcloud.smart.web.view.chart.TimeSeries;
 import com.stemcloud.smart.web.view.timeline.Era;
 import com.stemcloud.smart.web.view.timeline.Event;
@@ -16,10 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Belongs to smart-sensor
@@ -46,25 +44,45 @@ public class SensorDataService {
     }
 
     public List<SensorData> getSensorDataBySensorId(long sensorId){
-        return dataRepository.findBySensorId(sensorId);
+        return dataRepository.findBySensorIdOrderByDataTime(sensorId);
     }
 
     /**
      * time series data for echarts
      * @param sensorId
-     * @return
+     * @return list of time series data for chart
      */
-    public List<TimeSeries> getSensorTimeSeriesDataBySensorId(long sensorId) {
-        List<SensorData> sensorData = dataRepository.findBySensorId(sensorId);
-        List<TimeSeries> list = new ArrayList();
+    public List<Chart> getSensorTimeSeriesDataBySensorId(long sensorId) {
+        List<SensorData> sensorData = dataRepository.findBySensorIdOrderByDataTime(sensorId);
+        Map<Integer, List<TimeSeries>> map = new HashMap<Integer, List<TimeSeries>>();
 
         for (SensorData data : sensorData) {
             Date date = data.getDataTime();
             String value = data.getValue();
-            list.add(new TimeSeries(date, value));
+            int flag = data.getFlag();
+
+            if (!map.containsKey(flag)){
+                List<TimeSeries> list = new ArrayList<TimeSeries>();
+                list.add(new TimeSeries(date, value));
+                map.put(flag, list);
+            } else {
+                List<TimeSeries> list = map.get(flag);
+                list.add(new TimeSeries(date, value));
+                map.put(flag, list);
+            }
         }
 
-        return list;
+        List<Chart> charts = new ArrayList<Chart>();
+        for (Map.Entry<Integer, List<TimeSeries>> entry: map.entrySet()){
+            int flag = entry.getKey();
+            List<TimeSeries> timeSeries = entry.getValue();
+            Date startDate = (Date) timeSeries.get(0).getValue().get(0);
+            Date endDate = (Date) timeSeries.get(timeSeries.size() - 1).getValue().get(0);
+
+            charts.add(new Chart(startDate, endDate, flag, timeSeries));
+        }
+
+        return charts;
     }
 
     /**
@@ -85,7 +103,8 @@ public class SensorDataService {
             String sourcePath = camera.getSourcePath();
             String poster = "/img/oceans.png";
             int duration = camera.getDuration();
-            Date date = camera.getDataTime();
+            Date startDate = camera.getDataTime();
+            Date endDate = new Date(startDate.getTime() + duration*1000);
 
             // --- title
             Event title = new Event();
@@ -93,8 +112,8 @@ public class SensorDataService {
 
             // --- era
             Era era = new Era();
-            era.setStart_date(date);
-            era.setEnd_date(new Date(date.getTime() + duration*1000));
+            era.setStart_date(startDate);
+            era.setEnd_date(endDate);
 
             // --- events
             List<Event> events = new ArrayList<Event>();
@@ -103,7 +122,7 @@ public class SensorDataService {
                 for (int i=1; i < cameraPhotos.size(); i++){
                     SensorCameraPhotos photo = cameraPhotos.get(i);
                     int timeInVideo = photo.getTimeInVideo();
-                    Date startTime = new Date(date.getTime() + timeInVideo*1000);
+                    Date startTime = new Date(startDate.getTime() + timeInVideo*1000);
                     String url = photo.getSourcePath();
 
                     Event event = new Event();
@@ -118,7 +137,7 @@ public class SensorDataService {
             }
 
             Timeline cameraTimeline = new Timeline(title, events, era);
-            videos.add(new Video(poster, sourcePath, cameraTimeline));
+            videos.add(new Video(poster, sourcePath, cameraTimeline, startDate, endDate));
         }
         return videos;
     }

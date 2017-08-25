@@ -9,6 +9,11 @@ var video_players = {};
 var timelines = {};
 var timelineVideoIndex = {};
 
+/*
+* { name, startTime, endTime }
+* */
+var data_duration_info = [];
+
 function initSensorData() {
     if (sensors.length <= 0)
         return;
@@ -30,7 +35,23 @@ function initSensorData() {
         if (type == 1){
             var chart = echarts.init(document.getElementById('sensor-chart-' + id));
             chart.showLoading();
-            chart.setOption(chartOption(sensorData[id]));
+            var series = [];
+            var legend_data = [];
+            for (var data_index in sensorData[id]){
+                var time_series = sensorData[id][data_index]['timeSeries'];
+                var flag = sensorData[id][data_index]['flag'];
+                var series_data = chartSeriesOption(flag + "", time_series);
+                series.push(series_data);
+                legend_data.push({name: flag + ""});
+
+                data_duration_info.push({
+                    name: flag,
+                    startTime: sensorData[id][data_index]['startTime'],
+                    endTime: sensorData[id][data_index]['endTime']
+                });
+            }
+
+            chart.setOption(chartOption(legend_data, series));
             chart.hideLoading();
             charts_list.push(chart);
         } else if (type == 2){
@@ -61,15 +82,21 @@ function initSensorData() {
         }
     }
 
+    // init data-duration-info
+    var $duration_info = $('#data-duration-info');
+    for (var i in data_duration_info){
+        $duration_info.html($duration_info.html() +
+            '<p>' + data_duration_info[i]['name'] + ": " + data_duration_info[i]['startTime'] + " - " + data_duration_info[i]['endTime']);
+    }
+
+    window.onresize = function () {
+        for (var i in charts_list)
+            charts_list[i].resize();
+    };
     $loading.fadeOut();
 }
 
 initSensorData();
-
-window.onresize = function () {
-    for (var i in charts_list)
-        charts_list[i].resize();
-};
 
 function boundEvent(id, index){
     timelineVideoIndex = {};

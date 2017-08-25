@@ -132,7 +132,7 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">选取传感器：</label>
                                                         <div class="col-sm-9">
-                                                            <div class="checkbox">
+                                                            <div class="checkbox" id="data-recorder-sensor-select">
                                                                 <th:block th:each="sensor,index:${sensors}">
                                                                     <label><input type="checkbox" th:value="${sensor.id}" th:text="${sensor.name}"/></label>
                                                                 </th:block>
@@ -149,9 +149,10 @@
                                             </div>
 
                                             <div class="col-sm-6">
-                                                <h3>数据时间范围：</h3>
-                                                <small>请谨慎选取时间范围，超出范围的数据将不会在回放数据中出现</small>
-                                                <p>sensor1:2017-08-22 19:00 - 2017-08-23 19:00</p>
+                                                <h3>数据时间范围参考<br/><small>请谨慎选取时间范围，超出范围的数据将不会在回放数据中出现</small></h3>
+                                                <hr/>
+                                                <div id="data-duration-info">
+                                                </div>
                                             </div>
                                         </div>
 
@@ -344,5 +345,6 @@
     <script th:src="@{js/app-option.js}"></script>
     <script th:src="@{js/app-controller.js}"></script>
     <script th:src="@{js/app-entry.js}"></script>
+    <script th:src="@{js/app-recorder.js}"></script>
 </body>
 </html>

@@ -15,9 +15,11 @@ public class Video {
     private Date startTime;
     private Date endTime;
 
-    public Video(String poster, String src, Timeline timeline){
+    public Video(String poster, String src, Timeline timeline, Date startTime, Date endTime){
         this.option = new VideoConfig(poster, src);
         this.timeline = timeline;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public VideoConfig getOption() {
@@ -34,6 +36,22 @@ public class Video {
 
     public void setTimeline(Timeline timeline) {
         this.timeline = timeline;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     public class VideoConfig {
