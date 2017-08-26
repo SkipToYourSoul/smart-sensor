@@ -61,7 +61,7 @@ function initSensorData() {
             }
 
             video_players[id] = videojs('sensor-camera-' + id, sensorData[id][0]['option'], function () {
-                console.log('the video player is ready');
+                videojs.log('the video player of sensor' + id + ' is ready');
             });
             timelines[id] = new TL.Timeline('sensor-photo-' + id, sensorData[id][0]['timeline'], timelineOptions);
             boundEvent(id, 0);
@@ -72,12 +72,12 @@ function initSensorData() {
                 $video_select.html($video_select.html() + '<option value="' + k + '">视频片段' + (k+1) + '</option>');
 
             $video_select.change(function () {
-                var id = this.id.split('-')[3];
-                video_players[id].poster(sensorData[id][this.value]['option']['poster']);
-                video_players[id].src(sensorData[id][this.value]['option']['sources']);
+                var current_id = this.id.split('-')[3];
+                video_players[current_id].poster(sensorData[current_id][this.value]['option']['poster']);
+                video_players[current_id].src(sensorData[current_id][this.value]['option']['sources']);
 
-                timelines[id] = new TL.Timeline('sensor-photo-' + id, sensorData[id][this.value]['timeline'], timelineOptions);
-                boundEvent(id, this.value);
+                timelines[current_id] = new TL.Timeline('sensor-photo-' + current_id, sensorData[current_id][this.value]['timeline'], timelineOptions);
+                boundEvent(current_id, this.value);
             });
         }
     }

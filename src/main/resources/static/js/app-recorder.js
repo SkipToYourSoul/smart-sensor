@@ -3,6 +3,7 @@
  *  Author: liye on 2017/8/25
  *  Description:
  */
+var recorder_videos = {};
 
 $('#data-recorder-form').formValidation({
     framework: 'bootstrap',
@@ -33,52 +34,65 @@ $('#data-recorder-form').formValidation({
     var $recorder_video = $('#data-recorder-video');
     var $recorder_control = $('#data-recorder-control');
 
+    $recorder_chart.empty().attr('hidden', 'hidden');
+    $recorder_video.empty().attr('hidden', 'hidden');
+    $recorder_control.attr('hidden', 'hidden');
+
     if (JSON.stringify(time_data.chart) == "{}" && JSON.stringify(time_data.video) != "{}"){
         // only video
         $recorder_video.removeClass().addClass('col-sm-12').removeAttr('hidden');
-        $recorder_chart.attr('hidden', 'hidden');
         $recorder_control.removeAttr('hidden');
 
-        generateVideo(time_data);
+        recorder_videos = generateVideo(time_data);
+        message_info("only video", "info");
     } else if (JSON.stringify(time_data.chart) != "{}" && JSON.stringify(time_data.video) == "{}"){
         // only chart
         $recorder_chart.removeClass().addClass('col-sm-12').removeAttr('hidden');
-        $recorder_video.attr('hidden', 'hidden');
         $recorder_control.removeAttr('hidden');
 
         generateChart(time_data);
+        message_info("only chart", "info");
     } else if (JSON.stringify(time_data.chart) != "{}" && JSON.stringify(time_data.video) != "{}"){
         $recorder_chart.removeClass().addClass('col-sm-6').removeAttr('hidden');
         $recorder_video.removeClass().addClass('col-sm-6').removeAttr('hidden');
         $recorder_control.removeAttr('hidden');
 
         generateChart(time_data);
-        generateVideo(time_data);
+        recorder_videos = generateVideo(time_data);
+        message_info("video and chart", "info");
     } else {
-        $recorder_chart.removeClass().empty().attr('hidden', 'hidden');
-        $recorder_video.removeClass().empty().attr('hidden', 'hidden');
-        $recorder_control.attr('hidden', 'hidden');
+        $recorder_chart.removeClass().empty();
+        $recorder_video.removeClass().empty();
     }
 
-    this.reset();
+    // this.reset();
 
 }).on('err.form.fv', function (evt) {
     message_info("submit error", "info");
 });
 
 function generateChart(time_data){
-    var data_recorder_chart = echarts.init(document.getElementById("data-recorder-chart"));
+    echarts.dispose(document.getElementById("data-recorder-chart"));
+    var data_recorder_chart = echarts.init(document.getElementById("data-recorder-chart"), "", opts={
+        height: 400
+    });
     var legends = [];
     var series = [];
     for (var flag in time_data.chart){
         legends.push({name: flag});
-        var series_data = chartSeriesOption(flag, /*time_data['chart'][flag]*/[]);
+        var series_data = chartSeriesOption(flag, time_data['chart'][flag]);
         series.push(series_data);
     }
     data_recorder_chart.setOption(chartOption(legends, series));
 }
 
 function generateVideo(time_data){
+    // dispose
+    console.log(recorder_videos);
+    for (var video in recorder_videos){
+        recorder_videos[video].dispose();
+    }
+
     var videos = {};
     var $videos = $('#data-recorder-video');
 
@@ -86,15 +100,20 @@ function generateVideo(time_data){
         var video_options = time_data.video[sensor_id];
         for (var index in video_options){
             var video_id = sensor_id + "-" + index;
-            $videos.append('<video id="' + video_id + '" class="video-js vjs-fluid" controls="controls" preload="auto" data-setup="{}"></video>');
+            $videos.append('<h4>视频片段：来自传感器(' + sensor_id + ')的第' + (Number(index)+1) + '段视频</h4>');
+            $videos.append('<small>视频时间：' + parseTime(video_options[index]['startTime']) + ' - ' + parseTime(video_options[index]['endTime']) + '</small>');
+            $videos.append('<video id="' + video_id + '" class="video-js vjs-fluid" preload="auto" data-setup="{}"></video>');
             videos[video_id] = video_options[index]['option'];
+
+            // only append one video for a sensor
+            break;
         }
     }
 
     for (var id in videos){
         var option = videos[id];
         videos[id] = videojs(id, option, function () {
-            console.log('The video player ' + id + ' is ready');
+            videojs.log('The video player ' + id + ' is ready');
         });
     }
 
