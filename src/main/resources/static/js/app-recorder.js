@@ -4,6 +4,11 @@
  *  Description:
  */
 var recorder_videos = {};
+var recorder_data = {};
+var recorder_chart;
+var current_recorder_time;
+var recorder_start_time;
+var recorder_interval = null;
 
 $('#data-recorder-form').formValidation({
     framework: 'bootstrap',
@@ -28,6 +33,7 @@ $('#data-recorder-form').formValidation({
     var end_time = $('#end-picker').val();
 
     var time_data = constructTimeData(start_time, end_time, select_ids);
+    recorder_data = time_data;
 
     // step2: construct html
     var $recorder_chart = $('#data-recorder-chart');
@@ -50,14 +56,14 @@ $('#data-recorder-form').formValidation({
         $recorder_chart.removeClass().addClass('col-sm-12').removeAttr('hidden');
         $recorder_control.removeAttr('hidden');
 
-        generateChart(time_data);
+        recorder_chart = generateChart(time_data);
         message_info("only chart", "info");
     } else if (JSON.stringify(time_data.chart) != "{}" && JSON.stringify(time_data.video) != "{}"){
         $recorder_chart.removeClass().addClass('col-sm-6').removeAttr('hidden');
         $recorder_video.removeClass().addClass('col-sm-6').removeAttr('hidden');
         $recorder_control.removeAttr('hidden');
 
-        generateChart(time_data);
+        recorder_chart = generateChart(time_data);
         recorder_videos = generateVideo(time_data);
         message_info("video and chart", "info");
     } else {
@@ -66,10 +72,90 @@ $('#data-recorder-form').formValidation({
     }
 
     // this.reset();
+    recorder_start_time = start_time;
+    prepareRecorder();
 
 }).on('err.form.fv', function (evt) {
     message_info("submit error", "info");
 });
+
+function prepareRecorder() {
+    // initial clock
+    current_recorder_time = new Date(Date.parse(recorder_start_time.replace(/-/g, "/")));
+    $('#recorder-clock').html(recorder_start_time);
+
+    // prepare data
+    setRecorderChart(recorder_start_time);
+}
+
+
+function setClockTime(interval) {
+    current_recorder_time = new Date(current_recorder_time.getTime() + 1000*interval);
+    var format_time = current_recorder_time.Format("yyyy-MM-dd HH:mm:ss");
+    $('#recorder-clock').html(format_time);
+
+    return format_time;
+}
+
+function setRecorderChart(time){
+    var chart_option = recorder_chart.getOption();
+    var series = chart_option.series;
+
+    // get series index according name
+    var series_name_index = {};
+    for (var index in series){
+        var name = series[index]['name'];
+        series_name_index[name] = index;
+    }
+
+    // if current time has data, push to options
+    for (var flag in recorder_data.chart){
+        for (var index in recorder_data.chart[flag]){
+            var data_time = parseTime(recorder_data.chart[flag][index]['value'][0]);
+            if (time == data_time){
+                series[series_name_index[flag]].data.push(recorder_data.chart[flag][index]['value']);
+            }
+        }
+    }
+
+    chart_option.series = series;
+    recorder_chart.setOption(chart_option);
+}
+
+function recorderPlay() {
+    recorder_interval = setInterval(function () {
+        var time = setClockTime(1);
+        setRecorderChart(time);
+    }, 1000);
+    $('#play-btn').attr('disabled', 'disabled');
+    $('#pause-btn').removeAttr('disabled');
+}
+
+function recorderPause() {
+    if (recorder_interval != null)
+        clearInterval(recorder_interval);
+    $('#pause-btn').attr('disabled', 'disabled');
+    $('#play-btn').removeAttr('disabled');
+}
+
+function recorderReset() {
+    if (recorder_interval != null)
+        clearInterval(recorder_interval);
+
+    $('#pause-btn').attr('disabled', 'disabled');
+    $('#play-btn').removeAttr('disabled');
+
+    var chart_option = recorder_chart.getOption();
+    var series = chart_option.series;
+
+    for (var index in series){
+        series[index].data = [];
+    }
+
+    chart_option.series = series;
+    recorder_chart.setOption(chart_option);
+    prepareRecorder();
+}
 
 function generateChart(time_data){
     echarts.dispose(document.getElementById("data-recorder-chart"));
@@ -80,10 +166,11 @@ function generateChart(time_data){
     var series = [];
     for (var flag in time_data.chart){
         legends.push({name: flag});
-        var series_data = chartSeriesOption(flag, time_data['chart'][flag]);
+        var series_data = chartSeriesOption(flag, /*time_data['chart'][flag]*/[]);
         series.push(series_data);
     }
     data_recorder_chart.setOption(chartOption(legends, series));
+    return data_recorder_chart;
 }
 
 function generateVideo(time_data){
@@ -170,3 +257,19 @@ function constructTimeData(start_time, end_time, select_ids){
 function parseTime(time) {
     return time.split('.')[0].replace('T', ' ');
 }
+
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};
