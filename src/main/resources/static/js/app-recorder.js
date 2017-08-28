@@ -122,6 +122,10 @@ function setRecorderChart(time){
     recorder_chart.setOption(chart_option);
 }
 
+function setRecorderVideo(time){
+    
+}
+
 function recorderPlay() {
     recorder_interval = setInterval(function () {
         var time = setClockTime(1);
