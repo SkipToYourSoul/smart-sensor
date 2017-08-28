@@ -9,6 +9,7 @@ var recorder_chart;
 var current_recorder_time;
 var recorder_start_time;
 var recorder_interval = null;
+var is_recorder_video_play = {};
 
 $('#data-recorder-form').formValidation({
     framework: 'bootstrap',
@@ -86,6 +87,11 @@ function prepareRecorder() {
 
     // prepare data
     setRecorderChart(recorder_start_time);
+
+    // initial video
+    is_recorder_video_play = {};
+    for (var i in recorder_videos)
+        recorder_videos[i].currentTime(0);
 }
 
 
@@ -123,13 +129,24 @@ function setRecorderChart(time){
 }
 
 function setRecorderVideo(time){
-    
+    for (var video_id in recorder_data.video){
+        var start_time = parseTime(recorder_data.video[video_id][0]['startTime']);
+        var end_time = parseTime(recorder_data.video[video_id][0]['endTime']);
+
+        console.log(start_time + ' - ' + end_time);
+
+        if (start_time <= time && end_time >= time && !is_recorder_video_play.hasOwnProperty(video_id)){
+            is_recorder_video_play[video_id] = 1;
+            recorder_videos[video_id].play();
+        }
+    }
 }
 
 function recorderPlay() {
     recorder_interval = setInterval(function () {
         var time = setClockTime(1);
         setRecorderChart(time);
+        setRecorderVideo(time);
     }, 1000);
     $('#play-btn').attr('disabled', 'disabled');
     $('#pause-btn').removeAttr('disabled');
@@ -138,6 +155,11 @@ function recorderPlay() {
 function recorderPause() {
     if (recorder_interval != null)
         clearInterval(recorder_interval);
+    for (var i in recorder_videos){
+        recorder_videos[i].pause();
+        delete is_recorder_video_play[i];
+    }
+
     $('#pause-btn').attr('disabled', 'disabled');
     $('#play-btn').removeAttr('disabled');
 }
@@ -190,7 +212,7 @@ function generateVideo(time_data){
     for (var sensor_id in time_data.video){
         var video_options = time_data.video[sensor_id];
         for (var index in video_options){
-            var video_id = sensor_id + "-" + index;
+            var video_id = sensor_id/* + "-" + index*/;
             $videos.append('<h4>视频片段：来自传感器(' + sensor_id + ')的第' + (Number(index)+1) + '段视频</h4>');
             $videos.append('<small>视频时间：' + parseTime(video_options[index]['startTime']) + ' - ' + parseTime(video_options[index]['endTime']) + '</small>');
             $videos.append('<video id="' + video_id + '" class="video-js vjs-fluid" preload="auto" data-setup="{}"></video>');

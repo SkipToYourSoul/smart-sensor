@@ -176,6 +176,14 @@ hr {
     padding: 10px 10px 5px 10px;
 }
 
+/** recorder **/
+.recorder-time-view{
+    color: orangered;
+    font-weight: 500;
+    font-size: 20px;
+    text-align: right;
+}
+
 /** sensor content **/
 .value-sensor-content{
     height: 400px;

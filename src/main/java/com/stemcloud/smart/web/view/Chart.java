@@ -13,10 +13,10 @@ import java.util.List;
 public class Chart {
     private Date startTime;
     private Date endTime;
-    private int flag;
+    private String flag;
     private List<TimeSeries> timeSeries;
 
-    public Chart(Date startTime, Date endTime, int flag, List<TimeSeries> timeSeries) {
+    public Chart(Date startTime, Date endTime, String flag, List<TimeSeries> timeSeries) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.flag = flag;
@@ -39,11 +39,11 @@ public class Chart {
         this.endTime = endTime;
     }
 
-    public int getFlag() {
+    public String getFlag() {
         return flag;
     }
 
-    public void setFlag(int flag) {
+    public void setFlag(String flag) {
         this.flag = flag;
     }
 

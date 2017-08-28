@@ -24,7 +24,7 @@ public class SensorData {
     private String entrance;
 
     @Column(name = "data_flag", nullable = false)
-    private int flag;
+    private String flag;
 
     @Column(name = "sensor_type", nullable = false)
     private int type;
@@ -67,11 +67,11 @@ public class SensorData {
         this.entrance = entrance;
     }
 
-    public int getFlag() {
+    public String getFlag() {
         return flag;
     }
 
-    public void setFlag(int flag) {
+    public void setFlag(String flag) {
         this.flag = flag;
     }
 

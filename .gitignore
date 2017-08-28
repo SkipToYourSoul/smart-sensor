@@ -7,3 +7,5 @@
 .DS_Store
 
 target/
+.gitignore
+stem.jpeg

@@ -111,7 +111,7 @@ function boundEvent(id, index){
         if (timelineVideoIndex.hasOwnProperty( seconds )) {
             timelines[id].goTo( Number(timelineVideoIndex[seconds]) + 1);
         }
-        console.log("current time: " + current_video.currentTime());
+        // console.log("current time: " + current_video.currentTime());
     });
 }
 

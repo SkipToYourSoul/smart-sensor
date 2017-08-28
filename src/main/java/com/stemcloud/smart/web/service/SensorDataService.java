@@ -54,12 +54,12 @@ public class SensorDataService {
      */
     public List<Chart> getSensorTimeSeriesDataBySensorId(long sensorId) {
         List<SensorData> sensorData = dataRepository.findBySensorIdOrderByDataTime(sensorId);
-        Map<Integer, List<TimeSeries>> map = new HashMap<Integer, List<TimeSeries>>();
+        Map<String, List<TimeSeries>> map = new HashMap<String, List<TimeSeries>>();
 
         for (SensorData data : sensorData) {
             Date date = data.getDataTime();
             String value = data.getValue();
-            int flag = data.getFlag();
+            String flag = data.getFlag();
 
             if (!map.containsKey(flag)){
                 List<TimeSeries> list = new ArrayList<TimeSeries>();
@@ -73,8 +73,8 @@ public class SensorDataService {
         }
 
         List<Chart> charts = new ArrayList<Chart>();
-        for (Map.Entry<Integer, List<TimeSeries>> entry: map.entrySet()){
-            int flag = entry.getKey();
+        for (Map.Entry<String, List<TimeSeries>> entry: map.entrySet()){
+            String flag = entry.getKey();
             List<TimeSeries> timeSeries = entry.getValue();
             Date startDate = (Date) timeSeries.get(0).getValue().get(0);
             Date endDate = (Date) timeSeries.get(timeSeries.size() - 1).getValue().get(0);
