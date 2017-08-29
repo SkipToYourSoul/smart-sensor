@@ -10,8 +10,11 @@ var timelines = {};
 var timelineVideoIndex = {};
 
 function initSensorData() {
-    if (sensors.length <= 0)
+    if (sensors.length <= 0){
+        message_info("no data", "info");
+        $("#fakeLoader").fadeOut();
         return;
+    }
 
     // --- traverse sensor, init sensor content
     for (var i=0; i < sensors.length; i++){
