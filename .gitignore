@@ -9,3 +9,6 @@
 target/
 .gitignore
 stem.jpeg
+
+
+/src/main/resources/static/img/oceans.mp4

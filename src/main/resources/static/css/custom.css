@@ -184,6 +184,11 @@ hr {
     text-align: right;
 }
 
+.recorder-duration-info{
+    max-height: 90px;
+    overflow-y: auto;
+}
+
 /** sensor content **/
 .value-sensor-content{
     height: 400px;

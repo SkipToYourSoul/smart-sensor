@@ -151,7 +151,7 @@
                                             <div class="col-sm-6">
                                                 <h3>数据时间范围参考<br/><small>请谨慎选取时间范围，超出范围的数据将不会在回放数据中出现</small></h3>
                                                 <hr/>
-                                                <div id="data-duration-info">
+                                                <div id="data-duration-info" class="recorder-duration-info">
                                                 </div>
                                             </div>
                                         </div>
@@ -328,11 +328,20 @@
         var sensorData = [[${sensorData}]];
     </script>
 
+    <script th:src="@{source/loading/fakeLoader.min.js}"></script>
+    <script>
+        // --- loading
+        $("#fakeLoader").fakeLoader({
+            timeToHide: 5000,
+            spinner:"spinner4",
+            bgColor:"rgba(154, 154, 154, 0.7)"
+        });
+    </script>
+
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
 
     <script th:src="@{source/messenger/messenger.min.js}"></script>
     <script th:src="@{source/bootstrap/bootstrap-select.min.js}"></script>
-    <script th:src="@{source/loading/fakeLoader.min.js}"></script>
     <script th:src="@{source/bootbox/bootbox.min.js}"></script>
 
     <script th:src="@{source/validation/formValidation.min.js}"></script>

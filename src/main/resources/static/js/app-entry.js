@@ -9,22 +9,9 @@ var video_players = {};
 var timelines = {};
 var timelineVideoIndex = {};
 
-/*
-* { name, startTime, endTime }
-* */
-var data_duration_info = [];
-
 function initSensorData() {
     if (sensors.length <= 0)
         return;
-
-    // --- loading
-    var $loading = $("#fakeLoader");
-    $loading.fakeLoader({
-        timeToHide: 5000,
-        spinner:"spinner4",
-        bgColor:"rgba(154, 154, 154, 0.7)"
-    });
 
     // --- traverse sensor, init sensor content
     for (var i=0; i < sensors.length; i++){
@@ -43,12 +30,6 @@ function initSensorData() {
                 var series_data = chartSeriesOption(flag + "", time_series);
                 series.push(series_data);
                 legend_data.push({name: flag + ""});
-
-                data_duration_info.push({
-                    name: flag,
-                    startTime: sensorData[id][data_index]['startTime'],
-                    endTime: sensorData[id][data_index]['endTime']
-                });
             }
 
             chart.setOption(chartOption(legend_data, series));
@@ -84,16 +65,20 @@ function initSensorData() {
 
     // init data-duration-info
     var $duration_info = $('#data-duration-info');
-    for (var i in data_duration_info){
-        $duration_info.html($duration_info.html() +
-            '<p>' + data_duration_info[i]['name'] + ": " + data_duration_info[i]['startTime'] + " - " + data_duration_info[i]['endTime']);
+    for (var sensor_id in sensorData){
+        for (var index in sensorData[sensor_id]){
+            var name = '传感器' + sensor_id + ' - 数据列' + (Number(index)+1) + ': ';
+            var st = parseTime(sensorData[sensor_id][index]['startTime']);
+            var et = parseTime(sensorData[sensor_id][index]['endTime']);
+            $duration_info.append('<p>' + name + st + ' - ' + et + '</p>');
+        }
     }
 
     window.onresize = function () {
         for (var i in charts_list)
             charts_list[i].resize();
     };
-    $loading.fadeOut();
+    $("#fakeLoader").fadeOut();
 }
 
 initSensorData();

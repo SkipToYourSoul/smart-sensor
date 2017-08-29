@@ -278,24 +278,3 @@ function constructTimeData(start_time, end_time, select_ids){
         "video": video_time_data
     };
 }
-
-// parse 2017-08-17T18:16:31.000+08:00 to 2017-08-17 18:16:31
-function parseTime(time) {
-    return time.split('.')[0].replace('T', ' ');
-}
-
-Date.prototype.Format = function (fmt) {
-    var o = {
-        "M+": this.getMonth() + 1, //月份
-        "d+": this.getDate(), //日
-        "H+": this.getHours(), //小时
-        "m+": this.getMinutes(), //分
-        "s+": this.getSeconds(), //秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-        "S": this.getMilliseconds() //毫秒
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-};
