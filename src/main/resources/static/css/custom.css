@@ -116,6 +116,10 @@ hr {
 
 
 /* Main content */
+.app-nav-tabs{
+    margin-top: 10px
+}
+
 .main {
     padding: 20px;
     background-color: rgba(245, 245, 245, 0.8);
