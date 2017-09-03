@@ -4,15 +4,17 @@
     <div th:fragment="app-show">
         <!-- 应用展示、应用相关操作 -->
         <div class="col-sm-3 col-md-2 col-xs-3 sidebar">
-            <strong><i class="fa fa-bookmark-o"></i>&nbsp; 我的应用</strong>
-            <div class="app-group" th:if="${apps}">
-                <ul class="nav nav-sidebar">
-                    <th:block th:each="app,index:${apps}">
-                        <li th:class="${currentAppIndex eq index.count}?'active':''"><a th:text="${app.name}" th:href="@{/app(id=${app.id})}" th:class="|app-${index.count}|"></a></li>
-                    </th:block>
-                </ul>
-            </div>
-            <button class="btn btn-block" data-toggle="modal" data-target="#new-app-modal" todo="new">新建应用</button>
+            <th:block th:if="!${#lists.isEmpty(apps)}">
+                <strong><i class="fa fa-bookmark-o"></i>&nbsp; 我的应用</strong>
+                <div class="app-group" th:if="${apps}">
+                    <ul class="nav nav-sidebar">
+                        <th:block th:each="app,index:${apps}">
+                            <li th:class="${currentAppIndex eq index.count}?'active':''"><a th:text="${app.name}" th:href="@{/app(id=${app.id})}" th:class="|app-${index.count}|"></a></li>
+                        </th:block>
+                    </ul>
+                </div>
+            </th:block>
+            <button class="btn btn-block btn-info app-new-button" data-toggle="modal" data-target="#new-app-modal" todo="new">新建应用</button>
         </div>
 
         <!-- 应用内容 -->
@@ -59,13 +61,12 @@
                             </div>
                             <div class="panel-body">
                                 <div class="btn-group">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-sensor-modal">新建传感器</button>
-                                    <button class="btn btn-default">Button2</button>
-                                    <button class="btn btn-default">Button3</button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-sensor-modal"><i class="fa fa-info-circle"></i>&nbsp;新建传感器</button>
+                                    <button class="btn btn-default">一些其他功能</button>
                                 </div>
                                 <div class="btn-group pull-right">
-                                    <button class="btn btn-info" data-toggle="modal" data-target="#new-app-modal" todo="edit">编辑应用</button>
-                                    <button class="btn btn-danger" onclick="deleteApp(this)">删除应用</button>
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#new-app-modal" todo="edit"><i class="fa fa-id-badge"></i>&nbsp;编辑应用</button>
+                                    <button class="btn btn-danger" onclick="deleteApp(this)"><i class="fa fa-trash"></i>&nbsp;删除应用</button>
                                 </div>
                             </div>
                         </div>
@@ -103,14 +104,14 @@
                                                         <div class="col-xs-12 col-sm-3">
                                                             <div class="value-sensor-data" th:id="|sensor-chart-info-${sensor.id}|">
                                                                 <div class="value-sensor-data-title">数据面板</div>
-                                                                <div class="value-sensor-data-content"><i class="fa fa-hashtag"></i>最新数据:&nbsp;<span>xxx</span> </div>
-                                                                <div class="value-sensor-data-content"><i class="fa fa-hashtag"></i>数据更新时间:&nbsp;<span>2017-08-22 19:00:00</span> </div>
+                                                                <div class="value-sensor-data-content"><i class="fa fa-info-circle"></i>&nbsp;最新数据:&nbsp;<span>xxx</span> </div>
+                                                                <div class="value-sensor-data-content"><i class="fa fa-info-circle"></i>&nbsp;数据更新时间:&nbsp;<span>2017-08-22 19:00:00</span> </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
                                                         <div class="tab-sensor-info">
-                                                            <p><strong>传感器信息</strong></p>
+                                                            <h3><strong>传感器信息</strong></h3>
                                                             <hr/>
                                                             <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
                                                             <p><strong>传感器编号：</strong><span th:text="${sensor.code}"></span></p>
@@ -160,7 +161,7 @@
 
                                                     <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
                                                         <div class="tab-sensor-info">
-                                                            <p><strong>传感器信息</strong></p>
+                                                            <h3><strong>传感器信息</strong></h3>
                                                             <hr/>
                                                             <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
                                                             <p><strong>传感器编号：</strong><span th:text="${sensor.code}"></span></p>

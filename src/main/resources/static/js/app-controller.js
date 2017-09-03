@@ -138,6 +138,26 @@ $('#positionBtn').click(function () {
     });
 });
 
+$('#appPositionBtn').click(function () {
+    message_info("定位中，请稍等", 'info');
+    var geolocation = new BMap.Geolocation();
+    geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            $('#new-app-latitude').val(r.point.lat);
+            $('#new-app-longitude').val(r.point.lng);
+            message_info("定位完成", 'info');
+        }
+        else {
+            message_info('无法定位', 'info');
+        }
+    },{enableHighAccuracy: true});
+
+    var currentCity = new BMap.LocalCity();
+    currentCity.get(function (city) {
+        $('#new-app-city').val(city.name);
+    });
+});
+
 $new_sensor_modal = $('#new-sensor-modal');
 $new_sensor_modal.on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);

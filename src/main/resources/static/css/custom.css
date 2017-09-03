@@ -114,6 +114,13 @@ hr {
     padding-left: 10px;
 }
 
+.app-new-button{
+    margin-top: 10px;
+    height: 80px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
 
 /* Main content */
 .app-nav-tabs{
@@ -188,6 +195,9 @@ hr {
 .recorder-duration-info{
     max-height: 90px;
     overflow-y: auto;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-bottom: 10px;
 }
 
 /** sensor content **/

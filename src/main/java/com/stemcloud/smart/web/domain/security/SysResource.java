@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
  * Description:
  */
 @Entity
-@Table(name = "sys_resource")
+@Table(name = "zdc_sys_resource")
 public class SysResource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

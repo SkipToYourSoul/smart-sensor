@@ -12,7 +12,7 @@ import java.util.Date;
  * Description: base_sensor_info
  */
 @Entity
-@Table(name = "base_sensor_info")
+@Table(name = "zdc_base_sensor_info")
 public class SensorInfo {
     @Id
     @GeneratedValue

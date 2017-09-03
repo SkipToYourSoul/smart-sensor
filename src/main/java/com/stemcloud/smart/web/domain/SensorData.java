@@ -11,7 +11,7 @@ import java.util.Date;
  * Description: value sensor
  */
 @Entity
-@Table(name = "sensor_value_data")
+@Table(name = "zdc_sensor_value_data")
 public class SensorData {
     @Id
     @GeneratedValue

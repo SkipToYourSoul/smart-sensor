@@ -56,9 +56,10 @@ public class UserManagementService {
         resource.setRemark("应用页");
         final SysResource appResource = sysResourceRepository.save(resource);
 
-        resource.setResourceUrl("/class**");
-        resource.setRemark("课程页");
-        final SysResource classResource = sysResourceRepository.save(resource);
+        SysResource resource2 = new SysResource();
+        resource2.setResourceUrl("/class**");
+        resource2.setRemark("课程页");
+        final SysResource classResource = sysResourceRepository.save(resource2);
 
         // --- init role
         SysRole role = new SysRole();

@@ -57,14 +57,14 @@ $('#data-recorder-form').formValidation({
         $recorder_chart.removeClass().addClass('col-sm-12').removeAttr('hidden');
         $recorder_control.removeAttr('hidden');
 
-        recorder_chart = generateChart(time_data);
+        recorder_chart = generateChart(time_data, 400);
         message_info("only chart", "info");
     } else if (JSON.stringify(time_data.chart) != "{}" && JSON.stringify(time_data.video) != "{}"){
         $recorder_chart.removeClass().addClass('col-sm-12').removeAttr('hidden');
         $recorder_video.removeClass().addClass('col-sm-12').removeAttr('hidden');
         $recorder_control.removeAttr('hidden');
 
-        recorder_chart = generateChart(time_data);
+        recorder_chart = generateChart(time_data, 200);
         recorder_videos = generateVideo(time_data);
         message_info("video and chart", "info");
     } else {
@@ -183,10 +183,10 @@ function recorderReset() {
     prepareRecorder();
 }
 
-function generateChart(time_data){
+function generateChart(time_data, height){
     echarts.dispose(document.getElementById("data-recorder-chart"));
     var data_recorder_chart = echarts.init(document.getElementById("data-recorder-chart"), "", opts={
-        height: 400
+        height: height
     });
     var legends = [];
     var series = [];
@@ -195,7 +195,7 @@ function generateChart(time_data){
         var series_data = chartSeriesOption(flag, /*time_data['chart'][flag]*/[]);
         series.push(series_data);
     }
-    data_recorder_chart.setOption(chartOption(legends, series));
+    data_recorder_chart.setOption(recorderChartOption(legends, series));
     return data_recorder_chart;
 }
 

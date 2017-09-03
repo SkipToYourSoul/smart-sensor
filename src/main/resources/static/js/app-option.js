@@ -6,17 +6,14 @@
 
 var chartOption = function (legend_data, series) {
     return {
-        title: {
-            // text: 'SENSOR DATA'
-        },
         tooltip: {
             trigger: 'axis',
             axisPointer: {
                 type: 'cross'
             },
-            formatter: function(params){
+            /*formatter: function(params){
                 return parseTime(params[0].value[0]) + "<br/>" + params[0].value[1];
-            },
+            },*/
             backgroundColor: 'rgba(245, 245, 245, 0.8)',
             borderWidth: 1,
             borderColor: '#ccc',
@@ -32,7 +29,7 @@ var chartOption = function (legend_data, series) {
             extraCssText: 'width: 170px'
         },
         legend: {
-            top: 10,
+            top: '0%',
             left: 'center',
             data: legend_data
         },
@@ -89,10 +86,6 @@ var chartOption = function (legend_data, series) {
             type: 'time',
             name: 'TIME',
             nameRotate: 45,
-            /*splitNumber: 10,
-            splitLine: {
-                show: false
-            },*/
             boundaryGap : ['20%', '20%'],
             axisPointer: {
                 show: true,
@@ -113,6 +106,95 @@ var chartOption = function (legend_data, series) {
         series: series
     };
 };
+
+var recorderChartOption = function (legend_data, series) {
+    return {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            },
+            backgroundColor: 'rgba(245, 245, 245, 0.8)',
+            borderWidth: 1,
+            borderColor: '#ccc',
+            padding: 10,
+            textStyle: {
+                color: '#000'
+            },
+            position: function (pos, params, el, elRect, size) {
+                var obj = {top: 10};
+                obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
+                return obj;
+            },
+            extraCssText: 'width: 170px'
+        },
+        legend: {
+            bottom: 20,
+            left: 20,
+            data: legend_data
+        },
+        grid: {
+            borderWidth: 0,
+            top: '5%',
+            bottom: '60px',
+            left: '5px',
+            right: '5px',
+            textStyle: {
+                color: "#fff"
+            }
+        },
+        calculable: true,
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {},
+                brush: {
+                    type: ['lineX', 'clear']
+                }
+            },
+            right: 20,
+            bottom: 20
+        },
+        dataZoom: [{
+            show: true,
+            height: 25,
+            xAxisIndex: [0],
+            bottom: 0,
+            start: 0,
+            end: 100
+        }, {
+            type: "inside",
+            xAxisIndex: [0],
+            start: 0,
+            end: 100
+        }],
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            },
+            axisPointer: {
+                show: true,
+                type: 'line',
+                snap: true,
+                z: 100
+            }
+        },
+        yAxis: {
+            type: 'value',
+            scale: true,
+            splitArea: {
+                show: true
+            },
+            boundaryGap: ['0%', '0%']
+        },
+        series: series
+    };
+};
+
 
 var chartSeriesOption = function (name, data) {
     return {

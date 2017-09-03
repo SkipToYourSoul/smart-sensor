@@ -14,7 +14,7 @@ import java.util.Date;
  * Description: base app info
  */
 @Entity
-@Table(name = "base_app_info")
+@Table(name = "zdc_base_app_info")
 public class AppInfo {
     @Id
     @GeneratedValue
@@ -28,6 +28,15 @@ public class AppInfo {
 
     @Column(name = "app_description")
     private String description;
+
+    @Column(length = 20, precision = 6)
+    private Double longitude;
+
+    @Column(length = 20, precision = 6)
+    private Double latitude;
+
+    @Column(name = "app_city")
+    private String city;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
@@ -76,16 +85,36 @@ public class AppInfo {
         this.description = description;
     }
 
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public Date getModifyTime() {
         return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
     }
 
     public int getIsDeleted() {

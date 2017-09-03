@@ -14,7 +14,7 @@ import java.util.Set;
  * Description:
  */
 @Entity
-@Table(name = "sys_user")
+@Table(name = "zdc_sys_user")
 public class SysUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

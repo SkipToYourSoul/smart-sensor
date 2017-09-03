@@ -57,12 +57,13 @@
 
     <script th:src="@{source/loading/fakeLoader.min.js}"></script>
     <script>
-        // --- loading
-        $("#fakeLoader").fakeLoader({
-            timeToHide: 5000,
-            spinner:"spinner4",
-            bgColor:"rgba(154, 154, 154, 0.7)"
-        });
+        if (apps.length > 0)
+            // --- loading
+            $("#fakeLoader").fakeLoader({
+                timeToHide: 5000,
+                spinner:"spinner4",
+                bgColor:"rgba(154, 154, 154, 0.7)"
+            });
     </script>
 
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>

@@ -45,11 +45,21 @@ public class AppManagementDataService {
     public long saveNewApp(Map<String, String> queryParams, String user){
         String name = queryParams.get("new-app-name");
         String description = queryParams.get("new-app-description");
+        String city = queryParams.get("new-app-city");
 
         AppInfo appInfo = new AppInfo();
         appInfo.setCreator(user);
         appInfo.setName(name);
         appInfo.setDescription(description);
+
+        if (!queryParams.get("new-app-longitude").trim().isEmpty()){
+            appInfo.setLongitude(Double.parseDouble(queryParams.get("new-app-longitude")));
+        }
+        if (!queryParams.get("new-app-latitude").trim().isEmpty()){
+            appInfo.setLatitude(Double.parseDouble(queryParams.get("new-app-latitude")));
+        }
+        if (!city.trim().isEmpty())
+            appInfo.setCity(city);
 
         return appInfoRepository.save(appInfo).getId();
     }
@@ -57,9 +67,12 @@ public class AppManagementDataService {
     public int saveEditApp(Map<String, String> queryParams){
         int id = Integer.valueOf(queryParams.get("id"));
         String name = queryParams.get("new-app-name");
+        String city = queryParams.get("new-app-city");
+        double longitude = Double.parseDouble(queryParams.get("new-app-longitude"));
+        double latitude = Double.parseDouble(queryParams.get("new-app-latitude"));
         String description = queryParams.get("new-app-description");
 
-        return appInfoRepository.updateAppInfo(id, name, description);
+        return appInfoRepository.updateAppInfo(id, name, longitude, latitude, city, description);
     }
 
     public SensorInfo saveNewSensor(Map<String, String> queryParams, String user){

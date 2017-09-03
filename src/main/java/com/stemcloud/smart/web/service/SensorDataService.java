@@ -142,16 +142,17 @@ public class SensorDataService {
         return videos;
     }
 
-    public void generateRandomData() {
+    public void generateRandomData(int sensorId) {
         Random random = new Random(10);
 
         List<SensorData> list = new ArrayList<SensorData>();
 
         for (int i=0; i<10; i++){
             SensorData sensorData = new SensorData();
-            sensorData.setSensorId(1);
+            sensorData.setSensorId(sensorId);
             sensorData.setType(1);
             sensorData.setEntrance("192.0.0.1:8080");
+            sensorData.setFlag("光照");
             sensorData.setValue(String.valueOf(random.nextInt(30)));
             sensorData.setDataTime(new Date());
 
@@ -169,22 +170,22 @@ public class SensorDataService {
         dataRepository.save(list);
     }
 
-    public void generateCameraData(){
+    public void generateCameraData(int sensorId){
         SensorCamera camera = new SensorCamera();
         camera.setDataTime(new Date());
         camera.setEntrance("192.0.0.1:8080");
         camera.setType(2);
-        camera.setSensorId(2);
+        camera.setSensorId(sensorId);
         camera.setDuration(46);
-        camera.setSourcePath("//vjs.zencdn.net/v/oceans.mp4");
-        cameraRepository.save(camera);
+        camera.setSourcePath("/img/oceans.mp4");
+        SensorCamera saveCamera = cameraRepository.save(camera);
 
 
         for (int i=1; i<=3; i++) {
             SensorCameraPhotos cameraPhotos = new SensorCameraPhotos();
-            cameraPhotos.setSensorId(2);
+            cameraPhotos.setSensorId(sensorId);
             cameraPhotos.setTimeInVideo(i*5);
-            cameraPhotos.setVideoId(1);
+            cameraPhotos.setVideoId(saveCamera.getId());
             cameraPhotos.setSourcePath("/img/" + i + ".jpg");
             cameraPhotosRepository.save(cameraPhotos);
         }

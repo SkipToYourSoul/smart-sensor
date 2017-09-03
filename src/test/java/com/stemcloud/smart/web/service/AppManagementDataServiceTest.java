@@ -67,7 +67,7 @@ public class AppManagementDataServiceTest {
 
     @Test
     public void generateRandomData() {
-        // sensorDataService.generateRandomData();
-        sensorDataService.generateCameraData();
+        // sensorDataService.generateRandomData(2);
+        sensorDataService.generateCameraData(3);
     }
 }

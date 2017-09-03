@@ -10,7 +10,7 @@ import java.util.Set;
  * Description:
  */
 @Entity
-@Table(name = "sys_role")
+@Table(name = "zdc_sys_role")
 public class SysRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
