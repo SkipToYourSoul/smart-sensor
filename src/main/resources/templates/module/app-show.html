@@ -16,7 +16,7 @@
         </div>
 
         <!-- 应用内容 -->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-xs-9 col-xs-offset-3 main">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-xs-9 col-xs-offset-3 app-main-content">
             <div class="row">
                 <th:block th:if="${not #lists.isEmpty(apps)}">
                     <div class="col-sm-12">
@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="col-sm-6 col-xs-6">
                                         <div class="row text-center overview-title">创建时间</div>
-                                        <div class="row text-center overview-content" th:text="${apps[currentAppIndex-1].createTime}"></div>
+                                        <div class="row text-center overview-content" th:text="${#dates.format(apps[currentAppIndex-1].createTime, 'yyyy-MM-dd HH:mm:ss')}"></div>
                                     </div>
                                 </div>
                             </div>

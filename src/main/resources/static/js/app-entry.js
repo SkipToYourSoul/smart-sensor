@@ -37,6 +37,11 @@ function initSensorData() {
 
             chart.setOption(chartOption(legend_data, series));
             chart.hideLoading();
+
+            var analysis_chart = echarts.init(document.getElementById('analysis-chart-' + id));
+            analysis_chart.setOption(chartOption(legend_data, series));
+            charts_list.push(analysis_chart);
+
             charts_list.push(chart);
         } else if (type == 2){
             if (sensorData[id] == null || sensorData[id].length == 0) {
@@ -81,6 +86,8 @@ function initSensorData() {
         for (var i in charts_list)
             charts_list[i].resize();
     };
+
+    $('#app-analysis').removeClass('active');
     $("#fakeLoader").fadeOut();
 }
 

@@ -120,18 +120,15 @@ hr {
     margin-top: 10px
 }
 
-.main {
-    padding: 20px;
+.app-main-content {
+    padding: 10px;
     background-color: rgba(245, 245, 245, 0.8);
 }
 @media (min-width: 768px) {
-    .main {
+    .app-main-content {
         padding-right: 40px;
         padding-left: 40px;
     }
-}
-.main .page-header {
-    margin-top: 0;
 }
 
 /* overview */
@@ -252,6 +249,13 @@ hr {
     padding-top: 10px;
     padding-bottom: 10px;
     height: 400px;
+}
+
+/** analysis content **/
+.analysis-sensor-content{
+    height: 300px;
+    padding-top: 5px;
+    padding-bottom: 10px;
 }
 
 /** footer **/

@@ -15,7 +15,7 @@ var chartOption = function (legend_data, series) {
                 type: 'cross'
             },
             formatter: function(params){
-                return params[0].value[0] + "<br/>" + params[0].value[1];
+                return parseTime(params[0].value[0]) + "<br/>" + params[0].value[1];
             },
             backgroundColor: 'rgba(245, 245, 245, 0.8)',
             borderWidth: 1,
@@ -24,11 +24,11 @@ var chartOption = function (legend_data, series) {
             textStyle: {
                 color: '#000'
             },
-            /*position: function (pos, params, el, elRect, size) {
+            position: function (pos, params, el, elRect, size) {
              var obj = {top: 10};
              obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
              return obj;
-             },*/
+             },
             extraCssText: 'width: 170px'
         },
         legend: {
@@ -40,8 +40,8 @@ var chartOption = function (legend_data, series) {
             borderWidth: 0,
             top: '10%',
             bottom: '20%',
-            left: '5%',
-            right: '5%',
+            left: '50px',
+            right: '50px',
             textStyle: {
                 color: "#fff"
             }
@@ -89,13 +89,15 @@ var chartOption = function (legend_data, series) {
             type: 'time',
             name: 'TIME',
             nameRotate: 45,
-            splitNumber: 10,
+            /*splitNumber: 10,
             splitLine: {
                 show: false
-            },
-            scale: true,
-            boundaryGap : false,
+            },*/
+            boundaryGap : ['20%', '20%'],
             axisPointer: {
+                show: true,
+                type: 'line',
+                snap: true,
                 z: 100
             }
         },
@@ -106,7 +108,7 @@ var chartOption = function (legend_data, series) {
             splitArea: {
                 show: true
             },
-            boundaryGap: ['10%', '10%']
+            boundaryGap: ['0%', '0%']
         },
         series: series
     };

@@ -60,8 +60,8 @@ $('#data-recorder-form').formValidation({
         recorder_chart = generateChart(time_data);
         message_info("only chart", "info");
     } else if (JSON.stringify(time_data.chart) != "{}" && JSON.stringify(time_data.video) != "{}"){
-        $recorder_chart.removeClass().addClass('col-sm-6').removeAttr('hidden');
-        $recorder_video.removeClass().addClass('col-sm-6').removeAttr('hidden');
+        $recorder_chart.removeClass().addClass('col-sm-12').removeAttr('hidden');
+        $recorder_video.removeClass().addClass('col-sm-12').removeAttr('hidden');
         $recorder_control.removeAttr('hidden');
 
         recorder_chart = generateChart(time_data);

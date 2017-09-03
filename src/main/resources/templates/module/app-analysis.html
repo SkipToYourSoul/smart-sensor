@@ -1,38 +1,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
     <div th:fragment="app-analysis">
-        <div class="main">
+        <div class="app-main-content">
             <div class="row">
                 <!-- 传感器数据浏览 -->
                 <div id="analysis-sensor-group">
                     <th:block th:each="sensor,index:${sensors}">
-                        <div class="col-sm-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <i class="fa fa-hashtag"></i>&nbsp;<strong th:text="|${sensor.id}:${sensor.name}|"></strong>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row" th:switch="${sensor.type}">
-                                        <div th:case="1">
-                                            <div class="value-sensor-content" th:id="|sensor-chart-${sensor.id}|"></div>
-                                        </div>
-                                        <div th:case="2">
-                                            <video th:id="|sensor-camera-${sensor.id}|" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto"
-                                                   data-setup="{}">
-                                                <p class="vjs-no-js">播放视频需要启用 JavaScript, 推荐使用<a href="http://videojs.com/html5-video-support/" target="_blank">支持HTML5</a>的浏览器访问。</p>
-                                            </video>
+                        <th:block th:if="${sensor.type == 1}">
+                            <div class="col-sm-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <i class="fa fa-hashtag"></i>&nbsp;<strong th:text="|${sensor.id}:${sensor.name}|"></strong>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="analysis-sensor-content" th:id="|analysis-chart-${sensor.id}|"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </th:block>
                     </th:block>
                 </div>
             </div>
 
             <div class="row">
                 <!-- 数据回放面板 -->
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="data-recorder-panel-heading">
@@ -47,7 +41,7 @@
                                 <div class="panel-body">
                                     <!-- 数据配置 -->
                                     <div class="row">
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-12">
                                             <form id="data-recorder-form" class="form-horizontal data-recorder-form">
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label">数据起始时间：</label>
@@ -86,7 +80,7 @@
                                             </form>
                                         </div>
 
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-12">
                                             <h3>数据时间范围参考<br/><small>请谨慎选取时间范围，超出范围的数据将不会在回放数据中出现</small></h3>
                                             <hr/>
                                             <div id="data-duration-info" class="recorder-duration-info">
@@ -98,9 +92,9 @@
 
                                     <!-- 数据展示 -->
                                     <div class="row">
-                                        <div id="data-recorder-chart" class="col-sm-6" hidden="hidden">
+                                        <div id="data-recorder-video" class="col-sm-12" hidden="hidden">
                                         </div>
-                                        <div id="data-recorder-video" class="col-sm-6" hidden="hidden">
+                                        <div id="data-recorder-chart" class="col-sm-12" hidden="hidden">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -117,10 +111,10 @@
                                                 <button id="forward-btn" class="btn btn-default"><i class="fa fa-forward"></i>&nbsp;前进五秒</button>
                                             </div>
 
-                                                    <span class="recorder-time-view">
-                                                        <i class="fa fa-clock-o" style="margin-left: 20px"></i>&nbsp;
-                                                        <span id="recorder-clock"></span>
-                                                    </span>
+                                            <div class="recorder-time-view">
+                                                <i class="fa fa-clock-o" style="margin-left: 20px"></i>&nbsp;
+                                                <span id="recorder-clock"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
