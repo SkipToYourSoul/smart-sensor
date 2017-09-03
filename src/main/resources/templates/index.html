@@ -20,13 +20,11 @@
 
     <div class="container-fluid">
         <div class="row index-row">
-            <div class="col-sm-8">
-                <h4><i class="fa fa-map-o"></i><b>&nbsp; 传感器地图：</b><small>共享位置的传感器将在地图上显示</small></h4>
-                <hr/>
-                <div id="allmap" class="index-map-container">
-                    <strong>由于网络原因，地图无法加载</strong>
-                </div>
-                <div class="row index-row">
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4><i class="fa fa-map-o"></i><b>&nbsp; 应用地图：</b><small>共享的应用将在地图上显示</small></h4>
+                    </div>
                     <div class="col-sm-3">
                         <select class="selectpicker form-control" title="更改地图主题" id="theme-select">
                             <option value="1">灰色（突出信息）</option>
@@ -37,20 +35,57 @@
                         <button class="btn btn-info btn-block" onclick="toMark()">回到传感器中心</button>
                     </div>
                 </div>
+                <div id="allmap" class="index-map-container">
+                    <strong>由于网络原因，地图无法加载</strong>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <h4><i class="fa fa-bar-chart-o"></i>
-                <b>&nbsp; 传感器统计数据：</b><small>点击地图上的mark点可查看相应数据</small></h4>
-                <hr/>
 
+            <div class="col-sm-3">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <div class="index-small-chart" id="chart-pie-1"></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="index-small-chart" id="chart-pie-2"></div>
+                    <div class="col-sm-12">
+                        <h4><i class="fa fa-search"></i><b>&nbsp; 应用检索：</b><small>搜索共享应用</small></h4>
                     </div>
                 </div>
+                <div class="index-app-search">
+                    <div class="input-group index-search-input">
+                        <input type="text" id="app-searcher" class="form-control" placeholder="输入关键字搜索应用"/>
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    </div>
+
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <div class="panel-title">已选中的应用信息</div>
+                        </div>
+                        <div class="panel-body" id="select-app-info"></div>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="panel-title">近期热门应用</div>
+                        </div>
+                        <div class="panel-body">
+                            <ul id="hot-app-list">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 数据统计图 -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h4><i class="fa fa-bar-chart-o"></i>
+                    <b>&nbsp; 传感器统计数据：</b><small>点击地图上的mark点可查看相应数据</small></h4>
+                <hr/>
+            </div>
+            <div class="col-sm-4">
+                <div class="index-small-chart" id="chart-pie-1"></div>
+            </div>
+            <div class="col-sm-4">
+                <div class="index-small-chart" id="chart-pie-2"></div>
+            </div>
+            <div class="col-sm-4">
                 <div class="index-big-chart" id="chart-line"></div>
             </div>
         </div>
@@ -63,6 +98,7 @@
 
     <script th:inline="javascript">
         var sensors = [[${sensors}]];
+        var apps = [[${apps}]];
     </script>
 
     <script dataType="text/javascript" th:src="@{http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM}"></script>
@@ -72,11 +108,13 @@
 
     <script th:src="@{source/messenger/messenger.min.js}"></script>
     <script th:src="@{source/bootstrap/bootstrap-select.min.js}"></script>
+    <script th:src="@{source/suggestion/bootstrap3-typeahead.js}"></script>
 
     <script th:src="@{source/echarts/echarts.common.min.js}"></script>
     <script th:src="@{source/echarts/infographic.js}"></script>
 
     <script th:src="@{js/common.js}"></script>
+    <script th:src="@{js/index-entry.js}"></script>
     <script th:src="@{js/index-chart.js}"></script>
     <script th:src="@{js/index-map.js}"></script>
 

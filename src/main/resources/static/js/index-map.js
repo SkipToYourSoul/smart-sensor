@@ -40,13 +40,13 @@ map.addControl(new BMap.NavigationControl({
 // --- add map marker --------------------------------------------------------
 var opts = {
     width : 200,     // 信息窗口宽度
-    title : "<b>传感器信息</b>" // 信息窗口标题
+    title : "<b>应用信息</b>" // 信息窗口标题
 };
 
 function init_markers() {
     var markers = [];
-    for (var row in sensors){
-        var d = sensors[row];
+    for (var row in apps){
+        var d = apps[row];
         var info = "<hr/>" +
             "<p>NAME: " + d['name'] + "</p>" +
             "<p>CREATOR: " + d['creator'] + "</p>" +
@@ -66,7 +66,8 @@ createMarker = function (d, info, id) {
         this.closeInfoWindow();
     });
     _marker.addEventListener("click", function(e){
-        index_big_chart.setOption(chart_line_option(id));
+        // index_big_chart.setOption(chart_line_option(id));
+        showSelectAppInfo(id);
     });
     return _marker;
 };

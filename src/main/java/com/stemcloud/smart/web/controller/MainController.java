@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,15 +44,26 @@ public class MainController implements ErrorController {
 
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request) {
+        List<AppInfo> apps = new ArrayList<AppInfo>();
+        List<SensorInfo> sensors = new ArrayList<SensorInfo>();
+
         String loginUser = viewService.getCurrentLoginUser(request);
         if (loginUser != null) {
             logger.info("Current login user: " + loginUser);
-            model.addAttribute("sensors", appManagementDataService.getSensorInfoByCreatorAndShared(loginUser));
+
+            apps.addAll(appManagementDataService.getAppInfoByCreatorAndShared(loginUser));
+            sensors.addAll(appManagementDataService.getSensorInfoByCreator(loginUser));
         } else {
             logger.info("No login user!");
-            model.addAttribute("sensors", appManagementDataService.getSharedSensorInfo());
+
+            apps.addAll(appManagementDataService.getSharedAppInfo());
+            sensors.addAll(appManagementDataService.getSharedSensorInfo());
         }
+
+        model.addAttribute("sensors", sensors);
+        model.addAttribute("apps", apps);
         model.addAttribute("inIndex", true);
+
         return "index";
     }
 

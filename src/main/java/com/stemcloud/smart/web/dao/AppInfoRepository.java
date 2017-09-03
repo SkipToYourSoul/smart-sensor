@@ -16,6 +16,10 @@ import java.util.List;
 public interface AppInfoRepository extends CrudRepository<AppInfo, Integer> {
     List<AppInfo> findByCreatorOrderByCreateTime(String creator);
 
+    List<AppInfo> findByIsShare(int isShare);
+
+    List<AppInfo> findByCreatorOrIsShare(String creator, int isShare);
+
     AppInfo findByCreatorAndId(String creator, long id);
 
     @Query(value = "UPDATE base_app_info SET app_name = :name, longitude = :longitude, latitude = :latitude, sensor_city = :city, app_description = :description WHERE id = :id", nativeQuery = true)

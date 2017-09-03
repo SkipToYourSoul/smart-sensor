@@ -38,6 +38,9 @@ public class AppInfo {
     @Column(name = "app_city")
     private String city;
 
+    @Column(name = "is_shared")
+    private int isShare = 0;
+
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     @Column(name = "app_create_time", updatable = false)
@@ -107,6 +110,14 @@ public class AppInfo {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public int getIsShare() {
+        return isShare;
+    }
+
+    public void setIsShare(int isShare) {
+        this.isShare = isShare;
     }
 
     public Date getCreateTime() {

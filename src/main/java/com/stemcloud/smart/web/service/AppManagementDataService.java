@@ -30,6 +30,18 @@ public class AppManagementDataService {
         this.appInfoRepository = appInfoRepository;
     }
 
+    public List<AppInfo> getSharedAppInfo(){
+        return appInfoRepository.findByIsShare(1);
+    }
+
+    public List<AppInfo> getAppInfoByCreator(String creator){
+        return appInfoRepository.findByCreatorOrderByCreateTime(creator);
+    }
+
+    public List<AppInfo> getAppInfoByCreatorAndShared(String creator){
+        return appInfoRepository.findByCreatorOrIsShare(creator, 1);
+    }
+
     public List<SensorInfo> getSharedSensorInfo(){
         return sensorInfoRepository.findByIsShare(1);
     }
