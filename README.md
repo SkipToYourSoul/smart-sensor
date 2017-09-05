@@ -23,6 +23,7 @@
 
 ### 参考链接
 
+* thymeleaf基础：http://www.cnblogs.com/vinphy/p/4674247.html
 * thymeleaf比较符号：http://www.bubuko.com/infodetail-413210.html
 * thymeleaf条件判断：http://www.cnblogs.com/suncj/p/4030393.html
 * thymeleaf js取值：http://blog.csdn.net/xiaoyu411502/article/details/48582355

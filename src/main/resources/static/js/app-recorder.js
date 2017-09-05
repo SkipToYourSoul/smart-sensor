@@ -70,28 +70,34 @@ $('#data-recorder-form').formValidation({
     } else {
         $recorder_chart.removeClass().empty();
         $recorder_video.removeClass().empty();
+
+        message_info("当前时间段内没有任何数据！", "info");
+        return;
     }
 
     // this.reset();
     recorder_start_time = start_time;
-    prepareRecorder();
+    prepareRecorder(time_data);
 
 }).on('err.form.fv', function (evt) {
     message_info("submit error", "info");
 });
 
-function prepareRecorder() {
+function prepareRecorder(time_data) {
     // initial clock
     current_recorder_time = new Date(Date.parse(recorder_start_time.replace(/-/g, "/")));
     $('#recorder-clock').html(recorder_start_time);
 
     // prepare data
-    setRecorderChart(recorder_start_time);
+    if (JSON.stringify(time_data.chart) != "{}")
+        setRecorderChart(recorder_start_time);
 
     // initial video
-    is_recorder_video_play = {};
-    for (var i in recorder_videos)
-        recorder_videos[i].currentTime(0);
+    if (JSON.stringify(time_data.video) != "{}"){
+        is_recorder_video_play = {};
+        for (var i in recorder_videos)
+            recorder_videos[i].currentTime(0);
+    }
 }
 
 
