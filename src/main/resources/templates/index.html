@@ -15,7 +15,7 @@
     <link rel="stylesheet" th:href="@{css/custom.css}"/>
 </head>
 <body>
-    <div class="navbar-wrapper" th:include="/module/nav::nav">
+    <div class="navbar-wrapper" th:include="module/nav::nav">
     </div>
 
     <div class="container-fluid">
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <div th:include="/module/footer::main-footer"></div>
+        <div th:include="module/footer::main-footer"></div>
     </div>
 
     <script th:src="@{source/jquery.min.js}"></script>

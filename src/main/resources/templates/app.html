@@ -23,7 +23,7 @@
     <link rel="stylesheet" th:href="@{css/custom.css}"/>
 </head>
 <body>
-    <div class="navbar-wrapper" th:include="/module/nav::nav">
+    <div class="navbar-wrapper" th:include="module/nav::nav">
     </div>
 
     <div class="container-fluid">
@@ -35,14 +35,14 @@
             </ul>
 
             <div class="tab-content">
-                <div th:include="/module/app-show::app-show" id="app-show" role="tabpanel" class="tab-pane active fade in"></div>
-                <div th:include="/module/app-analysis::app-analysis" id="app-analysis" role="tabpanel" class="tab-pane active fade"></div>
+                <div th:include="module/app-show::app-show" id="app-show" role="tabpanel" class="tab-pane active fade in"></div>
+                <div th:include="module/app-analysis::app-analysis" id="app-analysis" role="tabpanel" class="tab-pane active fade"></div>
             </div>
         </div>
     </div>
 
-    <div th:include="/module/modal::new-app-modal"></div>
-    <div th:include="/module/modal::new-sensor-modal"></div>
+    <div th:include="module/modal::new-app-modal"></div>
+    <div th:include="module/modal::new-sensor-modal"></div>
 
     <script th:src="@{source/jquery.min.js}"></script>
     <script th:src="@{source/bootstrap/bootstrap.min.js}"></script>
