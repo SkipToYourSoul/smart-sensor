@@ -75,53 +75,54 @@ public class MainController implements ErrorController {
         if (currentUser == null)
             response.sendRedirect("/login");
 
-        model.addAttribute("inApp", true);
-
-        // --- get app info according current user
-        List<AppInfo> apps = viewService.getAppInfoByCurrentUser(currentUser);
-        logger.info("FIND " + apps.size() + " APPS By " + currentUser);
-
+        // --- check the app belongs the user
         if (id != null && !viewService.isAppBelongCurrentUser(id, currentUser)){
             logger.warn("The user: " + currentUser + " has not the app " + id);
             response.sendRedirect("/app");
         }
 
-        if (apps.size() != 0){
-            long currentAppId = apps.get(0).getId();
-            int currentAppIndex = 1;
+        model.addAttribute("inApp", true);
 
-            if (id != null)
+        // --- get app info according current user
+        List<AppInfo> apps = viewService.getAppInfoByCurrentUser(currentUser);
+        logger.info("FIND " + apps.size() + " APPS By " + currentUser);
+        model.addAttribute("apps", apps);
+
+        if (id == null){
+            List<SensorInfo> sensors = viewService.getSensorInfoByCurrentUser(currentUser);
+            model.addAttribute("sensors", sensors);
+
+            logger.info("IN APP MANAGE PAGE!");
+        } else {
+            if (apps.size() > 0){
+                int currentAppIndex = -1;
                 for (int i=0; i < apps.size(); i++){
                     if (id == apps.get(i).getId()){
-                        currentAppId = id;
                         currentAppIndex = i+1;
                         break;
                     }
                 }
 
-            // --- get first app's sensor info
-            List<SensorInfo> sensors = viewService.getSensorInfoByAppId(currentAppId);
-            logger.info("FIND " + sensors.size() + " SENSORS By " + currentUser);
+                List<SensorInfo> sensors = viewService.getSensorInfoByAppId(id);
+                logger.info("FIND " + sensors.size() + " SENSORS BY APP " + id);
 
-            // --- get attribute
-            model.addAttribute("apps", apps);
-            model.addAttribute("sensors", sensors);
-            model.addAttribute("currentAppId", currentAppId);
-            model.addAttribute("currentAppIndex", currentAppIndex);
+                model.addAttribute("sensors", sensors);
+                model.addAttribute("currentAppIndex", currentAppIndex);
 
-            // --- init sensor data
-            Map<Long, Object> sensorData = new HashMap<Long, Object>();
-            for (SensorInfo sensor: sensors){
-                long sensorId = sensor.getId();
-                if (sensor.getType() == 1){
-                    sensorData.put(sensorId, sensorDataService.getSensorTimeSeriesDataBySensorId(sensorId));
-                } else if (sensor.getType() == 2){
-                    sensorData.put(sensorId, sensorDataService.getSensorCameraBySensorId(sensorId));
-                } else if (sensor.getType() == 3){
-
+                // --- init sensor data
+                Map<Long, Object> sensorData = new HashMap<Long, Object>();
+                for (SensorInfo sensor: sensors){
+                    long sensorId = sensor.getId();
+                    if (sensor.getType() == 1){
+                        sensorData.put(sensorId, sensorDataService.getSensorTimeSeriesDataBySensorId(sensorId));
+                    } else if (sensor.getType() == 2){
+                        sensorData.put(sensorId, sensorDataService.getSensorCameraBySensorId(sensorId));
+                    }
                 }
+                model.addAttribute("sensorData", sensorData);
             }
-            model.addAttribute("sensorData", sensorData);
+
+            logger.info("IN APP DATA PAGE!");
         }
 
         return "app";

@@ -4,7 +4,9 @@
  * Description:
  */
 
-var index_big_chart = echarts.init(document.getElementById('chart-line'));
+var index_big_chart = echarts.init(document.getElementById('chart-line'), "", opts={
+    height: 300
+});
 
 var xData = function() {
     var data = [];
@@ -151,8 +153,12 @@ var chart_line_option = function (title) {
 index_big_chart.setOption(chart_line_option(1));
 
 // --- pie chart
-var pie_chart1 = echarts.init(document.getElementById('chart-pie-1'), 'infographic');
-var pie_chart2 = echarts.init(document.getElementById('chart-pie-2'));
+var pie_chart1 = echarts.init(document.getElementById('chart-pie-1'), 'infographic', opts={
+    height: 300
+});
+var pie_chart2 = echarts.init(document.getElementById('chart-pie-2'), "", opts={
+    height: 300
+});
 var pie_chart_option = function(title, legend, data) {
     return {
         title : {

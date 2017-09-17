@@ -20,7 +20,8 @@
     <link rel="stylesheet" th:href="@{source/timeline/timeline.css}"/>
     <link rel="stylesheet" th:href="@{source/datepicker/bootstrap-datetimepicker.min.css}"/>
 
-    <link rel="stylesheet" th:href="@{css/custom.css}"/>
+    <link rel="stylesheet" th:href="@{css/v1/main.css}"/>
+    <link rel="stylesheet" th:href="@{css/v1/app.css}"/>
 </head>
 <body>
     <div class="navbar-wrapper" th:include="module/nav::nav">
@@ -28,21 +29,79 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div id="fakeLoader"></div>
-            <ul class="nav nav-tabs app-nav-tabs" role="tablist">
-                <li role="presentation" class="pull-right"><a href="#app-analysis" aria-controls="app-analysis" role="tab" data-toggle="tab">切换到分析模式</a></li>
-                <li role="presentation" class="active pull-right"><a href="#app-show" aria-controls="app-show" role="tab" data-toggle="tab">切换到浏览模式</a></li>
-            </ul>
+            <div class="col-sm-3 col-md-2 col-xs-3 sidebar">
+                <div class="profile-sidebar">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic" th:if="!${param.id}">
+                        <img src="/img/nav1.jpg" class="img-responsive" alt=""/>
+                    </div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-app-info">
+                        <div class="info-title" th:text="${param.id}?|app${apps[currentAppIndex-1].id}: ${apps[currentAppIndex-1].name}|:'欢迎来到应用管理页面'">
 
-            <div class="tab-content">
-                <div th:include="module/app-show::app-show" id="app-show" role="tabpanel" class="tab-pane active fade in"></div>
-                <div th:include="module/app-analysis::app-analysis" id="app-analysis" role="tabpanel" class="tab-pane active fade"></div>
+                        </div>
+                        <div class="info-description">
+                            <div th:if="!${param.id}">
+                                在这里可以看到你账户下的设备及应用的相关统计
+                            </div>
+                            <div th:if="${param.id}">
+                                <div th:text="|应用编号: ${apps[currentAppIndex-1].id}|"></div>
+                                <div th:text="|传感器数量: ${#lists.size(sensors)}|"></div>
+                                <div th:text="|创建时间: ${#dates.format(apps[currentAppIndex-1].createTime, 'yyyy-MM-dd HH:mm:ss')}|"></div>
+                                <div th:text="|应用描述: ${apps[currentAppIndex-1].description}|"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END SIDEBAR USER TITLE -->
+                    <!-- SIDEBAR BUTTONS -->
+                    <div class="profile-buttons" th:if="!${param.id}">
+                        <button type="button" class="btn btn-success btn-large">新建应用</button>
+                    </div>
+                    <div class="profile-buttons" th:if="${param.id}">
+                        <button type="button" class="btn btn-warning btn-sm">编辑应用</button>
+                        <button type="button" class="btn btn-danger btn-sm">删除应用</button>
+                    </div>
+                    <!-- END SIDEBAR BUTTONS -->
+
+                    <!-- SIDEBAR MENU -->
+                    <div class="profile-usermenu">
+                        <strong>应用管理</strong>
+                        <ul class="nav main-menu">
+                            <li th:class="${param.id}?'':'active'">
+                                <a th:href="@{/app}"><i class="glyphicon glyphicon-home"></i>应用管理页面</a>
+                            </li>
+                        </ul>
+                        <strong>应用列表</strong><span class="badge pull-right" th:text="${#lists.size(apps)}">0</span>
+                        <ul class="nav">
+                            <th:block th:each="app,index:${apps}">
+                                <li th:class="${currentAppIndex eq index.count}?'active':''">
+                                    <a th:text="${app.name}" th:href="@{/app(id=${app.id})}" th:class="|app-${index.count}|"></a></li>
+                            </th:block>
+                        </ul>
+                    </div>
+                    <!-- END MENU -->
+                </div>
+            </div>
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-xs-9 col-xs-offset-3 profile-content">
+                <div th:if="!${param.id}" id="app-management">
+                    <div th:include="module/app-management::manager-chart"></div>
+                </div>
+                <div th:if="${param.id}">
+                    <ul class="nav nav-tabs app-nav-tabs" role="tablist">
+                        <li role="presentation" class="pull-right"><a href="#app-analysis" aria-controls="app-analysis" role="tab" data-toggle="tab">切换到分析模式</a></li>
+                        <li role="presentation" class="active pull-right"><a href="#app-show" aria-controls="app-show" role="tab" data-toggle="tab">切换到浏览模式</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div th:include="module/app-show::app-show" id="app-show" role="tabpanel" class="tab-pane active fade in"></div>
+                        <div th:include="module/app-analysis::app-analysis" id="app-analysis" role="tabpanel" class="tab-pane active fade"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <div th:include="module/modal::new-app-modal"></div>
-    <div th:include="module/modal::new-sensor-modal"></div>
 
     <script th:src="@{source/jquery.min.js}"></script>
     <script th:src="@{source/bootstrap/bootstrap.min.js}"></script>
@@ -56,17 +115,6 @@
     </script>
 
     <script th:src="@{source/loading/fakeLoader.min.js}"></script>
-    <script>
-        if (apps.length > 0)
-            // --- loading
-            $("#fakeLoader").fakeLoader({
-                timeToHide: 5000,
-                spinner:"spinner4",
-                bgColor:"rgba(154, 154, 154, 0.7)"
-            });
-    </script>
-
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=mWvnGYQ74Cyd3vjIPSisiT0SRt49AioM"></script>
 
     <script th:src="@{source/messenger/messenger.min.js}"></script>
     <script th:src="@{source/bootstrap/bootstrap-select.min.js}"></script>
@@ -83,9 +131,6 @@
     <script th:src="@{source/datepicker/bootstrap-datetimepicker.min.js}"></script>
 
     <script th:src="@{js/common.js}"></script>
-    <script th:src="@{js/app-option.js}"></script>
-    <script th:src="@{js/app-controller.js}"></script>
-    <script th:src="@{js/app-entry.js}"></script>
-    <script th:src="@{js/app-recorder.js}"></script>
+    <script th:src="@{js/app/manage-chart.js}"></script>
 </body>
 </html>

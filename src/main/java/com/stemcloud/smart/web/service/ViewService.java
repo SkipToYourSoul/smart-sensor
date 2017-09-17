@@ -41,6 +41,10 @@ public class ViewService {
         return appInfoRepository.findByCreatorOrderByCreateTime(user);
     }
 
+    public List<SensorInfo> getSensorInfoByCurrentUser(String user){
+        return sensorInfoRepository.findByCreator(user);
+    }
+
     public List<SensorInfo> getSensorInfoByAppId(long appId){
         return sensorInfoRepository.findByAppIdOrderByType(appId);
     }

@@ -37,3 +37,4 @@
 * spring security获取登陆用户信息：http://blog.csdn.net/tomcat_2014/article/details/50725723
 * spring-boot 自定义403页面：http://www.cnblogs.com/zgghb/p/5823132.html
 * thymeleaf+spring-security：http://www.thymeleaf.org/doc/articles/springsecurity.html
+* thymeleaf使用内置对象操作：http://www.zslin.com/web/article/detail/33

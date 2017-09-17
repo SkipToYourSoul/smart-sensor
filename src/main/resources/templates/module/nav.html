@@ -15,18 +15,21 @@
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
-            <!-- nav bar -->
-            <ul class="nav navbar-nav">
-                <li th:class="${inIndex}?'active':''"><a th:href="@{/}">首页</a></li>
-                <li th:class="${inApp}?'active':''"><a th:href="@{/app}">应用管理</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">课程管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="@{/class}">观察植物</a></li>
-                        <li><a th:href="@{/class}">水火箭</a></li>
-                    </ul>
-                </li>
-            </ul>
+            <th:block th:if="!${inIndex}">
+                <!-- nav bar -->
+                <ul class="nav navbar-nav">
+                    <li><a th:href="@{/}">首页</a></li>
+                    <li th:class="${inApp}?'active':''"><a th:href="@{/app}">应用管理</a></li>
+                    <li th:class="${inDevice}?'active':''"><a th:href="@{/device}">设备管理</a></li>
+                    <!--<li class="dropdown">
+                        <a class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">课程管理<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/class}">观察植物</a></li>
+                            <li><a th:href="@{/class}">水火箭</a></li>
+                        </ul>
+                    </li>-->
+                </ul>
+            </th:block>
 
             <!-- login user control -->
             <div sec:authorize="isAuthenticated()">
