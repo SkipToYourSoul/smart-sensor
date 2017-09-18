@@ -13,14 +13,12 @@ import java.util.List;
  * Author: liye on 2017/7/25
  * Description:
  */
-public interface SensorInfoRepository extends CrudRepository<SensorInfo, Integer> {
-    List<SensorInfo> findByIsShare(int isShare);
-
+public interface SensorInfoRepository extends CrudRepository<SensorInfo, Long> {
     List<SensorInfo> findByCreator(String creator);
 
-    List<SensorInfo> findByCreatorOrIsShare(String creator, int isShare);
-
     List<SensorInfo> findByAppIdOrderByType(long appId);
+
+    List<SensorInfo> findByExpIdOrderByType(long expId);
 
     @Query(value = "UPDATE base_sensor_info SET sensor_name = :name, " +
             "sensor_code = :code, sensor_type = :sType, longitude = :longitude, latitude = :latitude, sensor_city = :city, " +

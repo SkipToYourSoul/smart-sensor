@@ -25,5 +25,5 @@ public interface SensorDataRepository extends CrudRepository<SensorData, Integer
             "ORDER BY sensor_id, b.id", nativeQuery = true)
     public List<SensorData> findSensorDataByAppId(@Param("appId") int appId);
 
-    public List<SensorData> findBySensorIdOrderByDataTime(long sensorId);
+    public List<SensorData> findBySensorIdAndExpIdOrderByDataTime(long sensorId, long expId);
 }

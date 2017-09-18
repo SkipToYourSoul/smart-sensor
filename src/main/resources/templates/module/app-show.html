@@ -18,43 +18,18 @@
         </div>-->
 
         <!-- 应用内容 -->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-xs-9 col-xs-offset-3 app-main-content">
             <div class="row">
                 <th:block th:if="${not #lists.isEmpty(apps)}">
                     <div class="col-sm-12">
-                        <!-- 应用基本信息 -->
                         <div class="panel panel-default">
+                            <div class="panel-heading">传感器数据 - 实验一</div>
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-sm-2 col-xs-6">
-                                        <div class="row text-center overview-title">应用编号</div>
-                                        <div class="row text-center overview-content" th:text="${apps[currentAppIndex-1].id}"></div>
+                                    <div class="col-xs-9 col-sm-9">
+                                        传感器图
                                     </div>
-                                    <div class="col-sm-2 col-xs-6">
-                                        <div class="row text-center overview-title">传感器数量</div>
-                                        <div class="row text-center overview-content" th:text="${#lists.size(sensors)}"></div>
-                                    </div>
-                                    <div class="col-sm-2 col-xs-6">
-                                        <div class="row text-center overview-title">拥有人</div>
-                                        <div class="row text-center overview-content" th:text="${apps[currentAppIndex-1].creator}"></div>
-                                    </div>
-                                    <div class="col-sm-6 col-xs-6">
-                                        <div class="row text-center overview-title">创建时间</div>
-                                        <div class="row text-center overview-content" th:text="${#dates.format(apps[currentAppIndex-1].createTime, 'yyyy-MM-dd HH:mm:ss')}"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel-footer overview-panel-footer">
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <p><strong>应用描述：</strong><span th:text="${apps[currentAppIndex-1].description}"></span></p>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="btn-group pull-right">
-                                            <button class="btn btn-info" data-toggle="modal" data-target="#new-app-modal" todo="edit"><i class="fa fa-id-badge"></i>&nbsp;编辑应用</button>
-                                            <button class="btn btn-danger" onclick="deleteApp(this)"><i class="fa fa-trash"></i>&nbsp;删除应用</button>
-                                        </div>
+                                    <div class="col-xs-3 col-sm-3">
+                                        统计数据
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +37,7 @@
                     </div>
 
                     <!-- 传感器信息 -->
-                    <div class="col-sm-12">
+                    <!--<div class="col-sm-12">
                         <div id="sensor-group">
                             <th:block th:if="${#lists.isEmpty(sensors)}">
                                 <hr/>
@@ -74,10 +49,10 @@
                                         <i class="fa fa-hashtag"></i>&nbsp;<strong th:text="|${sensor.id}:${sensor.name}|"></strong>
                                         <span class="pull-right label label-danger" th:id="|sensor-state-${sensor.id}|">停止监控</span>
                                     </div>
-                                    <!-- load different content according to sensor.type -->
+                                    &lt;!&ndash; load different content according to sensor.type &ndash;&gt;
                                     <div class="panel-body">
                                         <div class="row" th:switch="${sensor.type}">
-                                            <!-- type = 1 value -->
+                                            &lt;!&ndash; type = 1 value &ndash;&gt;
                                             <div th:case="1">
                                                 <div class="tab-sensor-content">
                                                     <ul class="nav nav-tabs" role="tablist">
@@ -111,7 +86,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- type = 2 camera -->
+                                            &lt;!&ndash; type = 2 camera &ndash;&gt;
                                             <div th:case="2">
                                                 <div class="tab-sensor-content">
                                                     <ul class="nav nav-tabs" role="tablist">
@@ -172,17 +147,17 @@
                                 </div>
                             </th:block>
                         </div>
-                    </div>
+                    </div>-->
                 </th:block>
 
                 <!-- 应用按钮组 -->
-                <div class="col-sm-12">
+                <!--<div class="col-sm-12">
                     <div class="panel panel-default">
-                        <!--<div class="panel-heading">
+                        &lt;!&ndash;<div class="panel-heading">
                             <div class="panel-title">
                                 <i class="fa fa-plug"></i>&nbsp;<strong>应用操作按钮</strong>
                             </div>
-                        </div>-->
+                        </div>&ndash;&gt;
                         <div class="panel-body">
                             <div class="btn-group">
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#new-sensor-modal"><i class="fa fa-info-circle"></i>&nbsp;新建传感器</button>
@@ -190,7 +165,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <th:block th:if="${#lists.isEmpty(apps)}">
                     <h1 style="text-align: center">你的账户下暂无相关应用，可点击上方的“新建应用”按钮新建你的第一个应用</h1>
@@ -198,7 +173,6 @@
             </div>
 
             <div th:include="module/footer::sub-footer"></div>
-        </div>
     </div>
 </body>
 

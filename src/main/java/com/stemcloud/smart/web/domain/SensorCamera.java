@@ -20,6 +20,12 @@ public class SensorCamera {
     @Column(name = "sensor_id", nullable = false)
     private long sensorId;
 
+    @Column(name = "exp_id", nullable = false)
+    private long expId;
+
+    @Column(name = "app_id", nullable = false)
+    private long appId;
+
     @Column(name = "data_entry", nullable = false)
     private String entrance;
 
@@ -57,6 +63,22 @@ public class SensorCamera {
 
     public void setSensorId(long sensorId) {
         this.sensorId = sensorId;
+    }
+
+    public long getExpId() {
+        return expId;
+    }
+
+    public void setExpId(long expId) {
+        this.expId = expId;
+    }
+
+    public long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(long appId) {
+        this.appId = appId;
     }
 
     public String getEntrance() {

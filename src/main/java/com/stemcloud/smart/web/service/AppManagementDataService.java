@@ -34,24 +34,12 @@ public class AppManagementDataService {
         return appInfoRepository.findByIsShare(1);
     }
 
-    public List<AppInfo> getAppInfoByCreator(String creator){
-        return appInfoRepository.findByCreatorOrderByCreateTime(creator);
-    }
-
     public List<AppInfo> getAppInfoByCreatorAndShared(String creator){
         return appInfoRepository.findByCreatorOrIsShare(creator, 1);
     }
 
-    public List<SensorInfo> getSharedSensorInfo(){
-        return sensorInfoRepository.findByIsShare(1);
-    }
-
     public List<SensorInfo> getSensorInfoByCreator(String creator){
         return sensorInfoRepository.findByCreator(creator);
-    }
-
-    public List<SensorInfo> getSensorInfoByCreatorAndShared(String creator){
-        return sensorInfoRepository.findByCreatorOrIsShare(creator, 1);
     }
 
     public long saveNewApp(Map<String, String> queryParams, String user){

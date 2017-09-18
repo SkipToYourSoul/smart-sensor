@@ -13,8 +13,8 @@ import java.util.List;
  * Author: liye on 2017/7/25
  * Description:
  */
-public interface AppInfoRepository extends CrudRepository<AppInfo, Integer> {
-    List<AppInfo> findByCreatorOrderByCreateTime(String creator);
+public interface AppInfoRepository extends CrudRepository<AppInfo, Long> {
+    List<AppInfo> findByCreatorAndIsDeletedOrderByCreateTime(String creator, int isDeleted);
 
     List<AppInfo> findByIsShare(int isShare);
 

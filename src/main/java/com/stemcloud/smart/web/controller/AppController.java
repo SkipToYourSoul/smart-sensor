@@ -27,16 +27,16 @@ public class AppController {
 
     private final AppManagementDataService appManagementDataService;
     private final ViewService viewService;
-    private final SensorDataService sensorDataService;
+    /*private final SensorDataService sensorDataService;*/
 
     @Autowired
-    public AppController(AppManagementDataService appManagementDataService, ViewService viewService, SensorDataService sensorDataService) {
+    public AppController(AppManagementDataService appManagementDataService, ViewService viewService/*, SensorDataService sensorDataService*/) {
         this.appManagementDataService = appManagementDataService;
         this.viewService = viewService;
-        this.sensorDataService = sensorDataService;
+        /*this.sensorDataService = sensorDataService;*/
     }
 
-    @GetMapping("/sensor/data")
+    /*@GetMapping("/sensor/data")
     public List<SensorData> getSensorData(@RequestParam int sensorId){
         return sensorDataService.getSensorDataBySensorId(sensorId);
     }
@@ -46,7 +46,7 @@ public class AppController {
         logger.info("==========" + sensorId);
         List<Video> videos = sensorDataService.getSensorCameraBySensorId(sensorId);
         return videos;
-    }
+    }*/
 
     @PostMapping("/new/app")
     public long newApp(@RequestParam Map<String, String> queryParams, HttpServletRequest request){

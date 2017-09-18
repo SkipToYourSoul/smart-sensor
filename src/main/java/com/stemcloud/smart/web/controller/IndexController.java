@@ -19,9 +19,4 @@ import java.util.List;
 public class IndexController {
     @Autowired
     AppManagementDataService appManagementDataService;
-
-    @GetMapping(value = "/index/map/sensor")
-    public List<SensorInfo> getSensorInfo(){
-        return appManagementDataService.getSharedSensorInfo();
-    }
 }

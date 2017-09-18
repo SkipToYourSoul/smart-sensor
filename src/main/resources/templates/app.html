@@ -38,8 +38,7 @@
                     <!-- END SIDEBAR USERPIC -->
                     <!-- SIDEBAR USER TITLE -->
                     <div class="profile-app-info">
-                        <div class="info-title" th:text="${param.id}?|app${apps[currentAppIndex-1].id}: ${apps[currentAppIndex-1].name}|:'欢迎来到应用管理页面'">
-
+                        <div class="info-title" th:text="${param.id}?${apps[currentAppIndex-1].name}:'欢迎来到应用管理页面'">
                         </div>
                         <div class="info-description">
                             <div th:if="!${param.id}">
@@ -56,11 +55,11 @@
                     <!-- END SIDEBAR USER TITLE -->
                     <!-- SIDEBAR BUTTONS -->
                     <div class="profile-buttons" th:if="!${param.id}">
-                        <button type="button" class="btn btn-success btn-large">新建应用</button>
+                        <button type="button" class="btn btn-success btn-large" data-toggle="modal" data-target="#new-app-modal" todo="new">新建应用</button>
                     </div>
                     <div class="profile-buttons" th:if="${param.id}">
-                        <button type="button" class="btn btn-warning btn-sm">编辑应用</button>
-                        <button type="button" class="btn btn-danger btn-sm">删除应用</button>
+                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#new-app-modal" todo="edit"><i class="fa fa-id-badge"></i>&nbsp;编辑应用</button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteApp(this)"><i class="fa fa-trash"></i>&nbsp;删除应用</button>
                     </div>
                     <!-- END SIDEBAR BUTTONS -->
 
@@ -89,19 +88,21 @@
                     <div th:include="module/app-management::manager-chart"></div>
                 </div>
                 <div th:if="${param.id}">
-                    <ul class="nav nav-tabs app-nav-tabs" role="tablist">
-                        <li role="presentation" class="pull-right"><a href="#app-analysis" aria-controls="app-analysis" role="tab" data-toggle="tab">切换到分析模式</a></li>
-                        <li role="presentation" class="active pull-right"><a href="#app-show" aria-controls="app-show" role="tab" data-toggle="tab">切换到浏览模式</a></li>
+                    <ul class="nav nav-pills" role="tablist">
+                        <li role="presentation" class="active"><a href="#app-show" aria-controls="app-show" role="tab" data-toggle="tab">切换到浏览模式</a></li>
+                        <li role="presentation"><a href="#app-analysis" aria-controls="app-analysis" role="tab" data-toggle="tab">切换到分析模式</a></li>
                     </ul>
 
                     <div class="tab-content">
-                        <div th:include="module/app-show::app-show" id="app-show" role="tabpanel" class="tab-pane active fade in"></div>
+                        <div th:include="module/app-show::app-show" id="app-show" role="tabpanel" class="tab-pane active fade in app-tab-pane-content"></div>
                         <div th:include="module/app-analysis::app-analysis" id="app-analysis" role="tabpanel" class="tab-pane active fade"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div th:include="module/modal::new-app-modal"></div>
 
     <script th:src="@{source/jquery.min.js}"></script>
     <script th:src="@{source/bootstrap/bootstrap.min.js}"></script>

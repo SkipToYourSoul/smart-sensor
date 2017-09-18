@@ -3,9 +3,7 @@ package com.stemcloud.smart.web.service;
 import com.stemcloud.smart.web.dao.SensorCameraPhotosRepository;
 import com.stemcloud.smart.web.dao.SensorCameraRepository;
 import com.stemcloud.smart.web.dao.SensorDataRepository;
-import com.stemcloud.smart.web.domain.SensorCamera;
-import com.stemcloud.smart.web.domain.SensorCameraPhotos;
-import com.stemcloud.smart.web.domain.SensorData;
+import com.stemcloud.smart.web.domain.*;
 import com.stemcloud.smart.web.view.Chart;
 import com.stemcloud.smart.web.view.Video;
 import com.stemcloud.smart.web.view.chart.TimeSeries;
@@ -43,17 +41,13 @@ public class SensorDataService {
         return dataRepository.findSensorDataByAppId(appId);
     }
 
-    public List<SensorData> getSensorDataBySensorId(long sensorId){
-        return dataRepository.findBySensorIdOrderByDataTime(sensorId);
-    }
-
     /**
      * time series data for echarts
      * @param sensorId
      * @return list of time series data for chart
      */
-    public List<Chart> getSensorTimeSeriesDataBySensorId(long sensorId) {
-        List<SensorData> sensorData = dataRepository.findBySensorIdOrderByDataTime(sensorId);
+    public List<Chart> getSensorTimeSeriesDataBySensorId(long sensorId, long expId) {
+        List<SensorData> sensorData = dataRepository.findBySensorIdAndExpIdOrderByDataTime(sensorId, expId);
         Map<String, List<TimeSeries>> map = new HashMap<String, List<TimeSeries>>();
 
         for (SensorData data : sensorData) {
@@ -90,9 +84,9 @@ public class SensorDataService {
      * @param sensorId sensor id
      * @return List<Video>
      */
-    public List<Video> getSensorCameraBySensorId(long sensorId){
+    public List<Video> getSensorCameraBySensorId(long sensorId, long expId){
         List<Video> videos = new ArrayList<Video>();
-        List<SensorCamera> sensorCameras = cameraRepository.findBySensorId(sensorId);
+        List<SensorCamera> sensorCameras = cameraRepository.findBySensorIdAndExpId(sensorId, expId);
 
         int count = 0;
         for (SensorCamera camera : sensorCameras){

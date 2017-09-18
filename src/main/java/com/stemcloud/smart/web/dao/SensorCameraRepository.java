@@ -11,5 +11,5 @@ import java.util.List;
  * Description:
  */
 public interface SensorCameraRepository extends CrudRepository<SensorCamera, Long> {
-    List<SensorCamera> findBySensorId(long sensorId);
+    List<SensorCamera> findBySensorIdAndExpId(long sensorId, long expId);
 }

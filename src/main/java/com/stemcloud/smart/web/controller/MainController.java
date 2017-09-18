@@ -1,6 +1,7 @@
 package com.stemcloud.smart.web.controller;
 
 import com.stemcloud.smart.web.domain.AppInfo;
+import com.stemcloud.smart.web.domain.Experiment;
 import com.stemcloud.smart.web.domain.SensorInfo;
 import com.stemcloud.smart.web.service.AppManagementDataService;
 import com.stemcloud.smart.web.service.SensorDataService;
@@ -45,22 +46,13 @@ public class MainController implements ErrorController {
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request) {
         List<AppInfo> apps = new ArrayList<AppInfo>();
-        List<SensorInfo> sensors = new ArrayList<SensorInfo>();
-
         String loginUser = viewService.getCurrentLoginUser(request);
+
         if (loginUser != null) {
             logger.info("Current login user: " + loginUser);
-
-            apps.addAll(appManagementDataService.getAppInfoByCreatorAndShared(loginUser));
-            sensors.addAll(appManagementDataService.getSensorInfoByCreator(loginUser));
-        } else {
-            logger.info("No login user!");
-
-            apps.addAll(appManagementDataService.getSharedAppInfo());
-            sensors.addAll(appManagementDataService.getSharedSensorInfo());
         }
 
-        model.addAttribute("sensors", sensors);
+        apps.addAll(appManagementDataService.getSharedAppInfo());
         model.addAttribute("apps", apps);
         model.addAttribute("inIndex", true);
 
@@ -84,15 +76,16 @@ public class MainController implements ErrorController {
         model.addAttribute("inApp", true);
 
         // --- get app info according current user
-        List<AppInfo> apps = viewService.getAppInfoByCurrentUser(currentUser);
-        logger.info("FIND " + apps.size() + " APPS By " + currentUser);
+        List<AppInfo> apps = viewService.getOnlineAppInfoByCurrentUser(currentUser);
+        logger.info("APP PAGE: FIND " + apps.size() + " APPS By " + currentUser);
         model.addAttribute("apps", apps);
 
         if (id == null){
             List<SensorInfo> sensors = viewService.getSensorInfoByCurrentUser(currentUser);
+            logger.info("APP PAGE: FIND " + sensors.size() + " SENSORS BY USER " + currentUser);
             model.addAttribute("sensors", sensors);
 
-            logger.info("IN APP MANAGE PAGE!");
+            logger.info("APP PAGE: IN APP MANAGE PAGE!");
         } else {
             if (apps.size() > 0){
                 int currentAppIndex = -1;
@@ -103,26 +96,37 @@ public class MainController implements ErrorController {
                     }
                 }
 
+                List<Experiment> experiments = viewService.getExperimentByAppId(id);
+                logger.info("APP PAGE: FIND " + experiments.size() + " EXPERIMENTS By " + id);
+
                 List<SensorInfo> sensors = viewService.getSensorInfoByAppId(id);
-                logger.info("FIND " + sensors.size() + " SENSORS BY APP " + id);
+                logger.info("APP PAGE: FIND " + sensors.size() + " SENSORS BY APP " + id);
+
+                // --- init sensor data
+                Map<Long, Map<Long, Object>> result = new HashMap<Long, Map<Long, Object>>();
+                for (Experiment experiment : experiments){
+                    long expId = experiment.getId();
+                    List<SensorInfo> expSensors = viewService.getSensorInfoByExperimentId(expId);
+
+                    Map<Long, Object> sensorData = new HashMap<Long, Object>();
+                    for (SensorInfo sensor: expSensors){
+                        long sensorId = sensor.getId();
+                        if (sensor.getType() == 1){
+                            sensorData.put(sensorId, sensorDataService.getSensorTimeSeriesDataBySensorId(sensorId, expId));
+                        } else if (sensor.getType() == 2){
+                            sensorData.put(sensorId, sensorDataService.getSensorCameraBySensorId(sensorId, expId));
+                        }
+                    }
+                    result.put(expId, sensorData);
+                }
 
                 model.addAttribute("sensors", sensors);
                 model.addAttribute("currentAppIndex", currentAppIndex);
+                model.addAttribute("sensorData", result);
+            } else
+                logger.info("APP PAGE: CURRENT USER HAS NO APPS!");
 
-                // --- init sensor data
-                Map<Long, Object> sensorData = new HashMap<Long, Object>();
-                for (SensorInfo sensor: sensors){
-                    long sensorId = sensor.getId();
-                    if (sensor.getType() == 1){
-                        sensorData.put(sensorId, sensorDataService.getSensorTimeSeriesDataBySensorId(sensorId));
-                    } else if (sensor.getType() == 2){
-                        sensorData.put(sensorId, sensorDataService.getSensorCameraBySensorId(sensorId));
-                    }
-                }
-                model.addAttribute("sensorData", sensorData);
-            }
-
-            logger.info("IN APP DATA PAGE!");
+            logger.info("APP PAGE: IN APP DATA PAGE!");
         }
 
         return "app";

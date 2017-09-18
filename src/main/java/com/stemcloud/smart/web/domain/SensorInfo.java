@@ -45,6 +45,9 @@ public class SensorInfo {
     @Column(name = "sensor_app_id")
     private long appId;
 
+    @Column(name = "sensor_exp_id", nullable = false)
+    private long expId;
+
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     @Column(updatable = false)
@@ -55,9 +58,6 @@ public class SensorInfo {
 
     @Column(name = "is_monitor")
     private int isMonitor = 0;
-
-    @Column(name = "is_shared")
-    private int isShare = 0;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
@@ -145,6 +145,14 @@ public class SensorInfo {
         this.appId = appId;
     }
 
+    public long getExpId() {
+        return expId;
+    }
+
+    public void setExpId(long expId) {
+        this.expId = expId;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -163,14 +171,6 @@ public class SensorInfo {
 
     public void setIsMonitor(int isMonitor) {
         this.isMonitor = isMonitor;
-    }
-
-    public int getIsShare() {
-        return isShare;
-    }
-
-    public void setIsShare(int isShare) {
-        this.isShare = isShare;
     }
 
     public Date getModifyTime() {
