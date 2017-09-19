@@ -18,15 +18,25 @@
         </div>-->
 
         <!-- 应用内容 -->
-            <div class="row">
-                <th:block th:if="${not #lists.isEmpty(apps)}">
-                    <div class="col-sm-12">
+        <div class="row">
+            <th:block th:if="${not #lists.isEmpty(apps)}">
+                <div class="col-sm-12">
+                    <th:block th:each="experimentData,index:${sensorData}">
                         <div class="panel panel-default">
-                            <div class="panel-heading">传感器数据 - 实验一</div>
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <strong th:text="|实验${experimentData.key}|"></strong>
+                                </div>
+                            </div>
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-xs-9 col-sm-9">
-                                        传感器图
+                                        <div th:id="|experiment-chart-${experimentData.key}|">
+                                            传感器数据加载中
+                                        </div>
+                                        <div th:id="|experiment-video-${experimentData.key}|">
+                                            视频数据加载中
+                                        </div>
                                     </div>
                                     <div class="col-xs-3 col-sm-3">
                                         统计数据
@@ -34,145 +44,146 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </th:block>
+                </div>
 
-                    <!-- 传感器信息 -->
-                    <!--<div class="col-sm-12">
-                        <div id="sensor-group">
-                            <th:block th:if="${#lists.isEmpty(sensors)}">
-                                <hr/>
-                                <h1 class="text-center">该应用暂无传感器，可新建一个</h1>
-                            </th:block>
-                            <th:block th:each="sensor,index:${sensors}">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <i class="fa fa-hashtag"></i>&nbsp;<strong th:text="|${sensor.id}:${sensor.name}|"></strong>
-                                        <span class="pull-right label label-danger" th:id="|sensor-state-${sensor.id}|">停止监控</span>
-                                    </div>
-                                    &lt;!&ndash; load different content according to sensor.type &ndash;&gt;
-                                    <div class="panel-body">
-                                        <div class="row" th:switch="${sensor.type}">
-                                            &lt;!&ndash; type = 1 value &ndash;&gt;
-                                            <div th:case="1">
-                                                <div class="tab-sensor-content">
-                                                    <ul class="nav nav-tabs" role="tablist">
-                                                        <li role="presentation" class="active"><a th:href="@{|#sensor-content-${sensor.id}|}" role="tab" data-toggle="tab">传感器数据</a></li>
-                                                        <li role="presentation"><a th:href="@{|#sensor-info-${sensor.id}|}" role="tab" data-toggle="tab">传感器信息</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="tab-content">
-                                                    <div role="tabpanel" class="tab-pane fade in active" th:id="|sensor-content-${sensor.id}|">
-                                                        <div class="col-xs-12 col-sm-9">
-                                                            <div class="value-sensor-content" th:id="|sensor-chart-${sensor.id}|"></div>
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-3">
-                                                            <div class="value-sensor-data" th:id="|sensor-chart-info-${sensor.id}|">
-                                                                <div class="value-sensor-data-title">数据面板</div>
-                                                                <div class="value-sensor-data-content"><i class="fa fa-info-circle"></i>&nbsp;最新数据:&nbsp;<span>xxx</span> </div>
-                                                                <div class="value-sensor-data-content"><i class="fa fa-info-circle"></i>&nbsp;数据更新时间:&nbsp;<span>2017-08-22 19:00:00</span> </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
-                                                        <div class="tab-sensor-info">
-                                                            <h3><strong>传感器信息</strong></h3>
-                                                            <hr/>
-                                                            <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
-                                                            <p><strong>传感器编号：</strong><span th:text="${sensor.code}"></span></p>
-                                                            <p><strong>传感器位置：</strong><span th:text="|${sensor.city} - (${sensor.longitude}, ${sensor.latitude})|"></span></p>
-                                                            <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                <!-- 传感器信息 -->
+                <!--<div class="col-sm-12">
+                    <div id="sensor-group">
+                        <th:block th:if="${#lists.isEmpty(sensors)}">
+                            <hr/>
+                            <h1 class="text-center">该应用暂无传感器，可新建一个</h1>
+                        </th:block>
+                        <th:block th:each="sensor,index:${sensors}">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <i class="fa fa-hashtag"></i>&nbsp;<strong th:text="|${sensor.id}:${sensor.name}|"></strong>
+                                    <span class="pull-right label label-danger" th:id="|sensor-state-${sensor.id}|">停止监控</span>
+                                </div>
+                                &lt;!&ndash; load different content according to sensor.type &ndash;&gt;
+                                <div class="panel-body">
+                                    <div class="row" th:switch="${sensor.type}">
+                                        &lt;!&ndash; type = 1 value &ndash;&gt;
+                                        <div th:case="1">
+                                            <div class="tab-sensor-content">
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                    <li role="presentation" class="active"><a th:href="@{|#sensor-content-${sensor.id}|}" role="tab" data-toggle="tab">传感器数据</a></li>
+                                                    <li role="presentation"><a th:href="@{|#sensor-info-${sensor.id}|}" role="tab" data-toggle="tab">传感器信息</a></li>
+                                                </ul>
                                             </div>
-
-                                            &lt;!&ndash; type = 2 camera &ndash;&gt;
-                                            <div th:case="2">
-                                                <div class="tab-sensor-content">
-                                                    <ul class="nav nav-tabs" role="tablist">
-                                                        <li role="presentation" class="active"><a th:href="@{|#sensor-content-${sensor.id}|}" role="tab" data-toggle="tab">传感器数据</a></li>
-                                                        <li role="presentation"><a th:href="@{|#sensor-info-${sensor.id}|}" role="tab" data-toggle="tab">传感器信息</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="tab-content">
-                                                    <div role="tabpanel" class="tab-pane fade in active" th:id="|sensor-content-${sensor.id}|">
-                                                        <div class="col-xs-12 col-sm-12 camera-sensor-tool">
-                                                            <label>选取视频片段：</label>
-                                                            <select class="selectpicker" th:id="|sensor-video-select-${sensor.id}|">
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-6">
-                                                            <div class="camera-sensor-tab">
-                                                                <video th:id="|sensor-camera-${sensor.id}|" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto"
-                                                                       data-setup="{}">
-                                                                    <p class="vjs-no-js">播放视频需要启用 JavaScript, 推荐使用<a href="http://videojs.com/html5-video-support/" target="_blank">支持HTML5</a>的浏览器访问。</p>
-                                                                </video>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xs-12 col-sm-6">
-                                                            <div class="photo-sensor-tab">
-                                                                <div th:id="|sensor-photo-${sensor.id}|">
-                                                                    <h3>暂无时间轴数据</h3>
-                                                                </div>
-                                                            </div>
+                                            <div class="tab-content">
+                                                <div role="tabpanel" class="tab-pane fade in active" th:id="|sensor-content-${sensor.id}|">
+                                                    <div class="col-xs-12 col-sm-9">
+                                                        <div class="value-sensor-content" th:id="|sensor-chart-${sensor.id}|"></div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-3">
+                                                        <div class="value-sensor-data" th:id="|sensor-chart-info-${sensor.id}|">
+                                                            <div class="value-sensor-data-title">数据面板</div>
+                                                            <div class="value-sensor-data-content"><i class="fa fa-info-circle"></i>&nbsp;最新数据:&nbsp;<span>xxx</span> </div>
+                                                            <div class="value-sensor-data-content"><i class="fa fa-info-circle"></i>&nbsp;数据更新时间:&nbsp;<span>2017-08-22 19:00:00</span> </div>
                                                         </div>
                                                     </div>
-
-                                                    <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
-                                                        <div class="tab-sensor-info">
-                                                            <h3><strong>传感器信息</strong></h3>
-                                                            <hr/>
-                                                            <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
-                                                            <p><strong>传感器编号：</strong><span th:text="${sensor.code}"></span></p>
-                                                            <p><strong>传感器位置：</strong><span th:text="|${sensor.city} - (${sensor.longitude}, ${sensor.latitude})|"></span></p>
-                                                            <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
-                                                        </div>
+                                                </div>
+                                                <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
+                                                    <div class="tab-sensor-info">
+                                                        <h3><strong>传感器信息</strong></h3>
+                                                        <hr/>
+                                                        <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
+                                                        <p><strong>传感器编号：</strong><span th:text="${sensor.code}"></span></p>
+                                                        <p><strong>传感器位置：</strong><span th:text="|${sensor.city} - (${sensor.longitude}, ${sensor.latitude})|"></span></p>
+                                                        <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="panel-footer overview-panel-footer">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="btn-group pull-right">
-                                                    <button class="btn btn-warning" data-toggle="modal" data-target="#new-sensor-modal" th:data="${index.count}-1">编辑传感器</button>
-                                                    <button class="btn btn-danger" th:data="${index.count}-1" onclick="deleteSensor(this)">删除传感器</button>
-                                                    <button class="btn btn-success" th:data="${index.count}-1" onclick="monitorSensorChart(this)">开始监听</button>
+                                        &lt;!&ndash; type = 2 camera &ndash;&gt;
+                                        <div th:case="2">
+                                            <div class="tab-sensor-content">
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                    <li role="presentation" class="active"><a th:href="@{|#sensor-content-${sensor.id}|}" role="tab" data-toggle="tab">传感器数据</a></li>
+                                                    <li role="presentation"><a th:href="@{|#sensor-info-${sensor.id}|}" role="tab" data-toggle="tab">传感器信息</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content">
+                                                <div role="tabpanel" class="tab-pane fade in active" th:id="|sensor-content-${sensor.id}|">
+                                                    <div class="col-xs-12 col-sm-12 camera-sensor-tool">
+                                                        <label>选取视频片段：</label>
+                                                        <select class="selectpicker" th:id="|sensor-video-select-${sensor.id}|">
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="camera-sensor-tab">
+                                                            <video th:id="|sensor-camera-${sensor.id}|" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto"
+                                                                   data-setup="{}">
+                                                                <p class="vjs-no-js">播放视频需要启用 JavaScript, 推荐使用<a href="http://videojs.com/html5-video-support/" target="_blank">支持HTML5</a>的浏览器访问。</p>
+                                                            </video>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6">
+                                                        <div class="photo-sensor-tab">
+                                                            <div th:id="|sensor-photo-${sensor.id}|">
+                                                                <h3>暂无时间轴数据</h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div role="tabpanel" class="tab-pane fade" th:id="|sensor-info-${sensor.id}|">
+                                                    <div class="tab-sensor-info">
+                                                        <h3><strong>传感器信息</strong></h3>
+                                                        <hr/>
+                                                        <p><strong>创建者：</strong><span th:text="${sensor.creator}"></span></p>
+                                                        <p><strong>传感器编号：</strong><span th:text="${sensor.code}"></span></p>
+                                                        <p><strong>传感器位置：</strong><span th:text="|${sensor.city} - (${sensor.longitude}, ${sensor.latitude})|"></span></p>
+                                                        <p><strong>传感器描述：</strong><span th:text="${sensor.description}"></span></p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </th:block>
-                        </div>
-                    </div>-->
-                </th:block>
 
-                <!-- 应用按钮组 -->
-                <!--<div class="col-sm-12">
-                    <div class="panel panel-default">
-                        &lt;!&ndash;<div class="panel-heading">
-                            <div class="panel-title">
-                                <i class="fa fa-plug"></i>&nbsp;<strong>应用操作按钮</strong>
+                                <div class="panel-footer overview-panel-footer">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="btn-group pull-right">
+                                                <button class="btn btn-warning" data-toggle="modal" data-target="#new-sensor-modal" th:data="${index.count}-1">编辑传感器</button>
+                                                <button class="btn btn-danger" th:data="${index.count}-1" onclick="deleteSensor(this)">删除传感器</button>
+                                                <button class="btn btn-success" th:data="${index.count}-1" onclick="monitorSensorChart(this)">开始监听</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>&ndash;&gt;
-                        <div class="panel-body">
-                            <div class="btn-group">
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#new-sensor-modal"><i class="fa fa-info-circle"></i>&nbsp;新建传感器</button>
-                                <button class="btn btn-default">一些其他功能</button>
-                            </div>
-                        </div>
+                        </th:block>
                     </div>
                 </div>-->
+            </th:block>
 
-                <th:block th:if="${#lists.isEmpty(apps)}">
-                    <h1 style="text-align: center">你的账户下暂无相关应用，可点击上方的“新建应用”按钮新建你的第一个应用</h1>
-                </th:block>
-            </div>
+            <!-- 应用按钮组 -->
+            <!--<div class="col-sm-12">
+                <div class="panel panel-default">
+                    &lt;!&ndash;<div class="panel-heading">
+                        <div class="panel-title">
+                            <i class="fa fa-plug"></i>&nbsp;<strong>应用操作按钮</strong>
+                        </div>
+                    </div>&ndash;&gt;
+                    <div class="panel-body">
+                        <div class="btn-group">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#new-sensor-modal"><i class="fa fa-info-circle"></i>&nbsp;新建传感器</button>
+                            <button class="btn btn-default">一些其他功能</button>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
 
-            <div th:include="module/footer::sub-footer"></div>
+            <th:block th:if="${#lists.isEmpty(apps)}">
+                <h1 style="text-align: center">你的账户下暂无相关应用，可点击上方的“新建应用”按钮新建你的第一个应用</h1>
+            </th:block>
+        </div>
+
+        <div th:include="module/footer::sub-footer"></div>
     </div>
 </body>
 

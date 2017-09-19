@@ -108,7 +108,6 @@
     <script th:src="@{source/bootstrap/bootstrap.min.js}"></script>
 
     <script th:inline="javascript">
-        var currentAppId = [[${currentAppId}]];
         var sensors = [[${sensors}]];
         var apps = [[${apps}]];
         var currentAppIndex = [[${currentAppIndex}]];
@@ -132,6 +131,8 @@
     <script th:src="@{source/datepicker/bootstrap-datetimepicker.min.js}"></script>
 
     <script th:src="@{js/common.js}"></script>
-    <script th:src="@{js/app/manage-chart.js}"></script>
+    <!--<script th:src="@{js/app/manage-chart.js}"></script>-->
+    <script th:src="@{js/app/app-chart-option.js}"></script>
+    <script th:src="@{js/app/app-show-entry.js}"></script>
 </body>
 </html>
