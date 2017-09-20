@@ -46,7 +46,6 @@
                             </div>
                             <div th:if="${param.id}">
                                 <div th:text="|应用编号: ${apps[currentAppIndex-1].id}|"></div>
-                                <div th:text="|传感器数量: ${#lists.size(sensors)}|"></div>
                                 <div th:text="|创建时间: ${#dates.format(apps[currentAppIndex-1].createTime, 'yyyy-MM-dd HH:mm:ss')}|"></div>
                                 <div th:text="|应用描述: ${apps[currentAppIndex-1].description}|"></div>
                             </div>
@@ -90,12 +89,12 @@
                 <div th:if="${param.id}">
                     <ul class="nav nav-pills" role="tablist">
                         <li role="presentation" class="active"><a href="#app-show" aria-controls="app-show" role="tab" data-toggle="tab">切换到浏览模式</a></li>
-                        <li role="presentation"><a href="#app-analysis" aria-controls="app-analysis" role="tab" data-toggle="tab">切换到分析模式</a></li>
+                        <!--<li role="presentation"><a href="#app-analysis" aria-controls="app-analysis" role="tab" data-toggle="tab">切换到分析模式</a></li>-->
                     </ul>
 
                     <div class="tab-content">
                         <div th:include="module/app-show::app-show" id="app-show" role="tabpanel" class="tab-pane active fade in app-tab-pane-content"></div>
-                        <div th:include="module/app-analysis::app-analysis" id="app-analysis" role="tabpanel" class="tab-pane active fade"></div>
+                        <!--<div th:include="module/app-analysis::app-analysis" id="app-analysis" role="tabpanel" class="tab-pane active fade"></div>-->
                     </div>
                 </div>
             </div>
@@ -131,8 +130,8 @@
     <script th:src="@{source/datepicker/bootstrap-datetimepicker.min.js}"></script>
 
     <script th:src="@{js/common.js}"></script>
-    <!--<script th:src="@{js/app/manage-chart.js}"></script>-->
-    <script th:src="@{js/app/app-chart-option.js}"></script>
-    <script th:src="@{js/app/app-show-entry.js}"></script>
+    <script th:if="!${param.id}" th:src="@{js/app/manage-chart.js}"></script>
+    <script th:if="${param.id}" th:src="@{js/app/app-chart-option.js}"></script>
+    <script th:if="${param.id}" th:src="@{js/app/app-show-entry.js}"></script>
 </body>
 </html>

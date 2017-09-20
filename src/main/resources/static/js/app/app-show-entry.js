@@ -19,10 +19,15 @@ function initExperimentData() {
     var data1 = sensorData['1']['1'][0]['timeSeries'];
     var data2 = sensorData['1']['1'][1]['timeSeries'];
 
-    var data_recorder_chart = echarts.init(document.getElementById("experiment-chart-1"), "", opts={
-        height: 400
+    var data_recorder_chart1 = echarts.init(document.getElementById("experiment-chart-1-1"), "", opts={
+        height: 300
     });
-    data_recorder_chart.setOption(chartOption(data1, data2));
+    data_recorder_chart1.setOption(chartOption(data1));
+
+    var data_recorder_chart2 = echarts.init(document.getElementById("experiment-chart-1-2"), "", opts={
+        height: 300
+    });
+    data_recorder_chart2.setOption(chartOption(data2));
 }
 
 /* ==== init ==== */

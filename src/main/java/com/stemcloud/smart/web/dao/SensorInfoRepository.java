@@ -20,6 +20,8 @@ public interface SensorInfoRepository extends CrudRepository<SensorInfo, Long> {
 
     List<SensorInfo> findByExpIdOrderByType(long expId);
 
+    List<SensorInfo> findByExpIdAndType(long expId, int type);
+
     @Query(value = "UPDATE base_sensor_info SET sensor_name = :name, " +
             "sensor_code = :code, sensor_type = :sType, longitude = :longitude, latitude = :latitude, sensor_city = :city, " +
             "sensor_description = :description WHERE id = :id", nativeQuery = true)

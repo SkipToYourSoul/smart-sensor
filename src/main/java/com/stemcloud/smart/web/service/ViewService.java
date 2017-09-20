@@ -11,7 +11,9 @@ import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Belongs to smart-sensor
@@ -62,5 +64,16 @@ public class ViewService {
 
     public List<SensorInfo> getSensorInfoByExperimentId(long expId){
         return sensorInfoRepository.findByExpIdOrderByType(expId);
+    }
+
+    public Map<Integer, List<SensorInfo>> getSensorInfoByExperimentIdPartByType(long expId){
+        Map<Integer, List<SensorInfo>> map = new HashMap<Integer, List<SensorInfo>>();
+        for (int type = 1; type<=2; type++){
+            List<SensorInfo> list = sensorInfoRepository.findByExpIdAndType(expId, type);
+            if (list.size() > 0)
+                map.put(type, list);
+        }
+
+        return map;
     }
 }

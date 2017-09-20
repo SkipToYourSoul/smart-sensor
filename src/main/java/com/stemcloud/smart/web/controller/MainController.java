@@ -99,11 +99,9 @@ public class MainController implements ErrorController {
                 List<Experiment> experiments = viewService.getExperimentByAppId(id);
                 logger.info("APP PAGE: FIND " + experiments.size() + " EXPERIMENTS By " + id);
 
-                List<SensorInfo> sensors = viewService.getSensorInfoByAppId(id);
-                logger.info("APP PAGE: FIND " + sensors.size() + " SENSORS BY APP " + id);
-
                 // --- init sensor data
-                Map<Long, Map<Long, Object>> result = new HashMap<Long, Map<Long, Object>>();
+                Map<Long, Map<Integer, List<SensorInfo>>> sensors = new HashMap<Long, Map<Integer, List<SensorInfo>>>();
+                Map<Long, Map<Long, Object>> data = new HashMap<Long, Map<Long, Object>>();
                 for (Experiment experiment : experiments){
                     long expId = experiment.getId();
                     List<SensorInfo> expSensors = viewService.getSensorInfoByExperimentId(expId);
@@ -117,12 +115,13 @@ public class MainController implements ErrorController {
                             sensorData.put(sensorId, sensorDataService.getSensorCameraBySensorId(sensorId, expId));
                         }
                     }
-                    result.put(expId, sensorData);
+                    data.put(expId, sensorData);
+                    sensors.put(expId, viewService.getSensorInfoByExperimentIdPartByType(expId));
                 }
 
                 model.addAttribute("sensors", sensors);
                 model.addAttribute("currentAppIndex", currentAppIndex);
-                model.addAttribute("sensorData", result);
+                model.addAttribute("sensorData", data);
             } else
                 logger.info("APP PAGE: CURRENT USER HAS NO APPS!");
 

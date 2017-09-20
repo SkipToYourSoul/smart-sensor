@@ -4,7 +4,7 @@
  *  Description: chart option of app page
  */
 
-var chartOption = function (data1, data2) {
+var chartOption = function (data1) {
     return {
         tooltip: {
             trigger: 'axis',
@@ -31,14 +31,14 @@ var chartOption = function (data1, data2) {
             data: ['1', '2']
         },
         grid: [{
-            left: 50,
-            right: 50,
-            height: '35%'
-        }, {
-            left: 50,
-            right: 50,
-            top: '55%',
-            height: '35%'
+            borderWidth: 0,
+            top: '10%',
+            bottom: '20%',
+            left: '50px',
+            right: '50px',
+            textStyle: {
+                color: "#fff"
+            }
         }],
         calculable: true,
         toolbox: {
@@ -57,7 +57,7 @@ var chartOption = function (data1, data2) {
         dataZoom: [{
             show: true,
             height: 30,
-            xAxisIndex: [0, 1],
+            xAxisIndex: [0],
             bottom: 0,
             start: 0,
             end: 100,
@@ -75,25 +75,12 @@ var chartOption = function (data1, data2) {
             borderColor:"#eee"
         }, {
             type: "inside",
-            xAxisIndex: [0, 1],
+            xAxisIndex: [0],
             start: 0,
             end: 100
         }],
         xAxis: [
             {
-                type: 'time',
-                name: 'TIME',
-                nameRotate: 45,
-                boundaryGap : ['20%', '20%'],
-                axisPointer: {
-                    show: true,
-                    type: 'line',
-                    snap: true,
-                    z: 100
-                }
-            },
-            {
-                gridIndex: 1,
                 type: 'time',
                 name: 'TIME',
                 nameRotate: 45,
@@ -115,38 +102,16 @@ var chartOption = function (data1, data2) {
                     show: true
                 },
                 boundaryGap: ['0%', '0%']
-            },
-            {
-                gridIndex: 1,
-                type: 'value',
-                name: 'VALUE',
-                scale: true,
-                splitArea: {
-                    show: true
-                },
-                boundaryGap: ['0%', '0%']
             }
         ],
         series: [
             {
-                xAxisIndex: 0,
-                yAxisIndex: 0,
                 name: '1',
                 type: 'line',
                 symbolSize:10,
                 symbol:'circle',
                 hoverAnimation: false,
-                data: data1
-            },
-            {
-                xAxisIndex: 1,
-                yAxisIndex: 1,
-                name: '2',
-                type: 'line',
-                symbolSize:10,
-                symbol:'circle',
-                hoverAnimation: false,
-                data: data2
+                data: []
             }
         ]
     };

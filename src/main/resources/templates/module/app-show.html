@@ -21,6 +21,7 @@
         <div class="row">
             <th:block th:if="${not #lists.isEmpty(apps)}">
                 <div class="col-sm-12">
+                    <!-- 遍历构造实验tab -->
                     <th:block th:each="experimentData,index:${sensorData}">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -29,18 +30,29 @@
                                 </div>
                             </div>
                             <div class="panel-body">
+                                <!-- 传感器预览 -->
                                 <div class="row">
-                                    <div class="col-xs-9 col-sm-9">
-                                        <div th:id="|experiment-chart-${experimentData.key}|">
-                                            传感器数据加载中
+                                    <th:block th:each="sensor,index:${sensors[experimentData.key][1]}">
+                                        <div class="col-xs-6 col-sm-6">
+                                            <div class="app-show-sensor-title">
+                                                <span th:text="|#${sensor.code} ${sensor.name}|"></span>
+                                                <span class="label label-success pull-right">已连接</span>
+                                            </div>
+                                            <div th:id="|experiment-chart-${experimentData.key}-${sensor.id}|" class="app-show-sensor-content">
+                                                传感器数据加载中
+                                            </div>
                                         </div>
-                                        <div th:id="|experiment-video-${experimentData.key}|">
-                                            视频数据加载中
+                                    </th:block>
+
+                                    <th:block th:each="video,index:${sensors[experimentData.key][2]}">
+                                        <div class="col-xs-6 col-sm-6">
+                                            <div class="app-show-sensor-title">
+                                                <span th:text="|#${video.code} ${video.name}|"></span>
+                                                <span class="label label-success pull-right">已连接</span>
+                                            </div>
+                                            <div class="app-show-sensor-content">这是视频信息</div>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3">
-                                        统计数据
-                                    </div>
+                                    </th:block>
                                 </div>
                             </div>
                         </div>
