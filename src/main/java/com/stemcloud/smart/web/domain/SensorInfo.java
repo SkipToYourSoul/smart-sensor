@@ -30,6 +30,9 @@ public class SensorInfo {
     @Column(name = "sensor_type", nullable = false)
     private int type;
 
+    @OneToOne
+    private SensorConfig sensorConfig;
+
     @Column(length = 20, precision = 6)
     private Double longitude;
 
@@ -103,6 +106,14 @@ public class SensorInfo {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public SensorConfig getSensorConfig() {
+        return sensorConfig;
+    }
+
+    public void setSensorConfig(SensorConfig sensorConfig) {
+        this.sensorConfig = sensorConfig;
     }
 
     public Double getLongitude() {

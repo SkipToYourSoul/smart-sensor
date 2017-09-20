@@ -4,7 +4,20 @@
  *  Description: chart option of app page
  */
 
-var chartOption = function (data1) {
+var experimentChartOption = function (legend) {
+    var series = [];
+    for (var index in legend){
+        var name = legend[index];
+        series.push({
+            name: name,
+            type: 'line',
+            symbolSize:10,
+            symbol:'circle',
+            hoverAnimation: false,
+            data: []
+        })
+    }
+
     return {
         tooltip: {
             trigger: 'axis',
@@ -28,7 +41,7 @@ var chartOption = function (data1) {
         legend: {
             top: '0%',
             left: 'center',
-            data: ['1', '2']
+            data: legend
         },
         grid: [{
             borderWidth: 0,
@@ -104,16 +117,7 @@ var chartOption = function (data1) {
                 boundaryGap: ['0%', '0%']
             }
         ],
-        series: [
-            {
-                name: '1',
-                type: 'line',
-                symbolSize:10,
-                symbol:'circle',
-                hoverAnimation: false,
-                data: []
-            }
-        ]
+        series: series
     };
 };
 

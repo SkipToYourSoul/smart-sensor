@@ -47,6 +47,7 @@ function parseTime(time) {
     return time.split('.')[0].replace('T', ' ');
 }
 
+// --- rewrite format function, new Date(xx,xx,xx).Format("yyyy-MM-dd HH:mm:ss")
 Date.prototype.Format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1, //月份
