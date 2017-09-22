@@ -20,6 +20,13 @@
         <!-- 应用内容 -->
         <div class="row">
             <th:block th:if="${not #lists.isEmpty(apps)}">
+                <div class="app-page-introduction">
+                    <p>
+                        <i class="fa fa-info-circle"></i>&nbsp;在实验模式中，你能够随时监控传感器的数据，并且根据你的需要录制数据，录制的数据会被保存，你可以在“数据分析模式”下分析这些数据。
+                    </p>
+                    <p><i class="fa fa-info-circle"></i>&nbsp;点击“监控”按钮，让数据动起来；点击“录制”按钮，录制并保存你想要的实验数据</p>
+                </div>
+
                 <div class="col-sm-12">
                     <!-- 遍历构造实验tab -->
                     <th:block th:each="experimentData,index:${sensorData}">
@@ -27,6 +34,8 @@
                             <div class="panel-heading">
                                 <div class="panel-title">
                                     <strong th:text="|实验${experimentData.key}|"></strong>
+                                    <span class="pull-right label label-success" th:id="|experiment-state-${experimentData.key}|"></span>
+                                    <span class="pull-right label label-danger" th:id="|experiment-recorder-${experimentData.key}|"></span>
                                 </div>
                             </div>
                             <div class="panel-body">
@@ -50,7 +59,10 @@
                                                 <span th:text="|#${video.code} ${video.sensorConfig.name}|"></span>
                                                 <span class="label label-success pull-right">已连接</span>
                                             </div>
-                                            <div class="app-show-video-content">这是视频信息</div>
+                                            <div class="app-show-video-content">
+                                                <p><strong>这里会显示一些视频的基本信息</strong></p>
+                                                <p><strong>这里会显示当前摄像头的录制状态</strong></p>
+                                            </div>
                                         </div>
                                     </th:block>
                                 </div>
@@ -58,7 +70,8 @@
                                 <!-- 开始录制按钮 -->
                                 <div class="row">
                                     <div class="recorder-button">
-                                        <button class="btn btn-danger" th:data="${experimentData.key}" onclick="recorder(this)">RE</button>
+                                        <button class="btn btn-warning" th:data="${experimentData.key}" onclick="monitor(this)">监控</button>
+                                        <button class="btn btn-danger" th:data="${experimentData.key}" onclick="recorder(this)">录制</button>
                                     </div>
                                 </div>
                             </div>

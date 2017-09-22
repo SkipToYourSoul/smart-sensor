@@ -14,6 +14,10 @@ var experimentChartOption = function (legend) {
             symbolSize:10,
             symbol:'circle',
             hoverAnimation: false,
+            markArea: {
+                silent: true,
+                data: []
+            },
             data: []
         })
     }

@@ -89,9 +89,8 @@
                 <div th:if="${param.id}">
                     <ul class="nav nav-pills" role="tablist">
                         <li role="presentation" class="active"><a href="#app-show" aria-controls="app-show" role="tab" data-toggle="tab">实验模式</a></li>
-                        <!--<li role="presentation"><a href="#app-analysis" aria-controls="app-analysis" role="tab" data-toggle="tab">分析模式</a></li>-->
+                        <li role="presentation"><a href="#app-analysis" aria-controls="app-analysis" role="tab" data-toggle="tab">数据分析模式</a></li>
                     </ul>
-
                     <div class="tab-content">
                         <div th:include="module/app-show::app-show" id="app-show" role="tabpanel" class="tab-pane active fade in app-tab-pane-content"></div>
                         <!--<div th:include="module/app-analysis::app-analysis" id="app-analysis" role="tabpanel" class="tab-pane active fade"></div>-->
