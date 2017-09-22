@@ -1,9 +1,51 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
     <div th:fragment="app-analysis">
-        <div class="app-main-content">
+        <th:block th:if="${not #lists.isEmpty(apps)}">
             <div class="row">
-                <!-- 传感器数据浏览 -->
+                <!-- 页面说明 -->
+                <div class="app-page-introduction">
+                    <p>
+                        <i class="fa fa-info-circle"></i>&nbsp;在数据分析模式中，你能够分析之前所录制的实验数据，同时也可以查看传感器上报的历史数据。
+                    </p>
+                </div>
+
+                <div class="col-sm-12">
+                    <!-- 遍历构造实验tab -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <th:block th:each="experimentData,index:${sensorData}">
+                            <li role="presentation" th:class="${index.count}==1?'active':''"><a th:href="@{exp-tab-${experimentData.key}}" role="tab" data-toggle="tab" th:text="|实验${experimentData.key}|"></a></li>
+                        </th:block>
+                    </ul>
+                    <div class="tab-content">
+                        <th:block th:each="experimentData,index:${sensorData}">
+                            <div th:id="|exp-tab-${experimentData.key}|"
+                                 role="tabpanel"
+                                 th:class="${index.count}==1?'active tab-pane fade in app-tab-pane-content':'tab-pane fade in app-tab-pane-content'">
+                                <div>
+                                    recorder chart
+                                </div>
+
+                                <div>
+                                    video
+                                    <!-- 选取相应的video -->
+                                    <select class="selectpicker">
+                                    </select>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+
+
+        </th:block>
+
+
+
+        <!--<div class="app-main-content">
+            <div class="row">
+                &lt;!&ndash; 传感器数据浏览 &ndash;&gt;
                 <div id="analysis-sensor-group">
                     <th:block th:each="sensor,index:${sensors}">
                         <th:block th:if="${sensor.type == 1}">
@@ -25,7 +67,7 @@
             </div>
 
             <div class="row">
-                <!-- 数据回放面板 -->
+                &lt;!&ndash; 数据回放面板 &ndash;&gt;
                 <div class="col-sm-12">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
@@ -45,7 +87,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <!-- 数据配置 -->
+                                            &lt;!&ndash; 数据配置 &ndash;&gt;
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <h4>数据时间范围参考<br/><small>请谨慎选取时间范围，超出范围的数据将不会在回放数据中出现</small></h4>
@@ -94,7 +136,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            <!-- 数据展示 -->
+                                            &lt;!&ndash; 数据展示 &ndash;&gt;
                                             <div class="row">
                                                 <div id="data-recorder-video" class="col-sm-12" hidden="hidden">
                                                 </div>
@@ -104,7 +146,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- 回放相关操作 -->
+                                    &lt;!&ndash; 回放相关操作 &ndash;&gt;
                                     <div class="row">
                                         <div class="col-sm-12" id="data-recorder-control" hidden="hidden">
                                             <hr/>
@@ -126,7 +168,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <div th:include="module/footer::sub-footer"></div>
     </div>
