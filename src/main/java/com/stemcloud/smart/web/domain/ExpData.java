@@ -11,7 +11,7 @@ import java.util.Date;
  * Description: experiment value sensor
  */
 @Entity
-@Table(name = "zdc_experiment_value_data")
+@Table(name = "zdc_experiment_recorder")
 public class ExpData {
     @Id
     @GeneratedValue
@@ -20,21 +20,16 @@ public class ExpData {
     @Column(name = "exp_id", nullable = false)
     private long expId;
 
-    @Column(name = "recorder_id", nullable = false)
-    private long recorderId;
-
     @Column(name = "sensor_id", nullable = false)
     private long sensorId;
 
-    @Column(name = "data_flag", nullable = false)
-    private String flag;
-
-    @Column(nullable = false)
-    private String value;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "start_time", nullable = false)
+    private Date startTime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_time", nullable = false)
-    private Date dataTime;
+    @Column(name = "end_time", nullable = false)
+    private Date endTime;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
@@ -55,14 +50,6 @@ public class ExpData {
         this.expId = expId;
     }
 
-    public long getRecorderId() {
-        return recorderId;
-    }
-
-    public void setRecorderId(long recorderId) {
-        this.recorderId = recorderId;
-    }
-
     public long getSensorId() {
         return sensorId;
     }
@@ -71,27 +58,27 @@ public class ExpData {
         this.sensorId = sensorId;
     }
 
-    public String getFlag() {
-        return flag;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public String getValue() {
-        return value;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
-    public Date getDataTime() {
-        return dataTime;
+    public Date getModifyTime() {
+        return modifyTime;
     }
 
-    public void setDataTime(Date dataTime) {
-        this.dataTime = dataTime;
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }

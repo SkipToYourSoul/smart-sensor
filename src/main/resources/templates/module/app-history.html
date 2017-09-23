@@ -1,103 +1,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
-    <div th:fragment="app-analysis">
+    <div th:fragment="app-history">
         <th:block th:if="${not #lists.isEmpty(apps)}">
-            <div class="row app-analysis">
+            <div class="row app-history">
                 <!-- 页面说明 -->
                 <div class="app-page-introduction">
                     <p>
-                        <i class="fa fa-info-circle"></i>&nbsp;在数据分析模式中，你能够分析之前所录制的实验数据
-                    </p>
-                    <p>
-                        <i class="fa fa-info-circle"></i>&nbsp;你可以任意编辑你所记录的数据，并以回放的方式来重现数据
+                        <i class="fa fa-info-circle"></i>&nbsp;在历史数据查看页面，你能够查看传感器上报的历史数据，并以回放的方式来重现数据
                     </p>
                 </div>
 
-                <div class="col-sm-12">
-                    <!-- 遍历构造实验tab -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <th:block th:each="experimentData,index:${sensorData}">
-                            <li role="presentation" th:class="${index.count}==1?'active':''"><a th:href="@{exp-tab-${experimentData.key}}" role="tab" data-toggle="tab" th:text="|实验${experimentData.key}|"></a></li>
-                        </th:block>
-                    </ul>
-                    <div class="tab-content">
-                        <th:block th:each="experimentData,index:${sensorData}">
-                            <div th:id="|exp-tab-${experimentData.key}|"
-                                 role="tabpanel"
-                                 th:class="${index.count}==1?'active tab-pane fade in app-tab-pane-content':'tab-pane fade in app-tab-pane-content'">
-                                <!-- 实验tab内容 -->
-                                <div class="row">
-                                    <!-- 图表 -->
-                                    <th:block th:if="${!#lists.isEmpty(sensors[experimentData.key][1])}">
-                                        <th:block th:each="sensor,index:${sensors[experimentData.key][1]}">
-                                            <div class="col-sm-9">
-                                                <div th:id="|analysis-chart-${experimentData.key}-${sensor.id}|" class="exp-chart">
-                                                    传感器数据加载中
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                分析数据
-                                            </div>
-                                        </th:block>
-                                    </th:block>
-                                </div>
-                                <div class="row">
-                                    <!-- 视频 -->
-                                    <th:block th:if="${!#lists.isEmpty(sensors[experimentData.key][2])}">
-                                        <div class="col-xs-9 col-sm-9 exp-video">
-                                            <video id="analysis-video" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto" data-setup="{}"></video>
-                                        </div>
-                                        <div class="col-xs-3 col-sm-3">
-                                            <label>选取视频片段：</label>
-                                            <select class="selectpicker" id="analysis-video-select">
-                                            </select>
-                                            <p>分析数据</p>
-                                        </div>
-                                    </th:block>
-                                </div>
-
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-sm-3" style="padding:0 0 10px 30px;">
-                                        <button class="btn btn-success btn-block">数据回放</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </th:block>
-                    </div>
-                </div>
-            </div>
-
-
-        </th:block>
-
-
-
-        <!--<div class="app-main-content">
-            <div class="row">
-                &lt;!&ndash; 传感器数据浏览 &ndash;&gt;
-                <div id="analysis-sensor-group">
-                    <th:block th:each="sensor,index:${sensors}">
-                        <th:block th:if="${sensor.type == 1}">
-                            <div class="col-sm-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <i class="fa fa-hashtag"></i>&nbsp;<strong th:text="|${sensor.id}:${sensor.name}|"></strong>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="analysis-sensor-content" th:id="|analysis-chart-${sensor.id}|"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </th:block>
-                    </th:block>
-                </div>
-            </div>
-
-            <div class="row">
-                &lt;!&ndash; 数据回放面板 &ndash;&gt;
+                <!-- 数据回放面板 -->
                 <div class="col-sm-12">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
@@ -105,7 +18,7 @@
                                 <div class="panel-title">
                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#data-recorder-panel-body"
                                        aria-expanded="true" aria-controls="data-recorder-panel-body">
-                                        <i class="fa fa-video-camera"></i>&nbsp;<strong>数据回放</strong>
+                                        <i class="fa fa-video-camera"></i>&nbsp;<strong>传感器数据查看与回放</strong>
 
                                         <span class="recorder-time-view pull-right">
                                         <i class="fa fa-clock-o" style="margin-left: 20px"></i>&nbsp;
@@ -117,7 +30,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            &lt;!&ndash; 数据配置 &ndash;&gt;
+                                            <!-- 数据配置 -->
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <h4>数据时间范围参考<br/><small>请谨慎选取时间范围，超出范围的数据将不会在回放数据中出现</small></h4>
@@ -149,9 +62,6 @@
                                                             <label class="col-sm-3 control-label">选取传感器：</label>
                                                             <div class="col-sm-9">
                                                                 <div class="checkbox" id="data-recorder-sensor-select">
-                                                                    <th:block th:each="sensor,index:${sensors}">
-                                                                        <label><input type="checkbox" th:value="${sensor.id}" th:text="${sensor.name}"/></label>
-                                                                    </th:block>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -166,7 +76,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
-                                            &lt;!&ndash; 数据展示 &ndash;&gt;
+                                            <!-- 数据展示 -->
                                             <div class="row">
                                                 <div id="data-recorder-video" class="col-sm-12" hidden="hidden">
                                                 </div>
@@ -176,7 +86,7 @@
                                         </div>
                                     </div>
 
-                                    &lt;!&ndash; 回放相关操作 &ndash;&gt;
+                                    <!-- 回放相关操作 -->
                                     <div class="row">
                                         <div class="col-sm-12" id="data-recorder-control" hidden="hidden">
                                             <hr/>
@@ -198,7 +108,7 @@
                     </div>
                 </div>
             </div>
-        </div>-->
+        </th:block>
 
         <div th:include="module/footer::sub-footer"></div>
     </div>

@@ -125,6 +125,101 @@ var experimentChartOption = function (legend) {
     };
 };
 
+var analysisChartOption = function () {
+    return {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            },
+            backgroundColor: 'rgba(245, 245, 245, 0.8)',
+            borderWidth: 1,
+            borderColor: '#ccc',
+            padding: 10,
+            textStyle: {
+                color: '#000'
+            },
+            position: function (pos, params, el, elRect, size) {
+                var obj = {top: 10};
+                obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
+                return obj;
+            },
+            extraCssText: 'width: 170px'
+        },
+        legend: {
+            top: '0%',
+            left: 'center',
+            data: ['1']
+        },
+        grid: [{
+            borderWidth: 0,
+            top: '10px',
+            bottom: '10px',
+            left: '10',
+            right: '10',
+            textStyle: {
+                color: "#fff"
+            }
+        }],
+        calculable: true,
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {readOnly: false},
+                magicType : {show: true, type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {},
+                brush: {
+                    type: ['lineX', 'clear']
+                }
+            },
+            right: 20
+        },
+        dataZoom: [{
+            type: "inside",
+            xAxisIndex: [0],
+            start: 0,
+            end: 100
+        }],
+        xAxis: [
+            {
+                type: 'category',
+                nameRotate: 45,
+                boundaryGap : ['20%', '20%'],
+                axisPointer: {
+                    show: true,
+                    type: 'line',
+                    snap: true,
+                    z: 100
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: 'VALUE',
+                scale: true,
+                splitArea: {
+                    show: true
+                },
+                boundaryGap: ['0%', '0%']
+            }
+        ],
+        series: [{
+            name: '1',
+            type: 'line',
+            symbolSize:5,
+            symbol:'circle',
+            hoverAnimation: false,
+            markArea: {
+                silent: true,
+                data: []
+            },
+            data: []
+        }]
+    };
+};
+
 
 var chartSeriesOption = function (name, data) {
     return {

@@ -87,13 +87,15 @@
                     <div th:include="module/app-management::manager-chart"></div>
                 </div>
                 <div th:if="${param.id}">
-                    <ul class="nav nav-pills" role="tablist">
+                    <ul class="nav nav-pills" role="tablist" id="main-tab">
                         <li role="presentation" class="active"><a href="#app-show" aria-controls="app-show" role="tab" data-toggle="tab">实验模式</a></li>
                         <li role="presentation"><a href="#app-analysis" aria-controls="app-analysis" role="tab" data-toggle="tab">数据分析模式</a></li>
+                        <li role="presentation"><a href="#app-history" aria-controls="app-history" role="tab" data-toggle="tab">历史数据查看</a></li>
                     </ul>
                     <div class="tab-content">
                         <div th:include="module/app-show::app-show" id="app-show" role="tabpanel" class="tab-pane active fade in app-tab-pane-content"></div>
                         <div th:include="module/app-analysis::app-analysis" id="app-analysis" role="tabpanel" class="tab-pane fade app-tab-pane-content"></div>
+                        <div th:include="module/app-history::app-history" id="app-history" role="tabpanel" class="tab-pane fade app-tab-pane-content"></div>
                     </div>
                 </div>
             </div>
@@ -105,11 +107,31 @@
     <script th:src="@{source/jquery.min.js}"></script>
     <script th:src="@{source/bootstrap/bootstrap.min.js}"></script>
 
+    <!--
+        sensors: Map<Exp_id, Map<Type, List<SensorInfo>>>
+        apps: List<AppInfo>
+        sensorData: Map<Exp_id, Map<SensorId, Object>
+    -->
     <script th:inline="javascript">
         var sensors = [[${sensors}]];
         var apps = [[${apps}]];
         var currentAppIndex = [[${currentAppIndex}]];
         var sensorData = [[${sensorData}]];
+    </script>
+
+    <script>
+        var isFirstInAnalysis = 0;
+        $('#main-tab').find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            e.target // newly activated tab
+            e.relatedTarget // previous active tab
+
+            if (e.target.getAttribute('href') == "#app-analysis"){
+                if (isFirstInAnalysis == 0) {
+                    initExperimentData();
+                    isFirstInAnalysis = 1;
+                }
+            }
+        })
     </script>
 
     <script th:src="@{source/loading/fakeLoader.min.js}"></script>
@@ -129,8 +151,9 @@
     <script th:src="@{source/datepicker/bootstrap-datetimepicker.min.js}"></script>
 
     <script th:src="@{js/common.js}"></script>
-    <script th:if="!${param.id}" th:src="@{js/app/manage-chart.js}"></script>
+    <script th:if="!${param.id}" th:src="@{js/app/app-manage.js}"></script>
     <script th:if="${param.id}" th:src="@{js/app/app-chart-option.js}"></script>
-    <script th:if="${param.id}" th:src="@{js/app/app-show-entry.js}"></script>
+    <script th:if="${param.id}" th:src="@{js/app/app-show.js}"></script>
+    <script th:if="${param.id}" th:src="@{js/app/app-analysis.js}"></script>
 </body>
 </html>

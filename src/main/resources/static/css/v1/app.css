@@ -54,3 +54,11 @@ body{
     -moz-border-radius: 50% !important;
     border-radius: 50% !important;
 }
+
+/** app-analysis.html **/
+.app-analysis .exp-chart:first-child{
+    margin-top: 5px;
+}
+.app-analysis .exp-video{
+    padding: 10px 30px 10px 30px;
+}
