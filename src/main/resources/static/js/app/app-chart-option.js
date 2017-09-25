@@ -18,6 +18,12 @@ var experimentChartOption = function (legend) {
                 silent: true,
                 data: []
             },
+            markPoint: {
+                data: [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            },
             data: []
         })
     }
@@ -125,7 +131,38 @@ var experimentChartOption = function (legend) {
     };
 };
 
-var analysisChartOption = function () {
+var analysisChartOption = function (legend) {
+    var series = [];
+    function random() {
+        var list = [];
+        for (var i=0; i<7; i++)
+            list.push(Math.round(Math.random() * 100 + Math.random() * 21 - 10));
+        return list;
+    }
+
+    for (var index in legend){
+        var name = legend[index];
+        series.push({
+            name: name,
+            type: 'line',
+            symbolSize:10,
+            symbol:'circle',
+            hoverAnimation: false,
+            data: random(),
+            markPoint: {
+                data: [
+                    {type: 'max', name: '最大值'},
+                    {type: 'min', name: '最小值'}
+                ]
+            },
+            markLine: {
+                data: [
+                    {type: 'average', name: '平均值'}
+                ]
+            }
+        })
+    }
+
     return {
         tooltip: {
             trigger: 'axis',
@@ -147,16 +184,18 @@ var analysisChartOption = function () {
             extraCssText: 'width: 170px'
         },
         legend: {
-            top: '0%',
-            left: 'center',
-            data: ['1']
+            orient: 'vertical',
+            align: 'right',
+            right: 0,
+            top: 30,
+            data: legend
         },
         grid: [{
             borderWidth: 0,
-            top: '10px',
-            bottom: '10px',
-            left: '10',
-            right: '10',
+            top: '30px',
+            bottom: '5',
+            left: '30',
+            right: '100',
             textStyle: {
                 color: "#fff"
             }
@@ -165,13 +204,7 @@ var analysisChartOption = function () {
         toolbox: {
             show: true,
             feature: {
-                dataView: {readOnly: false},
-                magicType : {show: true, type: ['line', 'bar']},
-                restore: {},
-                saveAsImage: {},
-                brush: {
-                    type: ['lineX', 'clear']
-                }
+                magicType : {show: true, type: ['line', 'bar']}
             },
             right: 20
         },
@@ -191,7 +224,8 @@ var analysisChartOption = function () {
                     type: 'line',
                     snap: true,
                     z: 100
-                }
+                },
+                data: ['1', '2', '3', '4', '5', '6', '7']
             }
         ],
         yAxis: [
@@ -205,18 +239,7 @@ var analysisChartOption = function () {
                 boundaryGap: ['0%', '0%']
             }
         ],
-        series: [{
-            name: '1',
-            type: 'line',
-            symbolSize:5,
-            symbol:'circle',
-            hoverAnimation: false,
-            markArea: {
-                silent: true,
-                data: []
-            },
-            data: []
-        }]
+        series: series
     };
 };
 

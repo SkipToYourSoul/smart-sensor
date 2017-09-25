@@ -4,14 +4,24 @@
     <div th:fragment="manager-chart">
         <!-- 应用统计 -->
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div id="chart-pie-1"></div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div id="chart-pie-2"></div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <div id="chart-line"></div>
+            </div>
+
+            <div class="col-sm-12" style="padding: 20px">
+                <h3>注：</h3>
+                <ul>
+                    <li>应用管理页面可以看到该账户下相关的设备统计、应用统计、数据统计等</li>
+                    <li>应用管理页面允许用户“新建应用”，进入具体应用页面后，允许用户“编辑和删除应用”</li>
+                    <li>可以在这里管理应用下的设备，为应用绑定设备等操作</li>
+                    <li>还可以有更多操作，待设计</li>
+                </ul>
             </div>
 
             <div th:include="module/footer::sub-footer"></div>

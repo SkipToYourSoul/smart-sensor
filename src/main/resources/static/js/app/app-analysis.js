@@ -21,15 +21,15 @@ function initExperimentData() {
     var data_recorder_chart1 = echarts.init(document.getElementById("analysis-chart-1-1"), "", opts={
         height: 250
     });
-    data_recorder_chart1.setOption(analysisChartOption(data1));
+    data_recorder_chart1.setOption(analysisChartOption(['记录1-温度','记录1-湿度','记录2-温度','记录2-湿度']));
 
-    var data_recorder_chart2 = echarts.init(document.getElementById("analysis-chart-1-8"), "", opts={
+    var data_recorder_chart2 = echarts.init(document.getElementById("analysis-chart-1-2"), "", opts={
         height: 250
     });
-    data_recorder_chart2.setOption(analysisChartOption(data2));
+    data_recorder_chart2.setOption(analysisChartOption(['记录1-光照','记录2-光照']));
 }
 
 // videos
-videojs("analysis-video", sensorData['1']['7'][0]['option'], function () {
+videojs("analysis-video", sensorData['1']['3'][0]['option'], function () {
     videojs.log('The video player is ready');
 });

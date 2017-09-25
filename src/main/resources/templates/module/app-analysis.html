@@ -17,7 +17,7 @@
                     <!-- 遍历构造实验tab -->
                     <ul class="nav nav-tabs" role="tablist">
                         <th:block th:each="experimentData,index:${sensorData}">
-                            <li role="presentation" th:class="${index.count}==1?'active':''"><a th:href="@{exp-tab-${experimentData.key}}" role="tab" data-toggle="tab" th:text="|实验${experimentData.key}|"></a></li>
+                            <li role="presentation" th:class="${index.count}==1?'active':''"><a th:href="@{|#exp-tab-${experimentData.key}|}" role="tab" data-toggle="tab" th:text="|实验${experimentData.key}|"></a></li>
                         </th:block>
                     </ul>
                     <div class="tab-content">
@@ -36,7 +36,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-3">
-                                                分析数据
+                                                <div><strong th:text="|传感器${sensor.code} ${sensor.sensorConfig.name}|"></strong></div>
+                                                <hr/>
+                                                <ul>
+                                                    <li>这里可以显示一些基础的统计数据</li>
+                                                    <li>可以有对chart上的编辑操作</li>
+                                                    <li>目前数据是随机生成的，需要怎样的分析操作确认后我再加进去</li>
+                                                </ul>
                                             </div>
                                         </th:block>
                                     </th:block>
@@ -48,18 +54,25 @@
                                             <video id="analysis-video" class="video-js vjs-fluid vjs-default-skin vjs-big-play-centered" controls="controls" preload="auto" data-setup="{}"></video>
                                         </div>
                                         <div class="col-xs-3 col-sm-3">
+                                            <hr/>
                                             <label>选取视频片段：</label>
                                             <select class="selectpicker" id="analysis-video-select">
                                             </select>
-                                            <p>分析数据</p>
+                                            <div style="padding:20px">
+                                                <ul>
+                                                    <li>通过select可选取不同记录下的视频</li>
+                                                    <li>视频会跟上方的图标联动播放？</li>
+                                                    <li>点击数据回放，播放当前记录的视频</li>
+                                                </ul>
+                                            </div>
+                                            <button class="btn btn-success btn-block">数据回放</button>
                                         </div>
                                     </th:block>
                                 </div>
 
-                                <hr/>
                                 <div class="row">
-                                    <div class="col-sm-3" style="padding:0 0 10px 30px;">
-                                        <button class="btn btn-success btn-block">数据回放</button>
+                                    <div class="col-sm-3" >
+
                                     </div>
                                 </div>
                             </div>
