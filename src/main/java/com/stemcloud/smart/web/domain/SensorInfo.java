@@ -46,10 +46,10 @@ public class SensorInfo {
     private String description;
 
     @Column(name = "sensor_app_id")
-    private long appId;
+    private long appId = 0;
 
     @Column(name = "sensor_exp_id", nullable = false)
-    private long expId;
+    private long expId = 0;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp

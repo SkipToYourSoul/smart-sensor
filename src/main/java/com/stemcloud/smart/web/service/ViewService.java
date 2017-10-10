@@ -58,6 +58,10 @@ public class ViewService {
         return sensorInfoRepository.findByCreator(user);
     }
 
+    public List<SensorInfo> getOnlineSensorInfoByCurrentUser(String user){
+        return sensorInfoRepository.findByCreatorAndIsDeleted(user, 0);
+    }
+
     public List<SensorInfo> getSensorInfoByAppId(long appId){
         return sensorInfoRepository.findByAppIdOrderByType(appId);
     }

@@ -58,31 +58,32 @@
         </div>
     </div>
 
+    <!-- 新增，编辑设备 -->
     <div th:fragment="new-sensor-modal">
         <div class="modal fade" id="new-sensor-modal" tabindex="-1" role="dialog" aria-labelledby="new-sensor-modal-title">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="new-sensor-modal-title">新建传感器</h4>
+                        <h4 class="modal-title" id="new-sensor-modal-title">新增设备</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" role="form" id="new-sensor-form">
                             <input type="text" id="is-new-sensor" name="is-new-sensor" value="1" sensor-id="0" hidden="hidden"/>
                             <div class="form-group">
-                                <label for="new-sensor-name" class="col-sm-2 control-label">传感器名称</label>
+                                <label for="new-sensor-name" class="col-sm-2 control-label">设备名称</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="new-sensor-name" id="new-sensor-name"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="new-sensor-code" class="col-sm-2 control-label">传感器编号</label>
+                                <label for="new-sensor-code" class="col-sm-2 control-label">设备编号</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="new-sensor-code" id="new-sensor-code" placeholder="输入传感器上面的编号"/>
+                                    <input type="text" class="form-control" name="new-sensor-code" id="new-sensor-code" placeholder="输入设备上面的编号，如0001"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="new-sensor-type" class="col-sm-2 control-label">传感器类型</label>
+                                <label for="new-sensor-type" class="col-sm-2 control-label">设备类型</label>
                                 <div class="col-sm-10">
                                     <select class="selectpicker form-control" name="new-sensor-type" id="new-sensor-type">
                                         <option value="1">数值型传感器</option>
@@ -90,7 +91,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label for="new-sensor-city" class="col-sm-2 control-label">城市位置</label>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" name="new-sensor-city" id="new-sensor-city" placeholder="城市名"/>
@@ -106,21 +107,21 @@
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control" name="new-sensor-latitude" id="new-sensor-latitude" placeholder="latitude"/>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="form-group">
-                                <label for="new-sensor-description" class="col-sm-2 control-label">传感器描述</label>
+                                <label for="new-sensor-description" class="col-sm-2 control-label">设备描述</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control"
                                               name="new-sensor-description"
                                               rows="5"
-                                              required="true"
-                                              placeholder="输入传感器描述"
+                                              required="required"
+                                              placeholder="输入设备描述"
                                               id="new-sensor-description"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <button type="button" class="btn btn-success btn-block" onclick="$('#new-sensor-form').submit()" id="sensor-confirm-btn">新建传感器</button>
+                                    <button type="button" class="btn btn-success btn-block" onclick="$('#new-sensor-form').submit()" id="sensor-confirm-btn">新建设备</button>
                                 </div>
                             </div>
                         </form>

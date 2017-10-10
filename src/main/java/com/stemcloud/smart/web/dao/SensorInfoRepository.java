@@ -16,6 +16,8 @@ import java.util.List;
 public interface SensorInfoRepository extends CrudRepository<SensorInfo, Long> {
     List<SensorInfo> findByCreator(String creator);
 
+    List<SensorInfo> findByCreatorAndIsDeleted(String creator, int isDeleted);
+
     List<SensorInfo> findByAppIdOrderByType(long appId);
 
     List<SensorInfo> findByExpIdOrderByType(long expId);

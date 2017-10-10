@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sun.management.Sensor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -131,14 +132,25 @@ public class MainController implements ErrorController {
         return "app";
     }
 
+    @GetMapping("/device")
+    public String device(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // --- get login user name
+        String currentUser = viewService.getCurrentLoginUser(request);
+        if (currentUser == null)
+            response.sendRedirect("/login");
+
+        // --- get the devices of user
+        List<SensorInfo> devices = viewService.getOnlineSensorInfoByCurrentUser(currentUser);
+        model.addAttribute("sensors", devices);
+
+        model.addAttribute("inDevice", true);
+
+        return "device";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "login";
-    }
-
-    @GetMapping("/class")
-    public String classes(){
-        return "class";
     }
 
     @GetMapping("/denied")
