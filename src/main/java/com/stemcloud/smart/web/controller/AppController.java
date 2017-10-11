@@ -66,34 +66,6 @@ public class AppController {
         return -1;
     }
 
-    @PostMapping("/new/sensor")
-    public String newSensor(@RequestParam Map<String, String> queryParams, HttpServletRequest request){
-        int isNewSensor = Integer.parseInt(queryParams.get("is-new-sensor"));
-
-        if (isNewSensor == 1) {
-            String user = viewService.getCurrentLoginUser(request);
-            SensorInfo sensorInfo = appManagementDataService.saveNewSensor(queryParams, user);
-            logger.info("New sensor: " + sensorInfo.getId());
-        } else if (isNewSensor == 0){
-            int sensorId = Integer.parseInt(queryParams.get("sensorId"));
-            int ret = appManagementDataService.saveEditSensor(sensorId, queryParams);
-            logger.info("Update sensor: " + sensorId + " return state: " + ret);
-        }
-
-        return "success";
-    }
-
-    @GetMapping(value = "/delete/sensor")
-    public String deleteSensor(@RequestParam long id){
-        try {
-            appManagementDataService.deleteSensor(id);
-            logger.info("Delete sensor: " + id);
-        } catch (Exception e){
-            return "failure";
-        }
-        return "success";
-    }
-
     @GetMapping(value = "/delete/app")
     public String deleteApp(@RequestParam long id){
         try {

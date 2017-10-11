@@ -24,14 +24,12 @@ public interface SensorInfoRepository extends CrudRepository<SensorInfo, Long> {
 
     List<SensorInfo> findByExpIdAndType(long expId, int type);
 
-    @Query(value = "UPDATE base_sensor_info SET sensor_name = :name, " +
-            "sensor_code = :code, sensor_type = :sType, longitude = :longitude, latitude = :latitude, sensor_city = :city, " +
-            "sensor_description = :description WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE zdc_base_sensor_info SET sensor_name = :name, " +
+            "sensor_code = :code, sensor_type = :sType, sensor_description = :description WHERE id = :id", nativeQuery = true)
     @Modifying
     Integer updateSensorInfo(@Param("id") int id, @Param("name") String name,
                              @Param("code") String code, @Param("sType") int sType,
-                             @Param("longitude") double longitude, @Param("latitude") double latitude,
-                             @Param("city") String city, @Param("description") String description);
+                             @Param("description") String description);
 
     Integer deleteById(long id);
 }

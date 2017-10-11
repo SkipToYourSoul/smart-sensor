@@ -151,6 +151,7 @@
     <script th:src="@{source/datepicker/bootstrap-datetimepicker.min.js}"></script>
 
     <script th:src="@{js/common.js}"></script>
+    <script th:src="@{js/app/app-controller.js}"></script>
     <script th:if="!${param.id}" th:src="@{js/app/app-manage.js}"></script>
     <script th:if="${param.id}" th:src="@{js/app/app-chart-option.js}"></script>
     <script th:if="${param.id}" th:src="@{js/app/app-show.js}"></script>

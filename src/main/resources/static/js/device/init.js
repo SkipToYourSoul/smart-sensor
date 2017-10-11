@@ -46,9 +46,14 @@ $('#table').bootstrapTable({
         field: 'appId',
         sortable: 'true',
         align: 'center',
-        title: '所属应用ID',
-        formatter: 'deviceBelongFormatter',
-        cellStyle: 'deviceBelongStyle'
+        title: '所属应用',
+        /*formatter: 'deviceBelongFormatter',
+        cellStyle: 'deviceBelongStyle',*/
+        editable: {
+            type: 'select',
+            title: '所属应用',
+            source:[{value:"1",text:"观察植物的生长情况"},{value:"2",text:"一个空的测试应用"}]
+        }
     }, {
         field: 'expId',
         sortable: 'true',
@@ -56,7 +61,10 @@ $('#table').bootstrapTable({
         title: '所属实验ID',
         formatter: 'deviceBelongFormatter',
         cellStyle: 'deviceBelongStyle'
-    }]
+    }],
+    onEditableSave: function (field, row, oldValue, $el) {
+        message_info("modify", "info");
+    }
 });
 
 function timeFormatter(value){
@@ -128,6 +136,10 @@ $new_sensor_modal.on('shown.bs.modal', function (event) {
         modal.find('.modal-title').text('新增设备');
         $('#sensor-confirm-btn').text("新增设备");
         $('#is-new-sensor').attr('value', 1);
+
+        $('#new-sensor-name').val("");
+        $('#new-sensor-code').val("");
+        $('#new-sensor-description').val("");
     } else if (action == "edit") {
         var selectRow = $('#table').bootstrapTable('getSelections');
         if (selectRow.length == 0){
@@ -146,3 +158,40 @@ $new_sensor_modal.on('shown.bs.modal', function (event) {
         $('#new-sensor-description').val(selectRow[0]['description']);
     }
 });
+
+function deleteSensor() {
+    var selectRow = $('#table').bootstrapTable('getSelections');
+    if (selectRow.length == 0){
+        $new_sensor_modal.modal('hide');
+        message_info("请先在表格中选中设备", "info");
+        return;
+    }
+
+    var id = selectRow[0]['id'];
+    bootbox.confirm({
+        title: "删除设备?",
+        message: "确认删除设备吗? 设备相关数据也会被删除.",
+        buttons: {
+            cancel: {
+                label: '<i class="fa fa-times"></i> 取消'
+            },
+            confirm: {
+                label: '<i class="fa fa-check"></i> 确认删除'
+            }
+        },
+        callback: function (result) {
+            if (result){
+                $.ajax({
+                    type: 'get',
+                    url: current_address + '/delete/sensor?id=' + id,
+                    success: function (id) {
+                        location.replace(location.href);
+                    },
+                    error: function (id) {
+                        message_info("操作失败", 'error');
+                    }
+                });
+            }
+        }
+    });
+}
