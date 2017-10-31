@@ -1,8 +1,8 @@
 package com.stemcloud.smart.web.controller;
 
-import com.stemcloud.smart.web.domain.AppInfo;
-import com.stemcloud.smart.web.domain.Experiment;
-import com.stemcloud.smart.web.domain.SensorInfo;
+import com.stemcloud.smart.web.domain.base.AppInfo;
+import com.stemcloud.smart.web.domain.base.ExperimentInfo;
+import com.stemcloud.smart.web.domain.base.SensorInfo;
 import com.stemcloud.smart.web.service.AppManagementDataService;
 import com.stemcloud.smart.web.service.SensorDataService;
 import com.stemcloud.smart.web.service.ViewService;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import sun.management.Sensor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,8 +64,9 @@ public class MainController implements ErrorController {
                       HttpServletRequest request, HttpServletResponse response) throws IOException {
         // --- get login user name
         String currentUser = viewService.getCurrentLoginUser(request);
-        if (currentUser == null)
+        if (currentUser == null) {
             response.sendRedirect("/login");
+        }
 
         // --- check the app belongs the user
         if (id != null && !viewService.isAppBelongCurrentUser(id, currentUser)){
@@ -97,22 +97,22 @@ public class MainController implements ErrorController {
                     }
                 }
 
-                List<Experiment> experiments = viewService.getExperimentByAppId(id);
+                List<ExperimentInfo> experiments = viewService.getExperimentByAppId(id);
                 logger.info("APP PAGE: FIND " + experiments.size() + " EXPERIMENTS By " + id);
 
                 // --- init sensor data
                 Map<Long, Map<Integer, List<SensorInfo>>> sensors = new HashMap<Long, Map<Integer, List<SensorInfo>>>();
                 Map<Long, Map<Long, Object>> data = new HashMap<Long, Map<Long, Object>>();
-                for (Experiment experiment : experiments){
+                for (ExperimentInfo experiment : experiments){
                     long expId = experiment.getId();
                     List<SensorInfo> expSensors = viewService.getSensorInfoByExperimentId(expId);
 
                     Map<Long, Object> sensorData = new HashMap<Long, Object>();
                     for (SensorInfo sensor: expSensors){
                         long sensorId = sensor.getId();
-                        if (sensor.getType() == 1){
+                        if (sensor.getSensorConfig().getType() == 1){
                             sensorData.put(sensorId, sensorDataService.getSensorTimeSeriesDataBySensorId(sensorId, expId));
-                        } else if (sensor.getType() == 2){
+                        } else if (sensor.getSensorConfig().getType() == 2){
                             sensorData.put(sensorId, sensorDataService.getSensorCameraBySensorId(sensorId, expId));
                         }
                     }
@@ -123,8 +123,9 @@ public class MainController implements ErrorController {
                 model.addAttribute("sensors", sensors);
                 model.addAttribute("currentAppIndex", currentAppIndex);
                 model.addAttribute("sensorData", data);
-            } else
+            } else {
                 logger.info("APP PAGE: CURRENT USER HAS NO APPS!");
+            }
 
             logger.info("APP PAGE: IN APP DATA PAGE!");
         }
@@ -136,8 +137,9 @@ public class MainController implements ErrorController {
     public String device(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
         // --- get login user name
         String currentUser = viewService.getCurrentLoginUser(request);
-        if (currentUser == null)
+        if (currentUser == null) {
             response.sendRedirect("/login");
+        }
 
         // --- get the devices of user
         List<SensorInfo> devices = viewService.getOnlineSensorInfoByCurrentUser(currentUser);

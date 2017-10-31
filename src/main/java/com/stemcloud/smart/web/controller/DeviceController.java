@@ -1,6 +1,6 @@
 package com.stemcloud.smart.web.controller;
 
-import com.stemcloud.smart.web.domain.SensorInfo;
+import com.stemcloud.smart.web.domain.base.SensorInfo;
 import com.stemcloud.smart.web.service.AppManagementDataService;
 import com.stemcloud.smart.web.service.ViewService;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
-package com.stemcloud.smart.web.dao;
+package com.stemcloud.smart.web.dao.data;
 
-import com.stemcloud.smart.web.domain.ExpData;
+import com.stemcloud.smart.web.domain.data.ExpData;
 import org.springframework.data.repository.CrudRepository;
 
 /**

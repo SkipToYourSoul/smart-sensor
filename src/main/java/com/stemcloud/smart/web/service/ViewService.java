@@ -1,11 +1,11 @@
 package com.stemcloud.smart.web.service;
 
-import com.stemcloud.smart.web.dao.AppInfoRepository;
-import com.stemcloud.smart.web.dao.ExperimentRepository;
-import com.stemcloud.smart.web.dao.SensorInfoRepository;
-import com.stemcloud.smart.web.domain.AppInfo;
-import com.stemcloud.smart.web.domain.Experiment;
-import com.stemcloud.smart.web.domain.SensorInfo;
+import com.stemcloud.smart.web.dao.base.AppInfoRepository;
+import com.stemcloud.smart.web.dao.base.ExperimentRepository;
+import com.stemcloud.smart.web.dao.base.SensorInfoRepository;
+import com.stemcloud.smart.web.domain.base.AppInfo;
+import com.stemcloud.smart.web.domain.base.ExperimentInfo;
+import com.stemcloud.smart.web.domain.base.SensorInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,7 @@ public class ViewService {
         return appInfoRepository.findByCreatorAndId(user, appId) != null;
     }
 
-    public List<Experiment> getExperimentByAppId(long appId){
+    public List<ExperimentInfo> getExperimentByAppId(long appId){
         return experimentRepository.findByAppId(appId);
     }
 

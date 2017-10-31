@@ -1,13 +1,9 @@
 package com.stemcloud.smart.web.controller;
 
-import com.stemcloud.smart.web.domain.SensorInfo;
 import com.stemcloud.smart.web.service.AppManagementDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Belongs to smart-sensor

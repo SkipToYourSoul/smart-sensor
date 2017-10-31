@@ -1,10 +1,6 @@
 package com.stemcloud.smart.web.controller;
 
-import com.stemcloud.smart.web.domain.SensorData;
-import com.stemcloud.smart.web.domain.SensorInfo;
-import com.stemcloud.smart.web.view.Video;
 import com.stemcloud.smart.web.service.AppManagementDataService;
-import com.stemcloud.smart.web.service.SensorDataService;
 import com.stemcloud.smart.web.service.ViewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**

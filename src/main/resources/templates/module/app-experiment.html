@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <body>
-    <div th:fragment="app-show">
+    <div th:fragment="app-experiment">
         <!-- 应用展示、应用相关操作 -->
         <!--<div class="col-sm-3 col-md-2 col-xs-3 sidebar">
             <th:block th:if="!${#lists.isEmpty(apps)}">
@@ -19,6 +19,7 @@
 
         <!-- 应用内容 -->
         <div class="row">
+            <!-- 如果应用不为空 -->
             <th:block th:if="${not #lists.isEmpty(apps)}">
                 <!-- 页面说明 -->
                 <div class="app-page-introduction">
@@ -204,23 +205,6 @@
                     </div>
                 </div>-->
             </th:block>
-
-            <!-- 应用按钮组 -->
-            <!--<div class="col-sm-12">
-                <div class="panel panel-default">
-                    &lt;!&ndash;<div class="panel-heading">
-                        <div class="panel-title">
-                            <i class="fa fa-plug"></i>&nbsp;<strong>应用操作按钮</strong>
-                        </div>
-                    </div>&ndash;&gt;
-                    <div class="panel-body">
-                        <div class="btn-group">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#new-sensor-modal"><i class="fa fa-info-circle"></i>&nbsp;新建传感器</button>
-                            <button class="btn btn-default">一些其他功能</button>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
 
             <th:block th:if="${#lists.isEmpty(apps)}">
                 <h1 style="text-align: center">你的账户下暂无相关应用，可点击上方的“新建应用”按钮新建你的第一个应用</h1>

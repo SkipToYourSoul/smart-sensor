@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.domain;
+package com.stemcloud.smart.web.domain.base;
 
 import javax.persistence.*;
 
@@ -18,7 +18,7 @@ public class SensorConfig {
     private String name;
 
     @Column(name = "type", nullable = false)
-    private String type;
+    private int type;
 
     @Column(name = "dimension", nullable = false)
     private String dimension;
@@ -35,11 +35,11 @@ public class SensorConfig {
         this.name = name;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

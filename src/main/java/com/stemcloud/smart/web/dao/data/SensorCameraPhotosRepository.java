@@ -1,6 +1,6 @@
-package com.stemcloud.smart.web.dao;
+package com.stemcloud.smart.web.dao.data;
 
-import com.stemcloud.smart.web.domain.SensorCameraPhotos;
+import com.stemcloud.smart.web.domain.data.SensorCameraPhotos;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

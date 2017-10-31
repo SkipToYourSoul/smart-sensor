@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.domain;
+package com.stemcloud.smart.web.domain.base;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,6 +10,7 @@ import java.util.Date;
  * Belongs to smart-sensor
  * Author: liye on 2017/7/25
  * Description: base_sensor_info
+ * @author liye
  */
 @Entity
 @Table(name = "zdc_base_sensor_info")
@@ -27,12 +28,6 @@ public class SensorInfo {
     @Column(name = "sensor_creator", nullable = false)
     private String creator;
 
-    @Column(name = "sensor_type", nullable = false)
-    private int type;
-
-    @OneToOne
-    private SensorConfig sensorConfig;
-
     @Column(length = 20, precision = 6)
     private Double longitude;
 
@@ -45,26 +40,33 @@ public class SensorInfo {
     @Column(name = "sensor_description")
     private String description;
 
-    @Column(name = "sensor_app_id")
-    private long appId = 0;
+    @Column(name = "is_monitor")
+    private int isMonitor = 0;
 
-    @Column(name = "sensor_exp_id", nullable = false)
-    private long expId = 0;
+    @Column(name = "app_id")
+    private int appId = 0;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    @Column(updatable = false)
-    private Date createTime;
+    @Column(name = "exp_id")
+    private int expId = 0;
+
+    @OneToOne
+    private SensorConfig sensorConfig;
+
+    @OneToOne
+    private TrackInfo trackInfo;
 
     @Column(name = "is_deleted")
     private int isDeleted = 0;
 
-    @Column(name = "is_monitor")
-    private int isMonitor = 0;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    @Column(name = "create_time", updatable = false)
+    private Date createTime;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
-    @Column(updatable = false,
+    @Column(name = "modify_time",
+            updatable = false,
             columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date modifyTime;
 
@@ -100,22 +102,6 @@ public class SensorInfo {
         this.creator = creator;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public SensorConfig getSensorConfig() {
-        return sensorConfig;
-    }
-
-    public void setSensorConfig(SensorConfig sensorConfig) {
-        this.sensorConfig = sensorConfig;
-    }
-
     public Double getLongitude() {
         return longitude;
     }
@@ -148,24 +134,44 @@ public class SensorInfo {
         this.description = description;
     }
 
-    public long getAppId() {
+    public int getIsMonitor() {
+        return isMonitor;
+    }
+
+    public void setIsMonitor(int isMonitor) {
+        this.isMonitor = isMonitor;
+    }
+
+    public int getAppId() {
         return appId;
     }
 
-    public void setAppId(long appId) {
+    public void setAppId(int appId) {
         this.appId = appId;
     }
 
-    public long getExpId() {
+    public int getExpId() {
         return expId;
     }
 
-    public void setExpId(long expId) {
+    public void setExpId(int expId) {
         this.expId = expId;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public SensorConfig getSensorConfig() {
+        return sensorConfig;
+    }
+
+    public void setSensorConfig(SensorConfig sensorConfig) {
+        this.sensorConfig = sensorConfig;
+    }
+
+    public TrackInfo getTrackInfo() {
+        return trackInfo;
+    }
+
+    public void setTrackInfo(TrackInfo trackInfo) {
+        this.trackInfo = trackInfo;
     }
 
     public int getIsDeleted() {
@@ -176,12 +182,8 @@ public class SensorInfo {
         this.isDeleted = isDeleted;
     }
 
-    public int getIsMonitor() {
-        return isMonitor;
-    }
-
-    public void setIsMonitor(int isMonitor) {
-        this.isMonitor = isMonitor;
+    public Date getCreateTime() {
+        return createTime;
     }
 
     public Date getModifyTime() {

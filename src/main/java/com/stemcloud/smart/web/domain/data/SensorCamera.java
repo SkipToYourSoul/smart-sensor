@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.domain;
+package com.stemcloud.smart.web.domain.data;
 
 import org.hibernate.annotations.UpdateTimestamp;
 

@@ -1,9 +1,11 @@
 package com.stemcloud.smart.web.service;
 
-import com.stemcloud.smart.web.dao.SensorCameraPhotosRepository;
-import com.stemcloud.smart.web.dao.SensorCameraRepository;
-import com.stemcloud.smart.web.dao.SensorDataRepository;
-import com.stemcloud.smart.web.domain.*;
+import com.stemcloud.smart.web.dao.data.SensorCameraPhotosRepository;
+import com.stemcloud.smart.web.dao.data.SensorCameraRepository;
+import com.stemcloud.smart.web.dao.data.SensorDataRepository;
+import com.stemcloud.smart.web.domain.data.SensorCamera;
+import com.stemcloud.smart.web.domain.data.SensorCameraPhotos;
+import com.stemcloud.smart.web.domain.data.SensorData;
 import com.stemcloud.smart.web.view.Chart;
 import com.stemcloud.smart.web.view.Video;
 import com.stemcloud.smart.web.view.chart.TimeSeries;

@@ -1,4 +1,4 @@
-package com.stemcloud.smart.web.domain;
+package com.stemcloud.smart.web.domain.base;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,6 +10,7 @@ import java.util.Date;
  * Belongs to smart-sensor
  * Author: liye on 2017/8/2
  * Description: base app info
+ * @author liye
  */
 @Entity
 @Table(name = "zdc_base_app_info")
@@ -27,32 +28,23 @@ public class AppInfo {
     @Column(name = "app_description")
     private String description;
 
-    @Column(length = 20, precision = 6)
-    private Double longitude;
-
-    @Column(length = 20, precision = 6)
-    private Double latitude;
-
-    @Column(name = "app_city")
-    private String city;
-
     @Column(name = "is_shared")
     private int isShare = 0;
 
+    @Column(name = "is_deleted")
+    private int isDeleted = 0;
+
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    @Column(name = "app_create_time", updatable = false)
+    @Column(name = "create_time", updatable = false)
     private Date createTime;
 
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
-    @Column(name = "app_modify_time",
+    @Column(name = "modify_time",
             updatable = false,
             columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date modifyTime;
-
-    @Column(name = "is_deleted")
-    private int isDeleted = 0;
 
     public long getId() {
         return id;
@@ -84,30 +76,6 @@ public class AppInfo {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public int getIsShare() {

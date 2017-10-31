@@ -1,9 +1,9 @@
 package com.stemcloud.smart.web.service;
 
-import com.stemcloud.smart.web.dao.AppInfoRepository;
-import com.stemcloud.smart.web.dao.SensorInfoRepository;
-import com.stemcloud.smart.web.domain.AppInfo;
-import com.stemcloud.smart.web.domain.SensorInfo;
+import com.stemcloud.smart.web.dao.base.AppInfoRepository;
+import com.stemcloud.smart.web.dao.base.SensorInfoRepository;
+import com.stemcloud.smart.web.domain.base.AppInfo;
+import com.stemcloud.smart.web.domain.base.SensorInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
