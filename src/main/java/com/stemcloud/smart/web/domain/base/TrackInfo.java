@@ -19,8 +19,11 @@ public class TrackInfo {
     @GeneratedValue
     private long id;
 
-    @OneToOne
-    private ExperimentInfo experimentInfo;
+    @ManyToOne
+    private ExperimentInfo experiment;
+
+    /*@OneToOne
+    private SensorInfo sensorInfo;*/
 
     @Column(name = "is_deleted")
     private int isDeleted = 0;
@@ -46,12 +49,20 @@ public class TrackInfo {
     }
 
     public ExperimentInfo getExperimentInfo() {
-        return experimentInfo;
+        return experiment;
     }
 
     public void setExperimentInfo(ExperimentInfo experimentInfo) {
-        this.experimentInfo = experimentInfo;
+        this.experiment = experimentInfo;
     }
+
+    /*public SensorInfo getSensorInfo() {
+        return sensorInfo;
+    }
+
+    public void setSensorInfo(SensorInfo sensorInfo) {
+        this.sensorInfo = sensorInfo;
+    }*/
 
     public int getIsDeleted() {
         return isDeleted;

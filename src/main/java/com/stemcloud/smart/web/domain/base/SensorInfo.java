@@ -49,11 +49,11 @@ public class SensorInfo {
     @Column(name = "exp_id")
     private int expId = 0;
 
-    @OneToOne
-    private SensorConfig sensorConfig;
+    @Column(name = "track_id")
+    private int trackId = 0;
 
     @OneToOne
-    private TrackInfo trackInfo;
+    private SensorConfig sensorConfig;
 
     @Column(name = "is_deleted")
     private int isDeleted = 0;
@@ -166,12 +166,12 @@ public class SensorInfo {
         this.sensorConfig = sensorConfig;
     }
 
-    public TrackInfo getTrackInfo() {
-        return trackInfo;
+    public int getTrackId() {
+        return trackId;
     }
 
-    public void setTrackInfo(TrackInfo trackInfo) {
-        this.trackInfo = trackInfo;
+    public void setTrackId(int trackId) {
+        this.trackId = trackId;
     }
 
     public int getIsDeleted() {

@@ -25,44 +25,52 @@ import java.util.Map;
 
 /**
  * Belongs to smart-sensor
- * Author: liye on 2017/7/15
  * Description: main controller of html template
+ * @author liye on 2017/7/15
  */
 @Controller
 public class MainController implements ErrorController {
     private Logger logger = LoggerFactory.getLogger(MainController.class);
 
     private final ViewService viewService;
-    private final AppManagementDataService appManagementDataService;
     private final SensorDataService sensorDataService;
 
     @Autowired
-    public MainController(ViewService viewService, AppManagementDataService appManagementDataService, SensorDataService sensorDataService) {
+    public MainController(ViewService viewService, SensorDataService sensorDataService) {
         this.viewService = viewService;
-        this.appManagementDataService = appManagementDataService;
         this.sensorDataService = sensorDataService;
     }
 
+    /**
+     * index.html
+     * @param model
+     * @param request
+     * @return
+     */
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request) {
-        List<AppInfo> apps = new ArrayList<AppInfo>();
         String loginUser = viewService.getCurrentLoginUser(request);
-
         if (loginUser != null) {
             logger.info("Current login user: " + loginUser);
         }
-
-        apps.addAll(appManagementDataService.getSharedAppInfo());
-        model.addAttribute("apps", apps);
         model.addAttribute("inIndex", true);
 
         return "index";
     }
 
+    /**
+     * app.html
+     * @param id appId
+     * @param model
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @GetMapping("/app")
     public String app(@RequestParam(value = "id", required = false) Integer id, Model model,
                       HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // --- get login user name
+        // --- check the login user
         String currentUser = viewService.getCurrentLoginUser(request);
         if (currentUser == null) {
             response.sendRedirect("/login");
@@ -74,21 +82,34 @@ public class MainController implements ErrorController {
             response.sendRedirect("/app");
         }
 
-        model.addAttribute("inApp", true);
-
-        // --- get app info according current user
+        // --- get app and sensor info according current user
         List<AppInfo> apps = viewService.getOnlineAppInfoByCurrentUser(currentUser);
         logger.info("APP PAGE: FIND " + apps.size() + " APPS By " + currentUser);
         model.addAttribute("apps", apps);
+        List<SensorInfo> sensors = viewService.getOnlineSensorInfoByCurrentUser(currentUser);
+        logger.info("APP PAGE: FIND " + sensors.size() + " SENSORS BY USER " + currentUser);
+        model.addAttribute("sensors", sensors);
+
+        model.addAttribute("inApp", true);
 
         if (id == null){
-            List<SensorInfo> sensors = viewService.getSensorInfoByCurrentUser(currentUser);
-            logger.info("APP PAGE: FIND " + sensors.size() + " SENSORS BY USER " + currentUser);
-            model.addAttribute("sensors", sensors);
-
+            // --- id is null, in app management page
             logger.info("APP PAGE: IN APP MANAGE PAGE!");
         } else {
-            if (apps.size() > 0){
+            // --- in app page
+            List<ExperimentInfo> experimentInfoList = viewService.getOnlineExperimentOfCurrentApp(id);
+            model.addAttribute("experiment", experimentInfoList);
+
+
+
+
+
+
+
+
+
+
+            /*if (apps.size() > 0){
                 int currentAppIndex = -1;
                 for (int i=0; i < apps.size(); i++){
                     if (id == apps.get(i).getId()){
@@ -125,7 +146,7 @@ public class MainController implements ErrorController {
                 model.addAttribute("sensorData", data);
             } else {
                 logger.info("APP PAGE: CURRENT USER HAS NO APPS!");
-            }
+            }*/
 
             logger.info("APP PAGE: IN APP DATA PAGE!");
         }

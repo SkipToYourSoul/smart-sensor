@@ -70,9 +70,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @param httpSecurity
      * @throws Exception
      */
+    @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+        int cookieValidSeconds = 60*60*24;
         httpSecurity.authorizeRequests()
-                .antMatchers("/", "/index/**", "/denied").permitAll()   /*  主页以及主页相关数据无需登录权限认证  */
+                /*  主页以及主页相关数据无需登录权限认证  */
+                .antMatchers("/", "/index/**", "/denied/**").permitAll()
                 .anyRequest().authenticated()   /* 其他所有资源都需要认证，登陆后访问 */
                 .and()
                 /* 登陆相关设置 */
@@ -86,13 +89,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 /* 退出登陆，回到主页 */
                 .logout()
                 .logoutSuccessUrl("/")
-                .permitAll()   /*  注销行为用户任意访问  */
+                /*  注销行为用户任意访问  */
+                .permitAll()
                 .invalidateHttpSession(true)
                 .and()
                 /* 开启cookie保存用户数据 */
                 .rememberMe()
-                .tokenValiditySeconds(60 * 60 * 24);    /* 设置cookie有效期 */
-        httpSecurity.addFilterBefore(mySecurityFilterInterceptor(), FilterSecurityInterceptor.class);   /* 添加自定义拦截器 */
+                /* 设置cookie有效期 */
+                .tokenValiditySeconds(cookieValidSeconds);
+        /* 添加自定义拦截器 */
+        httpSecurity.addFilterBefore(mySecurityFilterInterceptor(), FilterSecurityInterceptor.class);
         httpSecurity.csrf().disable();
     }
 }

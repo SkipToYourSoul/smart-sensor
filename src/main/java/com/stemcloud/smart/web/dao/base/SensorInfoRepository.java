@@ -18,11 +18,11 @@ public interface SensorInfoRepository extends CrudRepository<SensorInfo, Long> {
 
     List<SensorInfo> findByCreatorAndIsDeleted(String creator, int isDeleted);
 
-    List<SensorInfo> findByAppIdOrderByType(long appId);
+    /*List<SensorInfo> findByAppIdOrderByType(long appId);
 
     List<SensorInfo> findByExpIdOrderByType(long expId);
 
-    List<SensorInfo> findByExpIdAndType(long expId, int type);
+    List<SensorInfo> findByExpIdAndType(long expId, int type);*/
 
     @Query(value = "UPDATE zdc_base_sensor_info SET sensor_name = :name, " +
             "sensor_code = :code, sensor_type = :sType, sensor_description = :description WHERE id = :id", nativeQuery = true)

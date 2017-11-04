@@ -19,6 +19,7 @@ import java.util.Map;
  * Belongs to smart-sensor
  * Author: liye on 2017/7/25
  * Description: some view operation, service for MainController
+ * @author liye
  */
 @Service
 public class ViewService {
@@ -36,33 +37,47 @@ public class ViewService {
     public String getCurrentLoginUser(HttpServletRequest request){
         SecurityContextImpl securityContextImpl = (SecurityContextImpl) request
                 .getSession().getAttribute("SPRING_SECURITY_CONTEXT");
-        if (securityContextImpl == null)
+        if (securityContextImpl == null) {
             return null;
+        }
 
         return securityContextImpl.getAuthentication().getName();
     }
 
+    /**
+     * find apps of current user
+     * @param user eg.root
+     * @return List<AppInfo>
+     */
     public List<AppInfo> getOnlineAppInfoByCurrentUser(String user){
         return appInfoRepository.findByCreatorAndIsDeletedOrderByCreateTime(user, 0);
     }
 
+    /**
+     * is app belong current user
+     * @param appId
+     * @param user
+     * @return
+     */
     public boolean isAppBelongCurrentUser(long appId, String user){
         return appInfoRepository.findByCreatorAndId(user, appId) != null;
     }
 
-    public List<ExperimentInfo> getExperimentByAppId(long appId){
-        return experimentRepository.findByAppId(appId);
-    }
-
-    public List<SensorInfo> getSensorInfoByCurrentUser(String user){
-        return sensorInfoRepository.findByCreator(user);
+    /**
+     * getOnlineExperimentOfCurrentApp
+     * @param appId
+     * @return
+     */
+    public List<ExperimentInfo> getOnlineExperimentOfCurrentApp(long appId){
+        AppInfo appInfo = appInfoRepository.findById(appId);
+        return experimentRepository.findByAppInfoAndIsDeleted(appInfo, 0);
     }
 
     public List<SensorInfo> getOnlineSensorInfoByCurrentUser(String user){
         return sensorInfoRepository.findByCreatorAndIsDeleted(user, 0);
     }
 
-    public List<SensorInfo> getSensorInfoByAppId(long appId){
+    /*public List<SensorInfo> getSensorInfoByAppId(long appId){
         return sensorInfoRepository.findByAppIdOrderByType(appId);
     }
 
@@ -74,10 +89,11 @@ public class ViewService {
         Map<Integer, List<SensorInfo>> map = new HashMap<Integer, List<SensorInfo>>();
         for (int type = 1; type<=2; type++){
             List<SensorInfo> list = sensorInfoRepository.findByExpIdAndType(expId, type);
-            if (list.size() > 0)
+            if (list.size() > 0) {
                 map.put(type, list);
+            }
         }
 
         return map;
-    }
+    }*/
 }

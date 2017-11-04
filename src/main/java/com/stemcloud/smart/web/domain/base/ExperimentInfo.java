@@ -5,6 +5,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Belongs to smart-sensor
@@ -27,6 +29,10 @@ public class ExperimentInfo {
 
     @OneToOne
     private AppInfo appInfo;
+
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "experiment")
+    private
+    Set<TrackInfo> trackInfoList;
 
     @Column(name = "is_deleted")
     private int isDeleted = 0;
@@ -73,6 +79,14 @@ public class ExperimentInfo {
 
     public void setAppInfo(AppInfo appInfo) {
         this.appInfo = appInfo;
+    }
+
+    public Set<TrackInfo> getTrackInfoList() {
+        return trackInfoList;
+    }
+
+    public void setTrackInfoList(Set<TrackInfo> trackInfoList) {
+        this.trackInfoList = trackInfoList;
     }
 
     public int getIsDeleted() {

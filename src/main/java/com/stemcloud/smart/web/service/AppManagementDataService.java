@@ -86,13 +86,11 @@ public class AppManagementDataService {
     public SensorInfo saveNewSensor(Map<String, String> queryParams, String user){
         String name = queryParams.get("new-sensor-name");
         String code = queryParams.get("new-sensor-code");
-        int type = Integer.parseInt(queryParams.get("new-sensor-type"));
         String description = queryParams.get("new-sensor-description");
 
         SensorInfo sensorInfo = new SensorInfo();
         sensorInfo.setName(name);
         sensorInfo.setCode(code);
-        sensorInfo.setType(type);
         sensorInfo.setDescription(description);
         sensorInfo.setCreator(user);
 

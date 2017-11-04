@@ -39,6 +39,13 @@ public interface AppInfoRepository extends CrudRepository<AppInfo, Long> {
     AppInfo findByCreatorAndId(String creator, long id);
 
     /**
+     * find app by id
+     * @param id id
+     * @return app
+     */
+    AppInfo findById(long id);
+
+    /**
      * update app
      * @param id
      * @param name
